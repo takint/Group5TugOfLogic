@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TugOfLogic</string>
+    <string name="title_home">Your Cards</string>
+    <string name="title_board">Game Board</string>
+    <string name="title_reasons">Participate Reasons</string>
+    <string name="player_placeholder">Player voted</string>
+</resources>
