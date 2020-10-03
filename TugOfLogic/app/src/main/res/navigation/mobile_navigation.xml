@@ -6,20 +6,20 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="specialtopic.groupfive.tugoflogic.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_yourcards" />
-
-    <fragment
         android:id="@+id/navigation_gameboard"
-        android:name="specialtopic.groupfive.tugoflogic.ui.dashboard.DashboardFragment"
+        android:name="specialtopic.groupfive.tugoflogic.student.ui.dashboard.DashboardFragment"
         android:label="@string/title_board"
         tools:layout="@layout/fragment_gameboard" />
 
     <fragment
+        android:id="@+id/navigation_home"
+        android:name="specialtopic.groupfive.tugoflogic.student.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_yourcards" />
+
+    <fragment
         android:id="@+id/navigation_reasons"
-        android:name="specialtopic.groupfive.tugoflogic.ui.notifications.NotificationsFragment"
+        android:name="specialtopic.groupfive.tugoflogic.student.ui.notifications.NotificationsFragment"
         android:label="@string/title_reasons"
         tools:layout="@layout/fragment_reasons" />
 </navigation>

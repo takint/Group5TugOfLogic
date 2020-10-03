@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_instructor"
+    app:startDestination="@+id/navigation_instructor_game">
+
+    <fragment
+        android:id="@+id/navigation_instructor_game"
+        android:name="specialtopic.groupfive.tugoflogic.instructor.ui.instructorgame.InstructorGameFragment"
+        android:label="@string/title_instructor_game"
+        tools:layout="@layout/fragment_instructor_game" />
+
+    <fragment
+        android:id="@+id/navigation_instructor_mainclaim"
+        android:name="specialtopic.groupfive.tugoflogic.instructor.ui.instructormainclaim.InstructorMainClaimFragment"
+        android:label="@string/title_instructor_mainclaim"
+        tools:layout="@layout/fragment_instructor_mainclaim" />
+
+    <fragment
+        android:id="@+id/navigation_instructor_statistics"
+        android:name="specialtopic.groupfive.tugoflogic.instructor.ui.instructorstatistics.InstructorStatisticsFragment"
+        android:label="@string/title_instructor_stats"
+        tools:layout="@layout/fragment_instructor_statistics" />
+</navigation>

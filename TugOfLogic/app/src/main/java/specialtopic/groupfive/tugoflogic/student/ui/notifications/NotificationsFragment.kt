@@ -1,4 +1,4 @@
-package specialtopic.groupfive.tugoflogic.ui.notifications
+package specialtopic.groupfive.tugoflogic.student.ui.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,14 +15,14 @@ class NotificationsFragment : Fragment() {
     private lateinit var notificationsViewModel: NotificationsViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
+            ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_reasons, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
+        val textView: TextView = root.findViewById(R.id.text_student_reasons)
         notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })

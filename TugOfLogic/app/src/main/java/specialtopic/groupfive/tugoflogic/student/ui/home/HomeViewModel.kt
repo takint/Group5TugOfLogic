@@ -1,4 +1,4 @@
-package specialtopic.groupfive.tugoflogic.ui.home
+package specialtopic.groupfive.tugoflogic.student.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class HomeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is RIP Fragment"
     }
     val text: LiveData<String> = _text
 }

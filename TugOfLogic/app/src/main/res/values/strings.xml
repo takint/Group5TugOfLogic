@@ -4,4 +4,9 @@
     <string name="title_board">Game Board</string>
     <string name="title_reasons">Participate Reasons</string>
     <string name="player_placeholder">Player voted</string>
+    <string name="title_activity_instructor_main">MainActivity</string>
+    <string name="submit_rip_btn">Submit RiP</string>
+    <string name="title_instructor_game">New Game</string>
+    <string name="title_instructor_mainclaim">Main Claims</string>
+    <string name="title_instructor_stats">Statistics</string>
 </resources>
