@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="10"
+    android:padding="10dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/textView_main_claim_id"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView_main_claim_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7" />
+
+    <ImageButton
+        android:id="@+id/btn_main_claim_edit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_baseline_edit_24" />
+
+    <ImageButton
+        android:id="@+id/btn_main_claim_delete"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_baseline_delete_24" />
+
+</LinearLayout>

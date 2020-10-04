@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class InstructorMainClaimViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is Main Claim Fragment"
+        value = "Main Claims Collection"
     }
     val text: LiveData<String> = _text
 }
