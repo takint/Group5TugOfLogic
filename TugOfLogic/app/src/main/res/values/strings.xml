@@ -9,4 +9,7 @@
     <string name="title_instructor_game">New Game</string>
     <string name="title_instructor_mainclaim">Main Claims</string>
     <string name="title_instructor_stats">Statistics</string>
+    <string name="readyCheck">Ready Check</string>
+    <string name="chooseMC">Choose Main Claim</string>
+    <string name="gameroom">Game Room</string>
 </resources>
