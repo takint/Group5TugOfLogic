@@ -9,14 +9,14 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/btnToStudent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onStudentBtnClick"
         android:text="@string/student" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/btnToInstructor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onInstructorBtnClick"

@@ -13,12 +13,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    public fun onStudentBtnClick(view: View) {
+    fun onStudentBtnClick(view: View) {
         val intent = Intent(this, StudentMainActivity::class.java)
         startActivity(intent)
     }
 
-    public fun onInstructorBtnClick(view: View) {
+    fun onInstructorBtnClick(view: View) {
         val intent = Intent(this, InstructorMainActivity::class.java)
         startActivity(intent)
     }
