@@ -1,4 +1,4 @@
-package specialtopic.groupfive.tugoflogic.student.ui.dashboard
+package specialtopic.groupfive.tugoflogic.student.ui.studentboardgame
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,20 +9,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import specialtopic.groupfive.tugoflogic.R
 
-class DashboardFragment : Fragment() {
+class GameBoardFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var gameBoardViewModel: GameBoardViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_gameboard, container, false)
+        gameBoardViewModel =
+                ViewModelProviders.of(this).get(GameBoardViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_student_gameboard, container, false)
         //val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        gameBoardViewModel.text.observe(viewLifecycleOwner, Observer {
             //textView.text = it
         })
         return root

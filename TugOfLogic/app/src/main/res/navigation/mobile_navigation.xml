@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_gameboard"
-        android:name="specialtopic.groupfive.tugoflogic.student.ui.dashboard.DashboardFragment"
+        android:name="specialtopic.groupfive.tugoflogic.student.ui.studentboardgame.GameBoardFragment"
         android:label="@string/title_board"
-        tools:layout="@layout/fragment_gameboard" />
+        tools:layout="@layout/fragment_student_gameboard" />
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="specialtopic.groupfive.tugoflogic.student.ui.home.HomeFragment"
+        android:name="specialtopic.groupfive.tugoflogic.student.ui.studentripcards.RipCardFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_yourcards" />
+        tools:layout="@layout/fragment_student_ripcards" />
 
     <fragment
         android:id="@+id/navigation_reasons"
-        android:name="specialtopic.groupfive.tugoflogic.student.ui.notifications.NotificationsFragment"
+        android:name="specialtopic.groupfive.tugoflogic.student.ui.studentreasons.ReasonsFragment"
         android:label="@string/title_reasons"
-        tools:layout="@layout/fragment_reasons" />
+        tools:layout="@layout/fragment_student_reasons" />
 </navigation>
