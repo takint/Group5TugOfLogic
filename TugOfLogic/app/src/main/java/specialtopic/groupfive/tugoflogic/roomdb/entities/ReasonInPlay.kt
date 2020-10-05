@@ -25,7 +25,7 @@ data class ReasonInPlay(
 
     // Agree or Disagree with the MainClaim
     @ColumnInfo(name = "logicSide")
-    val logicSide: TugSide
+    val logicSide: String
 ) {
     // Additional process
 }

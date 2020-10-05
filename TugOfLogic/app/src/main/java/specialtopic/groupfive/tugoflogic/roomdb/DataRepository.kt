@@ -26,8 +26,17 @@ class DataRepository(app: Application) {
     init {
         CoroutineScope(Dispatchers.IO).launch {
             // get data from SQLite
-            val mcData = mainClaimDao.getAll()
+            val lstMc = mainClaimDao.getAll()
+            val lstRip = reasonInPlayDao.getAll()
+            val lstGame = gameDao.getAll()
+            val lstUser = userDao.getAll()
+            val lstVote = voteTicketDao.getAll()
 
+            mainClaimData.postValue(lstMc)
+            ripData.postValue(lstRip)
+            gameData.postValue(lstGame)
+            userData.postValue(lstUser)
+            voteData.postValue(lstVote)
         }
     }
 

@@ -37,7 +37,7 @@ abstract class LogicTugRoomDatabase : RoomDatabase() {
                         context.applicationContext,
                         LogicTugRoomDatabase::class.java,
                         "tugoflogic.db"
-                    ).build()
+                    ).fallbackToDestructiveMigration().build()
                 }
             }
 

@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //val tugData = DataRepository(this.application)
+        val tugData = DataRepository(this.application)
     }
 
     fun onStudentBtnClick(view: View) {
