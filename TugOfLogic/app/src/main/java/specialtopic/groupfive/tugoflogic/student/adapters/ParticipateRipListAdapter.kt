@@ -10,10 +10,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
 
 class ParticipateRipListAdapter(
     private val context: Context?,
-    private val participateRips: ArrayList<String>
+    private val participateRips: ArrayList<ReasonInPlay>
 ) : RecyclerView.Adapter<ParticipateRipListAdapter.ParticipateRipViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -30,15 +31,15 @@ class ParticipateRipListAdapter(
         holder: ParticipateRipListAdapter.ParticipateRipViewHolder,
         position: Int
     ) {
-        holder.etPartName.text = participateRips[position]
-        holder.etPartReason.text = participateRips[position]
+        holder.etPartName.text = String.format("StudentId: %d",  participateRips[position].studentId)
+        holder.etPartReason.text = participateRips[position].reasonStatement
 
         holder.btnAgreePatRip.setOnClickListener {
-            Toast.makeText(context, participateRips[position], Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, participateRips[position].description, Toast.LENGTH_SHORT).show()
         }
 
         holder.btnDisagreePatRip.setOnClickListener {
-            Toast.makeText(context, participateRips[position], Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, participateRips[position].description, Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -10,11 +10,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
 
 
 class StudentRipListAdapter(
     private val context: Context?,
-    private val studentRips: ArrayList<String>
+    private val studentRips: ArrayList<ReasonInPlay>
 ) : RecyclerView.Adapter<StudentRipListAdapter.StudentRipViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentRipViewHolder {
@@ -25,18 +26,18 @@ class StudentRipListAdapter(
     }
 
     override fun onBindViewHolder(holder: StudentRipViewHolder, position: Int) {
-        holder.etStudentRip.text = studentRips[position]
+        holder.etStudentRip.text = studentRips[position].reasonStatement
 
         holder.btnPutToBoard.setOnClickListener {
-            Toast.makeText(context, studentRips[position], Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, studentRips[position].ripId.toString(), Toast.LENGTH_SHORT).show()
         }
 
         holder.btnEditRip.setOnClickListener {
-            Toast.makeText(context, studentRips[position], Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, studentRips[position].ripId.toString(), Toast.LENGTH_SHORT).show()
         }
 
         holder.btnDeleteRip.setOnClickListener {
-            Toast.makeText(context, studentRips[position], Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, studentRips[position].ripId.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -13,23 +13,14 @@ import androidx.lifecycle.ViewModelProviders
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorMainClaimsListAdapter
 import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorStatsListAdapter
+import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
+import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
+import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
 
 class InstructorStatisticsFragment : Fragment() {
 
     private lateinit var instructorStatisticsViewModel: InstructorStatisticsViewModel
-
-    // Dummy Data - Delete when implement database
-    private val gameIds = arrayOf<String>(
-        "ABC123",
-        "ABC456",
-        "XYZ789",
-    )
-
-    private val gameDateTimestamps = arrayOf<String>(
-        "Sep 3rd, 2020",
-        "Sep 15th, 2020",
-        "Sep 24th, 2020",
-    )
+    private lateinit var tugDataRepo: DataRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,18 +34,29 @@ class InstructorStatisticsFragment : Fragment() {
         instructorStatisticsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+        // Init data repository for using on this fragment
+        tugDataRepo = activity?.application?.let { DataRepository(it) }!!
+
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // init Main Claims ListView
-        val gamesListView = view.findViewById(R.id.listView_instructor_statistics) as ListView
-        val gameListAdapter =
-            InstructorStatsListAdapter(
-                view.context as Activity,
-                gameIds, gameDateTimestamps
-            )
+        activity?.let { fragmentActivity ->
+            tugDataRepo.getGamesData().observe(fragmentActivity, Observer {
+                val lstGames: ArrayList<TugGame> = ArrayList<TugGame>(it)
+                val gamesListView =
+                    view.findViewById(R.id.listView_instructor_statistics) as ListView
+                val gameListAdapter =
+                    InstructorStatsListAdapter(
+                        view.context as Activity,
+                        lstGames
+                    )
 
-        gamesListView.adapter = gameListAdapter
+                gamesListView.adapter = gameListAdapter
+            })
+        }
+
     }
 }

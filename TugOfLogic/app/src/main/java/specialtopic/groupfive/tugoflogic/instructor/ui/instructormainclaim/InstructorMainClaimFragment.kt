@@ -12,21 +12,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorMainClaimsListAdapter
+import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
+import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
+import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
 
 
 class InstructorMainClaimFragment : Fragment() {
 
     private lateinit var instructorMainClaimViewModel: InstructorMainClaimViewModel
-
-    // Dummy Data - Delete when implement database
-    private val mainClaimIds = arrayOf<Int>(1, 2, 3, 4, 5)
-    private val mainClaimContents = arrayOf<String>(
-        "Main Claim 1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-        "Main Claim 2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-        "Main Claim 3 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-        "Main Claim 4 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-        "Main Claim 5 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    )
+    private lateinit var tugDataRepo: DataRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,19 +35,26 @@ class InstructorMainClaimFragment : Fragment() {
             textView.text = it
         })
 
+        // Init data repository for using on this fragment
+        tugDataRepo = activity?.application?.let { DataRepository(it) }!!
+
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // init Main Claims ListView
-        val mainClaimsListView = view.findViewById(R.id.listView_instructor_main_claims) as ListView
-        val mainClaimsListAdapter =
-            InstructorMainClaimsListAdapter(
-                view.context as Activity,
-                mainClaimIds,
-                mainClaimContents
-            )
+        activity?.let { fragmentActivity ->
+            tugDataRepo.getMainClaimData().observe(fragmentActivity, Observer {
+                val lstMainClaims: ArrayList<MainClaim> = ArrayList<MainClaim>(it)
+                val mainClaimsListView = view.findViewById(R.id.listView_instructor_main_claims) as ListView
+                val mainClaimsListAdapter =
+                    InstructorMainClaimsListAdapter(
+                        view.context as Activity,
+                        lstMainClaims
+                    )
 
-        mainClaimsListView.adapter = mainClaimsListAdapter
+                mainClaimsListView.adapter = mainClaimsListAdapter
+            })
+        }
     }
 }

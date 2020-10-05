@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 
 class StudentMainActivity : AppCompatActivity() {
 
@@ -24,6 +25,7 @@ class StudentMainActivity : AppCompatActivity() {
                 R.id.navigation_gameboard, R.id.navigation_home, R.id.navigation_reasons
             )
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

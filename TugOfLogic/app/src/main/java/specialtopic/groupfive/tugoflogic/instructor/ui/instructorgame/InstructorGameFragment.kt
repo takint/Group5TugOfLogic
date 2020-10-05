@@ -12,16 +12,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.GameRoomActivity
+import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 
 class InstructorGameFragment : Fragment() {
 
     private lateinit var instructorGameViewModel: InstructorGameViewModel
+    private lateinit var tugDataRepo: DataRepository
 
     override fun onCreateView(
       inflater: LayoutInflater,
       container: ViewGroup?,
       savedInstanceState: Bundle?
     ): View? {
+        // Init data repository for using on this fragment
+        tugDataRepo = activity?.application?.let { DataRepository(it) }!!
+
         instructorGameViewModel =
             ViewModelProviders.of(this).get(InstructorGameViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_instructor_game, container, false)
