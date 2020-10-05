@@ -27,7 +27,10 @@ class InstructorMainActivity : AppCompatActivity() {
                 R.id.navigation_instructor_statistics
             )
         )
+
+        // Notice: I don't need the toolbar for now - Oct 3rd, 2020 - Chau
         setupActionBarWithNavController(navController, appBarConfiguration)
+
         navView.setupWithNavController(navController)
     }
 }

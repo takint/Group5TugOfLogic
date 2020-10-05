@@ -1,4 +1,4 @@
-package specialtopic.groupfive.tugoflogic.student.ui.home
+package specialtopic.groupfive.tugoflogic.student.ui.studentripcards
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import specialtopic.groupfive.tugoflogic.R
 
-class HomeFragment : Fragment() {
+class RipCardFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var ripCardViewModel: RipCardViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_yourcards, container, false)
+        ripCardViewModel =
+            ViewModelProviders.of(this).get(RipCardViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_student_ripcards, container, false)
         val textView: TextView = root.findViewById(R.id.text_student_cards)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        ripCardViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

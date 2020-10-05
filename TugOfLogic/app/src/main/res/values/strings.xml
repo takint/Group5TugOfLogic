@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TugOfLogic</string>
+    <string name="app_name">Group 5 - Tug of Logic</string>
     <string name="title_home">Your Cards</string>
     <string name="title_board">Game Board</string>
     <string name="title_reasons">Participate Reasons</string>
@@ -12,4 +12,8 @@
     <string name="readyCheck">Ready Check</string>
     <string name="chooseMC">Choose Main Claim</string>
     <string name="gameroom">Game Room</string>
+    <string name="create_new_game">Create New Game</string>
+    <string name="label_gameId">GameID:</string>
+    <string name="instructor">Instructor</string>
+    <string name="student">Student</string>
 </resources>

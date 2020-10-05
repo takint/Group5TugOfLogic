@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@drawable/rectangleborder"
+    android:layout_marginBottom="5dp"
+    >
+
+<!--    <ImageView-->
+<!--        android:id="@+id/img_ChooseMC_Tick"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginRight="10dp"-->
+<!--        android:layout_weight="0"-->
+<!--        app:srcCompat="@drawable/tickmark" />-->
+
+    <TextView
+        android:id="@+id/txt_ChooseMC_item"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:minHeight="70dp"
+        android:textSize="18dp" />
+
+</LinearLayout>

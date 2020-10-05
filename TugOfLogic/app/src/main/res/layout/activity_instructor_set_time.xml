@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".instructor.ui.gameroom.GameRoomActivity">
+    tools:context=".instructor.ui.gameroom.Instructor_SetTime">
 
     <TextView
-        android:id="@+id/txt_GameRoom_RoomID"
+        android:id="@+id/txt_SetTime_RoomID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -19,43 +19,39 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txt_GameRoom_Message"
+        android:id="@+id/txt_SetTime_Message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="Set Time To Vote"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_GameRoom_RoomID" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_SetTime_RoomID" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_GameRoom_Users"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_GameRoom_ReadyCheck"
-        app:layout_constraintTop_toBottomOf="@+id/txt_GameRoom_Message" />
+    <EditText
+        android:id="@+id/edt_SetTime_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Set Time"
+        android:inputType="time"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_SetTime_Message" />
 
     <Button
-        android:id="@+id/btn_GameRoom_ReadyCheck"
+        android:id="@+id/btn_Instructor_StartGame"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/readyCheck"
+        android:text="Start Game"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/border_radius"/>
 
-    <Button
-        android:id="@+id/btn_GameRoom_ChooseMC"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/chooseMC"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/border_radius"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
