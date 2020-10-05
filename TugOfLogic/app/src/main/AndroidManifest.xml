@@ -9,11 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".instructor.ui.gameroom.Instructor_SetTime"></activity>
+        <activity android:name=".instructor.ui.gameroom.GameSummaryActivity"></activity>
+        <activity android:name=".instructor.ui.gameroom.Instructor_DiscussionManagerActivity" />
+        <activity android:name=".instructor.ui.gameroom.Instructor_SetTime" />
         <activity android:name=".instructor.ui.gameroom.ChooseMainClaimActivity" />
         <activity
             android:name=".instructor.ui.gameroom.GameRoomActivity"
-            android:label="@string/gameroom"></activity>
+            android:label="@string/gameroom" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +25,7 @@
         </activity>
         <activity
             android:name=".student.StudentMainActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".instructor.InstructorMainActivity"
             android:label="@string/app_name" />

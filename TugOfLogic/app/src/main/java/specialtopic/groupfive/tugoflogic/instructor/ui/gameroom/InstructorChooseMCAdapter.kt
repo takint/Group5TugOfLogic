@@ -19,9 +19,9 @@ class InstructorChooseMCAdapter(private val mMCs: ArrayList<String>): RecyclerVi
         val context = parent.context
         val inflater = LayoutInflater.from(context)
 
-        val contactView = inflater.inflate(R.layout.instructor_gameroom_item_mc, parent, false)
+        val chooseMCView = inflater.inflate(R.layout.instructor_gameroom_item_mc, parent, false)
 
-        return ViewHolder(contactView)
+        return ViewHolder(chooseMCView)
     }
 
     override fun getItemCount(): Int {
