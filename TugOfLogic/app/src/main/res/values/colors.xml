@@ -11,4 +11,8 @@
     <color name="color_white">#ededf2</color>
     <color name="color_two">#E3E0E0</color>
 
+    <color name="black">#090909</color>
+    <color name="lightBlue">#7500BCD4</color>
+    <color name="skyBlue">#7594ECE1</color>
+
 </resources>
