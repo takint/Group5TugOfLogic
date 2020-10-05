@@ -22,9 +22,9 @@ class RipCardFragment : Fragment() {
         ripCardViewModel =
             ViewModelProviders.of(this).get(RipCardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_student_ripcards, container, false)
-        val textView: TextView = root.findViewById(R.id.text_student_cards)
+
         ripCardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+
         })
         return root
     }

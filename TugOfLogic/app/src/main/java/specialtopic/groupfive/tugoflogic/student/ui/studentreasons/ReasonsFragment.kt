@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.fragment_student_reasons.*
 import specialtopic.groupfive.tugoflogic.R
 
 class ReasonsFragment : Fragment() {
@@ -22,9 +23,9 @@ class ReasonsFragment : Fragment() {
         reasonsViewModel =
             ViewModelProviders.of(this).get(ReasonsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_student_reasons, container, false)
-        val textView: TextView = root.findViewById(R.id.text_student_reasons)
+
         reasonsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            //tvYourCardTitle.text = it
         })
         return root
     }

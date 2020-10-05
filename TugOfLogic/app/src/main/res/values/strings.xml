@@ -16,4 +16,16 @@
     <string name="label_gameId">GameID:</string>
     <string name="instructor">Instructor</string>
     <string name="student">Student</string>
+    <string name="blue_true">Blue True</string>
+    <string name="blue_false">Blue False</string>
+    <string name="red_true"> Reds True</string>
+    <string name="red_false">Reds False</string>
+    <string name="neutral">Neutral</string>
+    <string name="agree">Agree</string>
+    <string name="disagree">Disagree</string>
+    <string name="participate_name">Student 1</string>
+    <string name="rip_placeholder">Your reason in play</string>
+    <string name="btn_put_to_board">Put To board</string>
+    <string name="player_rip_title">Current Reason in Play and Discuss</string>
+    <string name="participate_rip_title">Vote for other student\'s RiPs</string>
 </resources>

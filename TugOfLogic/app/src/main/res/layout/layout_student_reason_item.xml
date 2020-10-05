@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_radius"
+    android:baselineAligned="false">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvPaticiateName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#2196F3"
+            android:text="@string/participate_name"
+            android:textColor="@color/design_default_color_on_secondary" />
+
+        <TextView
+            android:id="@+id/tvPaticipateRip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/rip_placeholder"
+            android:textColor="@color/design_default_color_on_secondary" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnPRAgree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4CAF50"
+            android:text="@string/agree"
+            android:textColor="@color/color_white" />
+
+        <Button
+            android:id="@+id/btnPRDisagree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#E91E63"
+            android:text="@string/disagree"
+            android:textColor="@color/color_white" />
+    </LinearLayout>
+</LinearLayout>
