@@ -21,7 +21,10 @@ class Instructor_SummaryAdapter(private val summaries: ArrayList<Instructor_Summ
         val numEndDisagree = itemView.findViewById<TextView>(R.id.txt_Summary_EndDisagree)
 
         val pieChart = itemView.findViewById<PieChart>(R.id.Instructor_Summary_piechart)
+        val txtSummaryAgree = itemView.findViewById<TextView>(R.id.txtSummaryAgree)
+        val txtSummaryDisagree = itemView.findViewById<TextView>(R.id.txtSummaryDisagree)
 
+        val txtSummaryTitle = itemView.findViewById<TextView>(R.id.txtSummaryTitle)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,13 +49,19 @@ class Instructor_SummaryAdapter(private val summaries: ArrayList<Instructor_Summ
         val txtnumEndAgree = holder.numEndAgree
         val txtnumEndDisagree = holder.numEndDisagree
 
+        val txtSummaryAgree = holder.txtSummaryAgree
+        val txtSummaryDisagree = holder.txtSummaryDisagree
+        val txtSummaryTitle = holder.txtSummaryTitle
+
+        txtSummaryTitle.setText("Main Claim ${position+1}")
+
         txtNumStudents.setText("Number of Students: ${summary.numStudents}")
         txtnumBeginAgree.setText("Begin With Agree: ${summary.beginAgree}")
         txtnumBeginDisagree.setText("Begin With Disagree: ${summary.beginDisagree}")
         txtnumEndAgree.setText("End With Agree: ${summary.endAgree}")
         txtnumEndDisagree.setText("End With Disagree: ${summary.endDisagree}")
 
-        val percent: Float = (summary.endAgree % summary.numStudents)*10.toFloat()
+        val percent: Float = (summary.endAgree.toFloat() / summary.numStudents.toFloat())*100
 
         val pieChart = holder.pieChart
         pieChart.addPieSlice(
@@ -63,6 +72,9 @@ class Instructor_SummaryAdapter(private val summaries: ArrayList<Instructor_Summ
             PieModel(
             "Disagree", (100-percent).toFloat(), Color.parseColor("#FFA726")
         ))
+
+        txtSummaryAgree.setText("Agree " + percent.toInt() + "%")
+        txtSummaryDisagree.setText("Disagree " + (100-percent).toInt() + "%")
 
         pieChart.startAnimation()
     }

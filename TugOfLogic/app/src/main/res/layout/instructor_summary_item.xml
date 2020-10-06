@@ -24,7 +24,7 @@
     <!-- Pie chart and details of pie chart -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewGraph"
-        android:layout_width="220dp"
+        android:layout_width="250dp"
         android:layout_height="120dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -45,11 +45,11 @@
 
             <!--Pie chart to display the data-->
 
-            <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
+            <org.eazegraph.lib.charts.PieChart
                 android:id="@+id/Instructor_Summary_piechart"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
@@ -60,7 +60,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
@@ -81,9 +81,10 @@
 
                     <!--Text view to display Agree text -->
                     <TextView
+                        android:id="@+id/txtSummaryAgree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="5dp"
                         android:text="Agree" />
 
                 </LinearLayout>
@@ -102,9 +103,10 @@
 
                     <!--Text view to display Disagree -->
                     <TextView
+                        android:id="@+id/txtSummaryDisagree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="5dp"
                         android:text="Disagree" />
 
                 </LinearLayout>
@@ -116,18 +118,18 @@
 
     <Button
         android:id="@+id/btn_Summary_EndRound"
-        android:layout_width="110dp"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="End Round"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cardViewGraph" />
 
     <Button
         android:id="@+id/btn_Summary_Drop"
-        android:layout_width="110dp"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="Drop"
         app:layout_constraintBottom_toBottomOf="@+id/cardViewGraph"
         app:layout_constraintEnd_toEndOf="parent" />

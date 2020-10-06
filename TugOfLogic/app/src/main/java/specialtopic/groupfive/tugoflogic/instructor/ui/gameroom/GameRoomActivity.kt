@@ -22,7 +22,7 @@ class GameRoomActivity : AppCompatActivity() {
         //Get students from database and set to the adapter later
         val rvUsers = findViewById<View>(R.id.rv_GameRoom_Users) as RecyclerView
 
-        tempUsers = tempUser.createStudentsList(4)
+        tempUsers = tempUser.createStudentsList(20)
         val adapter = StudentsAdapter(tempUsers)
         rvUsers.adapter = adapter
         rvUsers.layoutManager = LinearLayoutManager(this)
