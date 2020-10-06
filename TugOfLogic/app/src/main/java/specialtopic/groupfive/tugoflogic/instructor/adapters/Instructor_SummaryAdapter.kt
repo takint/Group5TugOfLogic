@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import specialtopic.groupfive.tugoflogic.R
-import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.Instructor_Summary
+import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.InstructorSummary
 
 /**
  * Adapter for summary
  */
-class Instructor_SummaryAdapter(private val summaries: ArrayList<Instructor_Summary>): RecyclerView.Adapter<Instructor_SummaryAdapter.ViewHolder>() {
+class Instructor_SummaryAdapter(private val summaries: ArrayList<InstructorSummary>): RecyclerView.Adapter<Instructor_SummaryAdapter.ViewHolder>() {
 
     inner class  ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView){
         val numStudents = itemView.findViewById<TextView>(R.id.txt_Summary_numStudents)
@@ -44,7 +44,7 @@ class Instructor_SummaryAdapter(private val summaries: ArrayList<Instructor_Summ
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val summary: Instructor_Summary = summaries.get(position)
+        val summary: InstructorSummary = summaries.get(position)
 
         val txtNumStudents = holder.numStudents
         val txtnumBeginAgree = holder.numBeginAgree

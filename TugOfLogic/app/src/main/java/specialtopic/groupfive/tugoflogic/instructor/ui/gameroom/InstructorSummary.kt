@@ -1,6 +1,6 @@
 package specialtopic.groupfive.tugoflogic.instructor.ui.gameroom
 
-class Instructor_Summary {
+class InstructorSummary {
     var numStudents = 0
     var beginAgree = 0
     var beginDisagree = 0

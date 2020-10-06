@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
-import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.tempUser
 import specialtopic.groupfive.tugoflogic.roomdb.entities.User
 
 class UsersAdapter (private  val mUser: ArrayList<User>) : RecyclerView.Adapter<UsersAdapter.ViewHolder>(){

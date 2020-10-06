@@ -1,19 +1,15 @@
 package specialtopic.groupfive.tugoflogic.instructor.ui.gameroom
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.ListView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_choose_main_claim.*
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorChooseMCAdapter
-import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorMainClaimsListAdapter
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
 
@@ -45,7 +41,7 @@ class ChooseMainClaimActivity : AppCompatActivity() {
         })
 
         btn_ChooseMC_Next.setOnClickListener(View.OnClickListener {
-            val setTimeIntent = Intent(this, Instructor_SetTime::class.java).apply {   }
+            val setTimeIntent = Intent(this, InstructorSetTime::class.java).apply {   }
             startActivity(setTimeIntent)
         })
     }

@@ -15,7 +15,6 @@ import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
 import specialtopic.groupfive.tugoflogic.roomdb.entities.User
 
 class GameRoomActivity : AppCompatActivity() {
-    lateinit var tempUsers: ArrayList<tempUser>
     private lateinit var tugDataRepo: DataRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {

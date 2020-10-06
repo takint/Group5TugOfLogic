@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".instructor.ui.gameroom.GameSummaryActivity"></activity>
-        <activity android:name=".instructor.ui.gameroom.Instructor_DiscussionManagerActivity" />
-        <activity android:name=".instructor.ui.gameroom.Instructor_SetTime" />
+        <activity android:name=".instructor.ui.gameroom.InstructorDiscussionManagerActivity" />
+        <activity android:name=".instructor.ui.gameroom.InstructorSetTime" />
         <activity android:name=".instructor.ui.gameroom.ChooseMainClaimActivity" />
         <activity
             android:name=".instructor.ui.gameroom.GameRoomActivity"
