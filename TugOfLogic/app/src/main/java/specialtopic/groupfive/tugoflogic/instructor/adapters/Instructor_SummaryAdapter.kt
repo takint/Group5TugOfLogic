@@ -1,4 +1,4 @@
-package specialtopic.groupfive.tugoflogic.instructor.ui.gameroom
+package specialtopic.groupfive.tugoflogic.instructor.adapters
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.Instructor_Summary
 
-
+/**
+ * Adapter for summary
+ */
 class Instructor_SummaryAdapter(private val summaries: ArrayList<Instructor_Summary>): RecyclerView.Adapter<Instructor_SummaryAdapter.ViewHolder>() {
 
     inner class  ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView){

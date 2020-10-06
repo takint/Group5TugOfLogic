@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_game_room.*
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.instructor.adapters.StudentsAdapter
 
 class GameRoomActivity : AppCompatActivity() {
     lateinit var tempUsers: ArrayList<tempUser>
@@ -16,13 +17,14 @@ class GameRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_room)
 
+        //Set RoomID and title later
         txt_GameRoom_RoomID.setText("Room ID: 514")
         txt_GameRoom_Message.setText("Waiting for people to join your room")
 
-        //Get students from database and set to the adapter later
+        //Get students/Users from database and set to the adapter later
         val rvUsers = findViewById<View>(R.id.rv_GameRoom_Users) as RecyclerView
 
-        tempUsers = tempUser.createStudentsList(20)
+        tempUsers = tempUser.createStudentsList(10)
         val adapter = StudentsAdapter(tempUsers)
         rvUsers.adapter = adapter
         rvUsers.layoutManager = LinearLayoutManager(this)

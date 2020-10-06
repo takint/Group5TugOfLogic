@@ -1,13 +1,15 @@
-package specialtopic.groupfive.tugoflogic.instructor.ui.gameroom
+package specialtopic.groupfive.tugoflogic.instructor.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
 
+/**
+ * Adapter for Choosing Main Claim
+ */
 class InstructorChooseMCAdapter(private val mMCs: ArrayList<String>): RecyclerView.Adapter<InstructorChooseMCAdapter.ViewHolder>() {
 
     inner class  ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView){

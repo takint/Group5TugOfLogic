@@ -1,4 +1,4 @@
-package specialtopic.groupfive.tugoflogic.instructor.ui.gameroom
+package specialtopic.groupfive.tugoflogic.instructor.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.tempUser
 
 class StudentsAdapter (private  val mUser: ArrayList<tempUser>) : RecyclerView.Adapter<StudentsAdapter.ViewHolder>(){
     inner class  ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView){
