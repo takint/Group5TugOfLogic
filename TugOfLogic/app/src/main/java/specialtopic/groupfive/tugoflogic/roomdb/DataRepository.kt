@@ -35,6 +35,11 @@ class DataRepository(app: Application) {
             var lstUser = userDao.getAll()
             var lstVote = voteTicketDao.getAll()
 
+
+            /**
+             * These checks will help to seed the sample data
+             * if it is a brand new database
+             * */
             if (lstUser.isEmpty()) {
                 lstUser = seedUsers()
                 userDao.insertUsers(lstUser)
@@ -63,6 +68,10 @@ class DataRepository(app: Application) {
         }
     }
 
+    /**
+     * Expose the add and update main claim operation from DAO
+     * for the UI can use to handle the data from users
+     * */
     fun addOrUpdateMainClaimDao(mainClaim: MainClaim) {
         CoroutineScope(Dispatchers.IO).launch {
             if (mainClaim.mainClaimId > 0) {
@@ -73,12 +82,19 @@ class DataRepository(app: Application) {
         }
     }
 
+    /**
+     * Expose the delete main claim operation from DAO
+     * for the UI can use to handle the data from users
+     * */
     fun deleteMainClaimDao(mainClaim: MainClaim) {
         CoroutineScope(Dispatchers.IO).launch {
             mainClaimDao.deleteMainClaim(mainClaim)
         }
     }
 
+    /**
+     * Get main claim by Id
+     * */
     fun getMainClaimById(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             var mainClaim: List<MainClaim> = mainClaimDao.getById(id)
@@ -86,18 +102,30 @@ class DataRepository(app: Application) {
         }
     }
 
+    /**
+     * Get main claim data for UI
+     * */
     fun getMainClaimData(): MutableLiveData<List<MainClaim>> {
         return mainClaimData
     }
 
+    /**
+     * Get reason in play data for UI
+     * */
     fun getRipsData(): MutableLiveData<List<ReasonInPlay>> {
         return ripData
     }
 
+    /**
+     * Get users for UI
+     * */
     fun getUsersData(): MutableLiveData<List<User>> {
         return userData
     }
 
+    /**
+     * Get games data for UI
+     * */
     fun getGamesData(): MutableLiveData<List<TugGame>> {
         return gameData
     }
