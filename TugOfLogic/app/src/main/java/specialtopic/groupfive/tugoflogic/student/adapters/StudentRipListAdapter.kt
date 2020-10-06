@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
@@ -26,7 +23,7 @@ class StudentRipListAdapter(
     }
 
     override fun onBindViewHolder(holder: StudentRipViewHolder, position: Int) {
-        holder.etStudentRip.text = studentRips[position].reasonStatement
+        holder.etStudentRip.setText(studentRips[position].reasonStatement)
 
         holder.btnPutToBoard.setOnClickListener {
             Toast.makeText(context, studentRips[position].ripId.toString(), Toast.LENGTH_SHORT).show()
@@ -46,7 +43,7 @@ class StudentRipListAdapter(
     }
 
     class StudentRipViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val etStudentRip: TextView = itemView.findViewById<TextView>(R.id.etStudentRip)
+        val etStudentRip: EditText = itemView.findViewById<EditText>(R.id.etStudentRip)
         val btnPutToBoard: Button = itemView.findViewById<Button>(R.id.btnPutToBoard)
         val btnEditRip: ImageView = itemView.findViewById<ImageView>(R.id.btnEditRip)
         val btnDeleteRip: ImageView = itemView.findViewById<ImageView>(R.id.btnDeleteRip)

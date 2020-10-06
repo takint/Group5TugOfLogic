@@ -12,6 +12,7 @@
         <activity android:name=".instructor.ui.gameroom.InstructorReasonsInPlayActivity"></activity>
         <activity android:name=".instructor.ui.gameroom.InstructorWaitingVoteActivity" />
         <activity android:name=".instructor.ui.gameroom.GameSummaryActivity" />
+        <activity android:name=".student.StudentMainClaimActivity"></activity>
         <activity android:name=".instructor.ui.gameroom.InstructorDiscussionManagerActivity" />
         <activity android:name=".instructor.ui.gameroom.InstructorSetTime" />
         <activity android:name=".instructor.ui.gameroom.ChooseMainClaimActivity" />

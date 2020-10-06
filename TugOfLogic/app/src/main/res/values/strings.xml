@@ -32,5 +32,9 @@
     <string name="btn_start_discussion">Start Discussion</string>
     <string name="txt_agree">Agree</string>
     <string name="txt_disagree">Disagree</string>
+    <string name="student_mc_title">Current main claim by instructor</string>
+    <string name="start_to_play">Start to play</string>
+    <string name="vote_to_discuss">Vote to discuss</string>
+    <string name="vote_to_drop">Vote to drop</string>
     <string name="reason_in_play_rips">Reason in Play - RIPs</string>
 </resources>
