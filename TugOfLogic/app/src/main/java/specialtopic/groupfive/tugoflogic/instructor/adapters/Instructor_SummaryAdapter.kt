@@ -14,9 +14,10 @@ import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.InstructorSummar
 /**
  * Adapter for summary
  */
-class Instructor_SummaryAdapter(private val summaries: ArrayList<InstructorSummary>): RecyclerView.Adapter<Instructor_SummaryAdapter.ViewHolder>() {
+class Instructor_SummaryAdapter(private val summaries: ArrayList<InstructorSummary>) :
+    RecyclerView.Adapter<Instructor_SummaryAdapter.ViewHolder>() {
 
-    inner class  ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView){
+    inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val numStudents = itemView.findViewById<TextView>(R.id.txt_Summary_numStudents)
         val numBeginAgree = itemView.findViewById<TextView>(R.id.txt_Summary_BeginAgree)
         val numBeginDisagree = itemView.findViewById<TextView>(R.id.txt_Summary_BeginDisagree)
@@ -56,7 +57,7 @@ class Instructor_SummaryAdapter(private val summaries: ArrayList<InstructorSumma
         val txtSummaryDisagree = holder.txtSummaryDisagree
         val txtSummaryTitle = holder.txtSummaryTitle
 
-        txtSummaryTitle.setText("Main Claim ${position+1}")
+        txtSummaryTitle.setText("Main Claim ${position + 1}")
 
         txtNumStudents.setText("Number of Students: ${summary.numStudents}")
         txtnumBeginAgree.setText("Begin With Agree: ${summary.beginAgree}")
@@ -64,23 +65,23 @@ class Instructor_SummaryAdapter(private val summaries: ArrayList<InstructorSumma
         txtnumEndAgree.setText("End With Agree: ${summary.endAgree}")
         txtnumEndDisagree.setText("End With Disagree: ${summary.endDisagree}")
 
-        val percent: Float = (summary.endAgree.toFloat() / summary.numStudents.toFloat())*100
+        val percent: Float = (summary.endAgree.toFloat() / summary.numStudents.toFloat()) * 100
 
         val pieChart = holder.pieChart
         pieChart.addPieSlice(
             PieModel(
-            "Agree", percent, Color.parseColor("#29B6F6")
-        ))
+                "Agree", percent, Color.parseColor("#29B6F6")
+            )
+        )
         pieChart.addPieSlice(
             PieModel(
-            "Disagree", (100-percent).toFloat(), Color.parseColor("#FFA726")
-        ))
+                "Disagree", (100 - percent).toFloat(), Color.parseColor("#FFA726")
+            )
+        )
 
         txtSummaryAgree.setText("Agree " + percent.toInt() + "%")
-        txtSummaryDisagree.setText("Disagree " + (100-percent).toInt() + "%")
+        txtSummaryDisagree.setText("Disagree " + (100 - percent).toInt() + "%")
 
         pieChart.startAnimation()
     }
-
-
 }

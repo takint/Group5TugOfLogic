@@ -12,11 +12,12 @@ class InstructorSetTime : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_instructor_set_time)
 
-        txt_SetTime_Message.setText("Set Time To Vote")
+        txt_SetTime_Message.text = "Set Time To Vote"
 
-        //Temp
+        // Link to InstructorWaitingVoteActivity
         btn_Instructor_StartGame.setOnClickListener(View.OnClickListener {
-            val startGameIntent = Intent(this, InstructorDiscussionManagerActivity::class.java).apply {  }
+            val startGameIntent =
+                Intent(this, InstructorWaitingVoteActivity::class.java).apply { }
             startActivity(startGameIntent)
         })
     }
