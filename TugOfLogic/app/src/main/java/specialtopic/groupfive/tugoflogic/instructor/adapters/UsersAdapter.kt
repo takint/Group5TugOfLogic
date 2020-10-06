@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.tempUser
+import specialtopic.groupfive.tugoflogic.roomdb.entities.User
 
-class StudentsAdapter (private  val mUser: ArrayList<tempUser>) : RecyclerView.Adapter<StudentsAdapter.ViewHolder>(){
+class UsersAdapter (private  val mUser: ArrayList<User>) : RecyclerView.Adapter<UsersAdapter.ViewHolder>(){
     inner class  ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView){
         val nameTextView = itemView.findViewById<TextView>(R.id.txt_GameRoom_UserName)
         val tick = itemView.findViewById<ImageView>(R.id.img_GameRoom_Tick)
@@ -25,10 +26,10 @@ class StudentsAdapter (private  val mUser: ArrayList<tempUser>) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user: tempUser = mUser.get(position)
+        val user: User = mUser.get(position)
 
         val textView = holder.nameTextView
-        textView.setText(user.name)
+        textView.setText(user.fullName)
         val tickView = holder.tick
 
     }
