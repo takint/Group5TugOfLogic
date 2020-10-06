@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import specialtopic.groupfive.tugoflogic.roomdb.dao.MainClaimDao
 import specialtopic.groupfive.tugoflogic.roomdb.entities.*
 
 class DataRepository(app: Application) {
@@ -16,6 +17,8 @@ class DataRepository(app: Application) {
     private val gameData = MutableLiveData<List<TugGame>>()
     private val userData = MutableLiveData<List<User>>()
     private val voteData = MutableLiveData<List<VoteTicket>>()
+
+    private val mainClaimEnt = MutableLiveData<MainClaim>()
 
     private val mainClaimDao = LogicTugRoomDatabase.getDatabase(app).mainClaimDao()
     private val reasonInPlayDao = LogicTugRoomDatabase.getDatabase(app).reasonInPlayDao()
@@ -57,6 +60,29 @@ class DataRepository(app: Application) {
             mainClaimData.postValue(lstMc)
             ripData.postValue(lstRip)
             voteData.postValue(lstVote)
+        }
+    }
+
+    fun addOrUpdateMainClaimDao(mainClaim: MainClaim) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (mainClaim.mainClaimId > 0) {
+                mainClaimDao.updateMainClaim(mainClaim)
+            } else {
+                mainClaimDao.insertMainClaim(mainClaim)
+            }
+        }
+    }
+
+    fun deleteMainClaimDao(mainClaim: MainClaim) {
+        CoroutineScope(Dispatchers.IO).launch {
+            mainClaimDao.deleteMainClaim(mainClaim)
+        }
+    }
+
+    fun getMainClaimById(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            var mainClaim: List<MainClaim> = mainClaimDao.getById(id)
+            mainClaimEnt.postValue(mainClaim[0])
         }
     }
 

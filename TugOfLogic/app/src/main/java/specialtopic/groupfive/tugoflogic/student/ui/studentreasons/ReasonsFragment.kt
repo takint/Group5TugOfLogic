@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
+import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
 import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
 import specialtopic.groupfive.tugoflogic.student.adapters.ParticipateRipListAdapter
 
