@@ -20,7 +20,7 @@ data class VoteTicket(
     val statementToVote: String,
 
     // Agree or Disagree
-    val voteSide: TugSide
+    val voteSide: String
 ) {
     // Additional process
 }

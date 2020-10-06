@@ -26,12 +26,53 @@ class DataRepository(app: Application) {
     init {
         CoroutineScope(Dispatchers.IO).launch {
             // get data from SQLite
-            val mcData = mainClaimDao.getAll()
+            var lstMc = mainClaimDao.getAll()
+            var lstRip = reasonInPlayDao.getAll()
+            var lstGame = gameDao.getAll()
+            var lstUser = userDao.getAll()
+            var lstVote = voteTicketDao.getAll()
 
+            if (lstUser.isEmpty()) {
+                lstUser = seedUsers()
+                userDao.insertUsers(lstUser)
+            }
+
+            if (lstGame.isEmpty()) {
+                lstGame = seedGames()
+                gameDao.insertGames(lstGame)
+            }
+
+            if (lstMc.isEmpty()) {
+                lstMc = seedMainClaim()
+                mainClaimDao.insertMainClaims(lstMc)
+            }
+
+            if (lstRip.isEmpty()) {
+                lstRip = seedRips()
+                reasonInPlayDao.insertRips(lstRip)
+            }
+
+            userData.postValue(lstUser)
+            gameData.postValue(lstGame)
+            mainClaimData.postValue(lstMc)
+            ripData.postValue(lstRip)
+            voteData.postValue(lstVote)
         }
     }
 
     fun getMainClaimData(): MutableLiveData<List<MainClaim>> {
         return mainClaimData
+    }
+
+    fun getRipsData(): MutableLiveData<List<ReasonInPlay>> {
+        return ripData
+    }
+
+    fun getUsersData(): MutableLiveData<List<User>> {
+        return userData
+    }
+
+    fun getGamesData(): MutableLiveData<List<TugGame>> {
+        return gameData
     }
 }

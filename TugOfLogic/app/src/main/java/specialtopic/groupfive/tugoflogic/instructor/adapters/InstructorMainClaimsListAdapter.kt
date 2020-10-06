@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
 
 class InstructorMainClaimsListAdapter(
     private val context: Activity,
-    private val ids: Array<Int>,
-    private val contents: Array<String>
-) : ArrayAdapter<String>(context, R.layout.layout_instructor_mainclaim_item, contents) {
+    private val mainClaims: ArrayList<MainClaim>
+) : ArrayAdapter<MainClaim>(context, R.layout.layout_instructor_mainclaim_item, mainClaims) {
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
@@ -30,8 +30,8 @@ class InstructorMainClaimsListAdapter(
         val btnEdit = itemView.findViewById(R.id.btn_main_claim_edit) as ImageButton
         val btnDelete = itemView.findViewById(R.id.btn_main_claim_delete) as ImageButton
 
-        txtMainClaimId.text = ids[position].toString()
-        txtMainClaimContent.text = contents[position]
+        txtMainClaimId.text = mainClaims[position].mainClaimId.toString()
+        txtMainClaimContent.text = mainClaims[position].statement
 
         return itemView
     }

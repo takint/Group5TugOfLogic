@@ -16,7 +16,7 @@ data class User(
     val userId: Int,
 
     // Instructor or Student
-    val userType: PlayerType,
+    val userType: String,
 
     val username: String,
 

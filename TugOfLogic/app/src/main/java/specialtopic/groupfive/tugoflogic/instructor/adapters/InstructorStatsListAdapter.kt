@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
 
 class InstructorStatsListAdapter(
     private val context: Activity,
-    private val gameIds: Array<String>,
-    private val dateTimestamps: Array<String>
-) : ArrayAdapter<String>(context, R.layout.layout_instructor_mainclaim_item, gameIds) {
+    private val games: ArrayList<TugGame>
+) : ArrayAdapter<TugGame>(context, R.layout.layout_instructor_mainclaim_item, games) {
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
@@ -28,8 +28,8 @@ class InstructorStatsListAdapter(
         val txtDateTimestamps =
             itemView.findViewById(R.id.textView_statistics_game_date_time) as TextView
 
-        txtGameId.text = gameIds[position]
-        txtDateTimestamps.text = dateTimestamps[position]
+        txtGameId.text = games[position].gameId.toString()
+        txtDateTimestamps.text = games[position].startTime.toLocaleString()
 
         return itemView
     }

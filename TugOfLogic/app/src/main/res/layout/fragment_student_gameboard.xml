@@ -194,54 +194,64 @@
         android:layout_height="2dp"
         android:background="?android:attr/listDivider" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnGbNeutral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/neutral" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <Button
-                android:id="@+id/button5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="NEUTRAL" />
-
-            <Button
-                android:id="@+id/button"
+                android:id="@+id/btnGbVoteBlueTrue"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#2196F3"
-                android:text="Vote for BLUE TRUE" />
+                android:text="@string/blue_true" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnGbVoteBlueFalse"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#2196F3"
-                android:text="Vote for BLUE FALSE" />
-
-            <Button
-                android:id="@+id/button2"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#F44336"
-                android:text="VOTE FOR RED TRUE" />
-
-            <Button
-                android:id="@+id/button4"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#F44336"
-                android:text="VOTE FOR RED FALSE" />
+                android:text="@string/blue_false" />
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btnGbVoteRedTrue"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#E91E63"
+                android:text="@string/red_true" />
+
+            <Button
+                android:id="@+id/btnGbVoteRedFalse"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#E91E63"
+                android:text="@string/red_false" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
