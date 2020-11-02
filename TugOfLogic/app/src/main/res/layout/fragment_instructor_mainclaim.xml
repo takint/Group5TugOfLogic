@@ -16,8 +16,8 @@
         android:textAlignment="center"
         android:textSize="20sp" />
 
-    <ListView
-        android:id="@+id/listView_instructor_main_claims"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_instructor_main_claims"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
