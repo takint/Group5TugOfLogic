@@ -3,7 +3,9 @@ package specialtopic.groupfive.tugoflogic.instructor.ui.gameroom
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +33,10 @@ class GameRoomActivity : AppCompatActivity() {
         tugDataRepo.getUsersData().observe(this, Observer {
             val lstUser: ArrayList<User> = ArrayList<User>(it)
 
+            for(user in lstUser){
+                Log.i("Users: ", user.username)
+            }
+
             val rvUsers = findViewById<View>(R.id.rv_GameRoom_Users) as RecyclerView
             val adapter = UsersAdapter(lstUser)
             rvUsers.adapter = adapter
@@ -41,6 +47,18 @@ class GameRoomActivity : AppCompatActivity() {
         btn_GameRoom_ChooseMC.setOnClickListener(View.OnClickListener {
             val chooseMCIntent = Intent(this, ChooseMainClaimActivity::class.java).apply {  }
             startActivity(chooseMCIntent)
+        })
+
+        btn_GameRoom_ReadyCheck.setOnClickListener(View.OnClickListener {
+            tugDataRepo.readyCheck(application)
+            tugDataRepo.getUsersData().observe(this, Observer {
+                val lstUser: ArrayList<User> = ArrayList<User>(it)
+                val rvUsers = findViewById<View>(R.id.rv_GameRoom_Users) as RecyclerView
+                val adapter = UsersAdapter(lstUser)
+                rvUsers.adapter = adapter
+                rvUsers.layoutManager = LinearLayoutManager(this)
+            })
+            Toast.makeText(this, "All users are ready!", Toast.LENGTH_SHORT).show()
         })
     }
 }

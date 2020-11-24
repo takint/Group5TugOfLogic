@@ -33,7 +33,7 @@ class ChooseMainClaimActivity : AppCompatActivity() {
             //Get MainClaims from database and set to the adapter later
             val rvMCs = findViewById<View>(R.id.rv_ChooseMC_MCs) as RecyclerView
 
-            //Currently using dummy data
+
             val adapter = InstructorChooseMCAdapter(lstMainClaims)
             rvMCs.adapter = adapter
             rvMCs.layoutManager = LinearLayoutManager(this)

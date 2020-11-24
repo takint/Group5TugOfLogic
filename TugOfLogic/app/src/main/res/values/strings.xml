@@ -28,4 +28,7 @@
     <string name="btn_put_to_board">Put To board</string>
     <string name="player_rip_title">Current Reason in Play and Discuss</string>
     <string name="participate_rip_title">Vote for other student\'s RiPs</string>
+    <string name="sharedPref">sharedPref</string>
+    <string name="mainClaimId">mainClaimId</string>
+    <string name="voteTime">voteTime</string>
 </resources>

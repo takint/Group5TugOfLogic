@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
-import specialtopic.groupfive.tugoflogic.instructor.adapters.Instructor_SummaryAdapter
+import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorSummaryAdapter
 
 class GameSummaryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class GameSummaryActivity : AppCompatActivity() {
 
         val summaries = arrayListOf<InstructorSummary>(dummySummary, dummySummary2, dummySummary3)
 
-        val adapter = Instructor_SummaryAdapter(summaries)
+        val adapter = InstructorSummaryAdapter(summaries)
         rvSummary.adapter = adapter
         rvSummary.layoutManager = LinearLayoutManager(this)
 

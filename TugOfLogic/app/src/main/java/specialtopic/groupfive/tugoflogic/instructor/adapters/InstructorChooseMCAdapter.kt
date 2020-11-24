@@ -1,11 +1,16 @@
 package specialtopic.groupfive.tugoflogic.instructor.adapters
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.InstructorSetTime
 import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
 
 /**
@@ -13,9 +18,8 @@ import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
  */
 class InstructorChooseMCAdapter(private val mMCs: ArrayList<MainClaim>): RecyclerView.Adapter<InstructorChooseMCAdapter.ViewHolder>() {
 
-    inner class  ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView){
+    inner class  ViewHolder(listItemView: View, context: Context) : RecyclerView.ViewHolder(listItemView){
         val mc = itemView.findViewById<TextView>(R.id.txt_ChooseMC_item)
-        //val tick = itemView.findViewById<ImageView>(R.id.img_ChooseMC_Tick)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,7 +28,7 @@ class InstructorChooseMCAdapter(private val mMCs: ArrayList<MainClaim>): Recycle
 
         val chooseMCView = inflater.inflate(R.layout.instructor_gameroom_item_mc, parent, false)
 
-        return ViewHolder(chooseMCView)
+        return ViewHolder(chooseMCView, context)
     }
 
     override fun getItemCount(): Int {
@@ -34,7 +38,18 @@ class InstructorChooseMCAdapter(private val mMCs: ArrayList<MainClaim>): Recycle
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val mainClaim: MainClaim = mMCs.get(position)
 
-        val textView = holder.mc
-        textView.setText(mainClaim.statement)
+        holder.mc.setText(mainClaim.statement)
+
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            //save mainClaimId into sharedPreferences
+            val sharedPref: SharedPreferences = holder.itemView.context.getSharedPreferences(R.string.sharedPref.toString(), Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = sharedPref.edit()
+            editor.putInt(R.string.mainClaimId.toString(), mainClaim.mainClaimId)
+            editor.apply()
+
+            //Go to setTime activity
+            val setTimeIntent = Intent(holder.itemView.context, InstructorSetTime::class.java)
+            holder.itemView.context.startActivity(setTimeIntent)
+        })
     }
 }

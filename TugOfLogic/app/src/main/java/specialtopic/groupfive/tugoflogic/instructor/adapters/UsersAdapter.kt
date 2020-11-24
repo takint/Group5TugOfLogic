@@ -27,9 +27,7 @@ class UsersAdapter (private  val mUser: ArrayList<User>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user: User = mUser.get(position)
 
-        val textView = holder.nameTextView
-        textView.setText(user.fullName)
-        val tickView = holder.tick
+        holder.nameTextView.setText(user.fullName)
 
     }
 

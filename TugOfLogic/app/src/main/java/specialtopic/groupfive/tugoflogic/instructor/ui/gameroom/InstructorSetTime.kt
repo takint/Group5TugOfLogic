@@ -1,6 +1,8 @@
 package specialtopic.groupfive.tugoflogic.instructor.ui.gameroom
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,6 +18,17 @@ class InstructorSetTime : AppCompatActivity() {
 
         //Temp
         btn_Instructor_StartGame.setOnClickListener(View.OnClickListener {
+            if(edt_SetTime_Time.text.isEmpty()){
+                edt_SetTime_Time.setError("Please input time to vote!")
+                return@OnClickListener
+            }
+            val time = edt_SetTime_Time.text.toString()
+            //save voteTime into sharedPreferences
+            val sharedPref: SharedPreferences = getSharedPreferences(R.string.sharedPref.toString(), Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = sharedPref.edit()
+            editor.putInt(R.string.voteTime.toString(), time.toInt())
+            editor.apply()
+
             val startGameIntent = Intent(this, InstructorDiscussionManagerActivity::class.java).apply {  }
             startActivity(startGameIntent)
         })
