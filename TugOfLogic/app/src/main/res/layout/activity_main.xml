@@ -8,17 +8,28 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/redvsblue" />
+
     <Button
         android:id="@+id/btnToStudent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#8BC34A"
         android:onClick="onStudentBtnClick"
-        android:text="@string/student" />
+        android:text="@string/student"
+        android:textColor="@color/color_white" />
 
     <Button
         android:id="@+id/btnToInstructor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#03A9F4"
         android:onClick="onInstructorBtnClick"
-        android:text="@string/instructor" />
+        android:text="@string/instructor"
+        android:textColor="@color/color_white" />
+
 </LinearLayout>

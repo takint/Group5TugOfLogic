@@ -7,9 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import specialtopic.groupfive.tugoflogic.WEB_SERVICE_URL
+import kotlinx.coroutines.withContext
+import specialtopic.groupfive.tugoflogic.roomdb.dao.MainClaimDao
 import specialtopic.groupfive.tugoflogic.roomdb.entities.*
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 
@@ -20,6 +23,8 @@ class DataRepository(app: Application) {
     private val gameData = MutableLiveData<List<TugGame>>()
     private val userData = MutableLiveData<List<User>>()
     private val voteData = MutableLiveData<List<VoteTicket>>()
+
+    private val mainClaimEnt = MutableLiveData<MainClaim>()
 
     private val mainClaimDao = LogicTugRoomDatabase.getDatabase(app).mainClaimDao()
     private val reasonInPlayDao = LogicTugRoomDatabase.getDatabase(app).reasonInPlayDao()
@@ -68,14 +73,57 @@ class DataRepository(app: Application) {
         }
     }
 
+    /**
+     * Expose the add and update main claim operation from DAO
+     * for the UI can use to handle the data from users
+     * */
+    fun addOrUpdateMainClaimDao(mainClaim: MainClaim) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (mainClaim.mainClaimId > 0) {
+                mainClaimDao.updateMainClaim(mainClaim)
+            } else {
+                mainClaimDao.insertMainClaim(mainClaim)
+            }
+        }
+    }
+
+    /**
+     * Expose the delete main claim operation from DAO
+     * for the UI can use to handle the data from users
+     * */
+    fun deleteMainClaimDao(mainClaim: MainClaim) {
+        CoroutineScope(Dispatchers.IO).launch {
+            mainClaimDao.deleteMainClaim(mainClaim)
+        }
+    }
+
+    /**
+     * Get main claim by Id
+     * */
+    fun getMainClaimById(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            var mainClaim: List<MainClaim> = mainClaimDao.getById(id)
+            mainClaimEnt.postValue(mainClaim[0])
+        }
+    }
+
+    /**
+     * Get main claim data for UI
+     * */
     fun getMainClaimData(): MutableLiveData<List<MainClaim>> {
         return mainClaimData
     }
 
+    /**
+     * Get reason in play data for UI
+     * */
     fun getRipsData(): MutableLiveData<List<ReasonInPlay>> {
         return ripData
     }
 
+    /**
+     * Get users for UI
+     * */
     fun getUsersData(): MutableLiveData<List<User>> {
         return userData
     }
@@ -118,6 +166,9 @@ class DataRepository(app: Application) {
         }
     }
 
+    /**
+     * Get games data for UI
+     * */
     fun getGamesData(): MutableLiveData<List<TugGame>> {
         return gameData
     }

@@ -1,26 +1,29 @@
 package specialtopic.groupfive.tugoflogic.instructor.ui.instructorstatistics
 
-import android.app.Activity
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
-import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorMainClaimsListAdapter
-import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorStatsListAdapter
+import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorStatsRVAdapter
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
-import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
 import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
 
 class InstructorStatisticsFragment : Fragment() {
 
-    private lateinit var instructorStatisticsViewModel: InstructorStatisticsViewModel
     private lateinit var tugDataRepo: DataRepository
+    private lateinit var mStatsRV: RecyclerView
+    private lateinit var mLayoutManager: RecyclerView.LayoutManager
+    private lateinit var mStatsRVAdapter: RecyclerView.Adapter<InstructorStatsRVAdapter.ViewHolder>
+    private lateinit var instructorStatisticsViewModel: InstructorStatisticsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,19 +45,18 @@ class InstructorStatisticsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // init Main Claims ListView
+        Log.i(ContentValues.TAG, "onViewCreated: Statistics Fragment")
+
         activity?.let { fragmentActivity ->
             tugDataRepo.getGamesData().observe(fragmentActivity, Observer {
-                val lstGames: ArrayList<TugGame> = ArrayList<TugGame>(it)
-                val gamesListView =
-                    view.findViewById(R.id.listView_instructor_statistics) as ListView
-                val gameListAdapter =
-                    InstructorStatsListAdapter(
-                        view.context as Activity,
-                        lstGames
-                    )
+                val lstGames: ArrayList<TugGame> = ArrayList(it)
 
-                gamesListView.adapter = gameListAdapter
+                // Recycler View
+                mStatsRV = view.findViewById(R.id.rv_instructor_statistics) as RecyclerView
+                mLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                mStatsRVAdapter = InstructorStatsRVAdapter(lstGames)
+                mStatsRV.adapter = mStatsRVAdapter
+                mStatsRV.layoutManager = mLayoutManager
             })
         }
 

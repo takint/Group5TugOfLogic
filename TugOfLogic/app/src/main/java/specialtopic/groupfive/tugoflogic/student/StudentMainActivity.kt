@@ -8,7 +8,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import specialtopic.groupfive.tugoflogic.R
-import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 
 class StudentMainActivity : AppCompatActivity() {
 

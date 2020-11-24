@@ -1,11 +1,16 @@
 package specialtopic.groupfive.tugoflogic.roomdb
 
-import androidx.room.ColumnInfo
 import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
 import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
 import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
 import specialtopic.groupfive.tugoflogic.roomdb.entities.User
 import java.util.*
+
+/**
+ * This class is only use for seeding data when user first install and open the app
+ * The data is here only the sample data
+ * Users can generate data when using the App
+ * */
 
 fun seedUsers(): List<User> {
     return listOf(

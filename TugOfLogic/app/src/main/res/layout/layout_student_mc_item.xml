@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/border_radius">
+
+    <TextView
+        android:id="@+id/tvStudentVoteMainClaim"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btnVoteToDiscuss"
+        app:layout_constraintEnd_toStartOf="@+id/radStudentMCLogicSide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnVoteToDrop"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="104dp"
+        android:backgroundTint="#FFEB3B"
+        android:text="@string/vote_to_drop"
+        app:layout_constraintStart_toStartOf="@+id/radStudentMCLogicSide"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnVoteToDiscuss"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="57dp"
+        android:backgroundTint="#2196F3"
+        android:text="@string/vote_to_discuss"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnVoteToDrop"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radStudentMCLogicSide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnVoteToDrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvStudentVoteMainClaim"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/rbtnStudenMCAgree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/agree" />
+
+        <RadioButton
+            android:id="@+id/rbtnStudentMCDisagree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/disagree" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

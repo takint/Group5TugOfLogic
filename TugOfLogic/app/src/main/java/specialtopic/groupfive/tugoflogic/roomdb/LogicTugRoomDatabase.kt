@@ -20,6 +20,13 @@ import specialtopic.groupfive.tugoflogic.roomdb.entities.*
 @TypeConverters(Converters::class)
 abstract class LogicTugRoomDatabase : RoomDatabase() {
 
+    /**
+     * Follow the instruction from last class
+     * We create 5 Dao Class corresponding to 5 data table for our App
+     * These Dao will implement the CRUD operation
+     * and some of specific operations
+     * */
+
     abstract fun gameDao(): TugGameDao
     abstract fun mainClaimDao(): MainClaimDao
     abstract fun reasonInPlayDao(): ReasonInPlayDao

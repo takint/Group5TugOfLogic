@@ -7,6 +7,7 @@ import android.view.View
 import specialtopic.groupfive.tugoflogic.instructor.InstructorMainActivity
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.student.StudentMainActivity
+import specialtopic.groupfive.tugoflogic.student.StudentMainClaimActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onStudentBtnClick(view: View) {
-        val intent = Intent(this, StudentMainActivity::class.java)
+        val intent = Intent(this, StudentMainClaimActivity::class.java)
         startActivity(intent)
     }
 
