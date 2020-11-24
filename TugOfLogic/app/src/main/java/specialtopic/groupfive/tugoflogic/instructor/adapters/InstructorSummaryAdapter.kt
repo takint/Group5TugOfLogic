@@ -15,8 +15,8 @@ import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.InstructorSummar
  * Adapter for summary
  */
 
-class Instructor_SummaryAdapter(private val summaries: ArrayList<InstructorSummary>) :
-    RecyclerView.Adapter<Instructor_SummaryAdapter.ViewHolder>() {
+class InstructorSummaryAdapter(private val summaries: ArrayList<InstructorSummary>) :
+    RecyclerView.Adapter<InstructorSummaryAdapter.ViewHolder>() {
 
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val numStudents = itemView.findViewById<TextView>(R.id.txt_Summary_numStudents)

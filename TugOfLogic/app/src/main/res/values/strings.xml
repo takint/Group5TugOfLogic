@@ -28,11 +28,9 @@
     <string name="btn_put_to_board">Put To board</string>
     <string name="player_rip_title">Current Reason in Play and Discuss</string>
     <string name="participate_rip_title">Vote for other student\'s RiPs</string>
-<<<<<<< HEAD
     <string name="sharedPref">sharedPref</string>
     <string name="mainClaimId">mainClaimId</string>
     <string name="voteTime">voteTime</string>
-=======
     <string name="waiting_for_the_vote">Waiting for the vote</string>
     <string name="btn_start_discussion">Start Discussion</string>
     <string name="txt_agree">Agree</string>
@@ -42,5 +40,4 @@
     <string name="vote_to_discuss">Vote to discuss</string>
     <string name="vote_to_drop">Vote to drop</string>
     <string name="reason_in_play_rips">Reason in Play - RIPs</string>
->>>>>>> 139f5448180f502d8026e302bdc585f00df8b894
 </resources>

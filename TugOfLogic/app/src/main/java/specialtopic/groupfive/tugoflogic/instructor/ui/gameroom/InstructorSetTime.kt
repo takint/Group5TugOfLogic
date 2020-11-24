@@ -18,7 +18,7 @@ class InstructorSetTime : AppCompatActivity() {
 
         // Link to InstructorWaitingVoteActivity
         btn_Instructor_StartGame.setOnClickListener(View.OnClickListener {
-<<<<<<< HEAD
+
             if(edt_SetTime_Time.text.isEmpty()){
                 edt_SetTime_Time.setError("Please input time to vote!")
                 return@OnClickListener
@@ -31,10 +31,6 @@ class InstructorSetTime : AppCompatActivity() {
             editor.apply()
 
             val startGameIntent = Intent(this, InstructorDiscussionManagerActivity::class.java).apply {  }
-=======
-            val startGameIntent =
-                Intent(this, InstructorWaitingVoteActivity::class.java).apply { }
->>>>>>> 139f5448180f502d8026e302bdc585f00df8b894
             startActivity(startGameIntent)
         })
     }
