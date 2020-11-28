@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.roomdb.entities.User
 
-class UsersAdapter (private  val mUser: ArrayList<User>) : RecyclerView.Adapter<UsersAdapter.ViewHolder>(){
+class UsersAdapter (private  val mUser: ArrayList<String>) : RecyclerView.Adapter<UsersAdapter.ViewHolder>(){
     inner class  ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView){
         val nameTextView = itemView.findViewById<TextView>(R.id.txt_GameRoom_UserName)
         val tick = itemView.findViewById<ImageView>(R.id.img_GameRoom_Tick)
@@ -25,10 +25,9 @@ class UsersAdapter (private  val mUser: ArrayList<User>) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user: User = mUser.get(position)
+        val username: String = mUser.get(position)
 
-        holder.nameTextView.setText(user.fullName)
-
+        holder.nameTextView.setText(username)
     }
 
     override fun getItemCount(): Int {

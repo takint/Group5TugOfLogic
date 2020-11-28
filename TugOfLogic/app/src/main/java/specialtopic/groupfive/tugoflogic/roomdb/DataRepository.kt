@@ -4,17 +4,19 @@ import android.app.Application
 import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import specialtopic.groupfive.tugoflogic.WEB_SERVICE_URL
-import kotlinx.coroutines.withContext
-import specialtopic.groupfive.tugoflogic.roomdb.dao.MainClaimDao
 import specialtopic.groupfive.tugoflogic.roomdb.entities.*
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
+import java.util.*
+import kotlin.random.Random
 
 class DataRepository(app: Application) {
     // https://developer.android.com/reference/androidx/lifecycle/MutableLiveData.html
@@ -36,13 +38,14 @@ class DataRepository(app: Application) {
         CoroutineScope(Dispatchers.IO).launch {
             // get data from SQLite
 //            var lstMc = mainClaimDao.getAll()
-            var lstRip = reasonInPlayDao.getAll()
-            var lstGame = gameDao.getAll()
+//            var lstRip = reasonInPlayDao.getAll()
+//            var lstGame = gameDao.getAll()
             //var lstUser = userDao.getAll()
-            var lstVote = voteTicketDao.getAll()
+//            var lstVote = voteTicketDao.getAll()
 
             getUsersFromService(app)
             getMCsFromService(app)
+            getGamesFromService(app)
 
 //            if (lstUser.isEmpty()) {
 //                lstUser = seedUsers()
@@ -50,26 +53,26 @@ class DataRepository(app: Application) {
 //                getUsersFromService(app)
 //            }
 
-            if (lstGame.isEmpty()) {
-                lstGame = seedGames()
-                gameDao.insertGames(lstGame)
-            }
+//            if (lstGame.isEmpty()) {
+//                lstGame = seedGames()
+//                gameDao.insertGames(lstGame)
+//            }
 
 //            if (lstMc.isEmpty()) {
 //                lstMc = seedMainClaim()
 //                mainClaimDao.insertMainClaims(lstMc)
 //            }
 
-            if (lstRip.isEmpty()) {
-                lstRip = seedRips()
-                reasonInPlayDao.insertRips(lstRip)
-            }
-
+//            if (lstRip.isEmpty()) {
+//                lstRip = seedRips()
+//                reasonInPlayDao.insertRips(lstRip)
+//            }
+//
 //            userData.postValue(lstUser)
-            gameData.postValue(lstGame)
+//            gameData.postValue(lstGame)
 //            mainClaimData.postValue(lstMc)
-            ripData.postValue(lstRip)
-            voteData.postValue(lstVote)
+//            ripData.postValue(lstRip)
+//            voteData.postValue(lstVote)
         }
     }
 
@@ -128,11 +131,16 @@ class DataRepository(app: Application) {
         return userData
     }
 
+    /**
+     * Get games data for UI
+     * */
+    fun getGamesData(): MutableLiveData<List<TugGame>> {
+        return gameData
+    }
+
     @WorkerThread
     suspend fun getUsersFromService(app: Application){
         if(NetworkHelper.isNetworkConnected(app)){
-            Log.i("Data Repository", "Calling web service")
-
             val retrofit = Retrofit.Builder()
                 .baseUrl(WEB_SERVICE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
@@ -159,6 +167,26 @@ class DataRepository(app: Application) {
             mainClaimData.postValue(serviceData)
         }
     }
+    @WorkerThread
+    suspend fun getGamesFromService(app: Application){
+        if(NetworkHelper.isNetworkConnected(app)){
+            try {
+                val moshi = Moshi.Builder()
+                    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                    .build()
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(WEB_SERVICE_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
+                val service = retrofit.create(ApiService::class.java)
+                val serviceData = service.getGameData().body() ?: emptyList()
+                gameData.postValue(serviceData)
+            }
+            catch (ex: Exception){
+
+            }
+        }
+    }
 
     fun readyCheck(app: Application){
         CoroutineScope(Dispatchers.IO).launch {
@@ -166,10 +194,22 @@ class DataRepository(app: Application) {
         }
     }
 
-    /**
-     * Get games data for UI
-     * */
-    fun getGamesData(): MutableLiveData<List<TugGame>> {
-        return gameData
+    @WorkerThread
+    fun createNewGame(app: Application, newGame: TugGame) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (NetworkHelper.isNetworkConnected(app)) {
+                    val moshi = Moshi.Builder()
+                        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                        .build()
+                    val retrofit = Retrofit.Builder()
+                        .baseUrl(WEB_SERVICE_URL)
+                        .addConverterFactory(MoshiConverterFactory.create(moshi))
+                        .build()
+                    val service = retrofit.create(ApiService::class.java)
+                    val newGameCall = service.addGame(newGame)
+                    newGameCall.execute()
+
+            }
+        }
     }
 }
