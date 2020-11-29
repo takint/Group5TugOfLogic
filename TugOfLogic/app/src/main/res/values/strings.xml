@@ -40,4 +40,6 @@
     <string name="vote_to_discuss">Vote to discuss</string>
     <string name="vote_to_drop">Vote to drop</string>
     <string name="reason_in_play_rips">Reason in Play - RIPs</string>
+    <string name="wait_game_room">Waiting Game Room</string>
+    <string name="game_room">Game Room</string>
 </resources>
