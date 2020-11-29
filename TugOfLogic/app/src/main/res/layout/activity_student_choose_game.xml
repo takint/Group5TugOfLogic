@@ -15,14 +15,14 @@
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/edt_StudentChooseGame_Username"
+        android:id="@+id/etStudentGuessName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:ems="10"
         android:gravity="center"
-        android:hint="Input Username"
+        android:hint="@string/input_username"
         android:inputType="textPersonName"
         android:textSize="24sp" />
 

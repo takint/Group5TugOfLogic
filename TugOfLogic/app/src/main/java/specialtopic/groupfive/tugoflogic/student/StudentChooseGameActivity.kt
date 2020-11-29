@@ -6,52 +6,35 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nkzawa.emitter.Emitter
-import com.github.nkzawa.socketio.client.IO
-import com.github.nkzawa.socketio.client.Socket
 import kotlinx.android.synthetic.main.activity_student_choose_game.*
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.student.adapters.ChooseGameAdapter
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 
 class StudentChooseGameActivity : AppCompatActivity() {
-    lateinit var roomName: String
     var listGameRoom = ArrayList<String>()
-    lateinit var username: String
+    private var userName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_choose_game)
-        username = ""
 
-        NetworkHelper.mSocket.emit("getRunningGame", username)
+        NetworkHelper.mSocket.emit("getRunningGame")
         NetworkHelper.mSocket.on("notification_game_room", onNewGame)
-        runOnUiThread(Runnable {
-            updateView()
-        })
 
-        edt_StudentChooseGame_Username.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                username = edt_StudentChooseGame_Username.text.toString()
-                runOnUiThread(Runnable {
-                    updateView()
-                })
+        etStudentGuessName.addTextChangedListener { text ->
+            userName = etStudentGuessName.text.toString()
+            runOnUiThread {
+                updateView()
             }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-        })
+        }
     }
 
-    var onNewGame = Emitter.Listener {
+    private var onNewGame = Emitter.Listener {
         var message = it[0] as String
         if (message.contains('[')) {
             message = message.substring(1, message.length - 1)
@@ -63,20 +46,19 @@ class StudentChooseGameActivity : AppCompatActivity() {
         } else {
             listGameRoom.add(message)
         }
-        runOnUiThread(Runnable {
+        runOnUiThread {
             updateView()
-        })
+        }
     }
 
-    fun updateView() {
+    private fun updateView() {
         if (listGameRoom.size > 0) {
-            Log.i("TEST USERNAME: ", username)
             txt_ChooseGame_Title.text = getString(R.string.game_room)
             val rvGameRooms = findViewById<View>(R.id.rsvStudentChooseGame) as RecyclerView
-            if (username.isBlank()) {
-                username = "No Name User"
+            if (userName.isBlank()) {
+                userName = getString(R.string.no_name)
             }
-            val adapter = ChooseGameAdapter(listGameRoom, username)
+            val adapter = ChooseGameAdapter(listGameRoom, userName)
             rvGameRooms.adapter = adapter
             rvGameRooms.layoutManager = LinearLayoutManager(this)
         } else {
