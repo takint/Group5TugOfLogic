@@ -30,7 +30,6 @@ class InstructorMainActivity : AppCompatActivity() {
 
         // Notice: I don't need the toolbar for now - Oct 3rd, 2020 - Chau
         setupActionBarWithNavController(navController, appBarConfiguration)
-
         navView.setupWithNavController(navController)
     }
 }

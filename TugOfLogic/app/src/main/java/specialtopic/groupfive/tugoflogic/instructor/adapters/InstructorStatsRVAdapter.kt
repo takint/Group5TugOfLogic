@@ -26,10 +26,14 @@ class InstructorStatsRVAdapter(
         var timeStamp: TextView = itemView.findViewById(R.id.textView_statistics_game_date_time)
 
         init {
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 // TODO: implement item click here
-                val position: Int = getAdapterPosition()
-                Toast.makeText(itemView.context, "You clicked on item $position" , Toast.LENGTH_SHORT).show()
+                val position: Int = adapterPosition
+                Toast.makeText(
+                    itemView.context,
+                    "You clicked on item $position",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

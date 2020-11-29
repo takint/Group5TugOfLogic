@@ -52,7 +52,7 @@ class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
         // Init data repository for using on this fragment
 
         try {
-            val inputStream: InputStream = assets.open("source.txt")
+            val inputStream: InputStream = assets.open("config.txt")
             val size: Int = inputStream.available()
             val buffer = ByteArray(size)
             inputStream.read(buffer)

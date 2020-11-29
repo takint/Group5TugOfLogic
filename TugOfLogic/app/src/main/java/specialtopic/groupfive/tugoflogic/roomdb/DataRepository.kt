@@ -6,7 +6,6 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +15,6 @@ import specialtopic.groupfive.tugoflogic.WEB_SERVICE_URL
 import specialtopic.groupfive.tugoflogic.roomdb.entities.*
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import java.util.*
-import kotlin.random.Random
 
 class DataRepository(app: Application) {
     // https://developer.android.com/reference/androidx/lifecycle/MutableLiveData.html
@@ -36,43 +34,10 @@ class DataRepository(app: Application) {
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            // get data from SQLite
-//            var lstMc = mainClaimDao.getAll()
-//            var lstRip = reasonInPlayDao.getAll()
-//            var lstGame = gameDao.getAll()
-            //var lstUser = userDao.getAll()
-//            var lstVote = voteTicketDao.getAll()
-
+            // get data from APIs
             getUsersFromService(app)
             getMCsFromService(app)
             getGamesFromService(app)
-
-//            if (lstUser.isEmpty()) {
-//                lstUser = seedUsers()
-//                userDao.insertUsers(lstUser)
-//                getUsersFromService(app)
-//            }
-
-//            if (lstGame.isEmpty()) {
-//                lstGame = seedGames()
-//                gameDao.insertGames(lstGame)
-//            }
-
-//            if (lstMc.isEmpty()) {
-//                lstMc = seedMainClaim()
-//                mainClaimDao.insertMainClaims(lstMc)
-//            }
-
-//            if (lstRip.isEmpty()) {
-//                lstRip = seedRips()
-//                reasonInPlayDao.insertRips(lstRip)
-//            }
-//
-//            userData.postValue(lstUser)
-//            gameData.postValue(lstGame)
-//            mainClaimData.postValue(lstMc)
-//            ripData.postValue(lstRip)
-//            voteData.postValue(lstVote)
         }
     }
 
@@ -105,7 +70,7 @@ class DataRepository(app: Application) {
      * */
     fun getMainClaimById(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-            var mainClaim: List<MainClaim> = mainClaimDao.getById(id)
+            val mainClaim: List<MainClaim> = mainClaimDao.getById(id)
             mainClaimEnt.postValue(mainClaim[0])
         }
     }
@@ -139,56 +104,56 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getUsersFromService(app: Application){
-        if(NetworkHelper.isNetworkConnected(app)){
+    suspend fun getUsersFromService(app: Application) {
+        if (NetworkHelper.isNetworkConnected(app)) {
             val retrofit = Retrofit.Builder()
-                .baseUrl(WEB_SERVICE_URL)
+                .baseUrl(NetworkHelper.API_ENDPOINT_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
             val service = retrofit.create(ApiService::class.java)
             val serviceData = service.getUserData().body() ?: emptyList()
 
-            Log.i("Main DataRepository","$serviceData")
+            Log.i("Main DataRepository", "$serviceData")
             userData.postValue(serviceData)
         }
     }
 
     @WorkerThread
-    suspend fun getMCsFromService(app: Application){
-        if(NetworkHelper.isNetworkConnected(app)){
+    suspend fun getMCsFromService(app: Application) {
+        if (NetworkHelper.isNetworkConnected(app)) {
             val retrofit = Retrofit.Builder()
-                .baseUrl(WEB_SERVICE_URL)
+                .baseUrl(NetworkHelper.API_ENDPOINT_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
             val service = retrofit.create(ApiService::class.java)
             val serviceData = service.getMainClaimData().body() ?: emptyList()
 
-            Log.i("Main DataRepository","$serviceData")
+            Log.i("Main DataRepository", "$serviceData")
             mainClaimData.postValue(serviceData)
         }
     }
+
     @WorkerThread
-    suspend fun getGamesFromService(app: Application){
-        if(NetworkHelper.isNetworkConnected(app)){
+    suspend fun getGamesFromService(app: Application) {
+        if (NetworkHelper.isNetworkConnected(app)) {
             try {
                 val moshi = Moshi.Builder()
                     .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
                     .build()
                 val retrofit = Retrofit.Builder()
-                    .baseUrl(WEB_SERVICE_URL)
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
                     .addConverterFactory(MoshiConverterFactory.create(moshi))
                     .build()
                 val service = retrofit.create(ApiService::class.java)
                 val serviceData = service.getGameData().body() ?: emptyList()
                 gameData.postValue(serviceData)
-            }
-            catch (ex: Exception){
-
+            } catch (ex: Exception) {
+                Log.d("error", ex.message.toString())
             }
         }
     }
 
-    fun readyCheck(app: Application){
+    fun readyCheck(app: Application) {
         CoroutineScope(Dispatchers.IO).launch {
             getUsersFromService(app);
         }
@@ -198,17 +163,16 @@ class DataRepository(app: Application) {
     fun createNewGame(app: Application, newGame: TugGame) {
         CoroutineScope(Dispatchers.IO).launch {
             if (NetworkHelper.isNetworkConnected(app)) {
-                    val moshi = Moshi.Builder()
-                        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
-                        .build()
-                    val retrofit = Retrofit.Builder()
-                        .baseUrl(WEB_SERVICE_URL)
-                        .addConverterFactory(MoshiConverterFactory.create(moshi))
-                        .build()
-                    val service = retrofit.create(ApiService::class.java)
-                    val newGameCall = service.addGame(newGame)
-                    newGameCall.execute()
-
+                val moshi = Moshi.Builder()
+                    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                    .build()
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
+                val service = retrofit.create(ApiService::class.java)
+                val newGameCall = service.addGame(newGame)
+                newGameCall.execute()
             }
         }
     }

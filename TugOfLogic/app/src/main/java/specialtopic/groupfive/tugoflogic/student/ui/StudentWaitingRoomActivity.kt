@@ -1,6 +1,5 @@
 package specialtopic.groupfive.tugoflogic.student.ui
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -38,7 +37,7 @@ class StudentWaitingRoomActivity : AppCompatActivity() {
         txt_StudentWaitingRoom_Message.setText("Waiting for other users")
 
         try {
-            val inputStream: InputStream = assets.open("source.txt")
+            val inputStream: InputStream = assets.open("config.txt")
             val size: Int = inputStream.available()
             val buffer = ByteArray(size)
             inputStream.read(buffer)

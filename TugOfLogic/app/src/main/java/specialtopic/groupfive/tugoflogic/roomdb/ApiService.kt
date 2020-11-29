@@ -23,4 +23,8 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("/add-game")
     fun addGame(@Body tugGame: TugGame): Call<TugGame>
+
+    @Headers("Content-Type: application/json")
+    @POST("/login")
+    fun login(@Body tugGame: User): Call<User>
 }

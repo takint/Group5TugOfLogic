@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".student.StudentChooseGameActivity"></activity>
+        <activity android:name=".student.StudentChooseGameActivity" />
         <activity android:name=".student.ui.StudentWaitingRoomActivity" />
         <activity android:name=".instructor.ui.gameroom.InstructorReasonsInPlayActivity" />
         <activity android:name=".instructor.ui.gameroom.InstructorWaitingVoteActivity" />
@@ -28,7 +28,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

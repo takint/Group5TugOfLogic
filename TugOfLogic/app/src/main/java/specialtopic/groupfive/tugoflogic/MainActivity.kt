@@ -27,10 +27,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Init configuration from start
+        NetworkHelper.getConfiguration(applicationContext);
+
+        // Connect app to socket
+        NetworkHelper.initSocket()
+        NetworkHelper.openConnect()
     }
 
     fun onStudentBtnClick(view: View) {
-//        val intent = Intent(this, StudentMainClaimActivity::class.java)
         val intent = Intent(this, StudentChooseGameActivity::class.java)
         startActivity(intent)
     }
