@@ -37,6 +37,9 @@ class GameRoomActivity : AppCompatActivity() {
 
         val randomGameID = Random.nextInt(100000, 1000000)
 
+        // Init data repository for using on this fragment
+         tugDataRepo = application?.let { DataRepository(it) }!!
+
         tugDataRepo.getGamesData().observe(this, Observer {
             val newGame: TugGame = TugGame(randomGameID, Date(), Date(), 0, true)
             tugDataRepo.createNewGame(this.application, newGame)

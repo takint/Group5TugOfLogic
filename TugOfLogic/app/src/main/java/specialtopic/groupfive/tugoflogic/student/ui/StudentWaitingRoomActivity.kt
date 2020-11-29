@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_student_waiting_room.*
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.UsersAdapter
 import specialtopic.groupfive.tugoflogic.student.StudentMainClaimActivity
+import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import java.io.InputStream
 import java.lang.Exception
 
@@ -36,28 +37,10 @@ class StudentWaitingRoomActivity : AppCompatActivity() {
         }
         txt_StudentWaitingRoom_Message.setText("Waiting for other users")
 
-        try {
-            val inputStream: InputStream = assets.open("config.txt")
-            val size: Int = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.read(buffer)
-            sourseStr = String(buffer)
-        } catch (e: Exception) {
-            Log.d("error", e.message.toString())
-        }
+        NetworkHelper.mSocket.emit("newUser", username)
 
-        try {
-            mSocket = IO.socket(sourseStr)
-            mSocket.connect()
-
-        } catch (e: Exception) {
-
-        }
-
-        mSocket.emit("newUser", username)
-
-        mSocket.on("notification_user", onNewUser)
-        mSocket.on("notification_startGame", onStartGame)
+        NetworkHelper.mSocket.on("notification_user", onNewUser)
+        NetworkHelper.mSocket.on("notification_startGame", onStartGame)
 
     }
 
@@ -74,7 +57,6 @@ class StudentWaitingRoomActivity : AppCompatActivity() {
 
     var onStartGame = Emitter.Listener {
         val intent = Intent(this, StudentMainClaimActivity::class.java)
-        mSocket.disconnect()
         startActivity(intent)
     }
 

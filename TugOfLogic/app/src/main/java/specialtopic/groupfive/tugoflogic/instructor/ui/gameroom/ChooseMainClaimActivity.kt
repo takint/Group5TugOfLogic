@@ -16,6 +16,7 @@ import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorChooseMCAdapter
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
+import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import java.io.InputStream
 
 class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
@@ -47,27 +48,8 @@ class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
             val adapter = InstructorChooseMCAdapter(mainclaims, this)
             rvMCs.adapter = adapter
             rvMCs.layoutManager = LinearLayoutManager(this)
-
         })
         // Init data repository for using on this fragment
-
-        try {
-            val inputStream: InputStream = assets.open("config.txt")
-            val size: Int = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.read(buffer)
-            sourseStr = String(buffer)
-        } catch (e: Exception) {
-            Log.d("error", e.message.toString())
-        }
-
-        try {
-            mSocket = IO.socket(sourseStr)
-            mSocket.connect()
-
-        } catch (e: Exception) {
-
-        }
 
         btn_ChooseMC_Next.setOnClickListener(View.OnClickListener {
             if(!mainclaims.containsValue(true)){
@@ -75,8 +57,7 @@ class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
                 return@OnClickListener
             }
             val setTimeIntent = Intent(this, InstructorSetTime::class.java)
-            mSocket.emit("startGame")
-            mSocket.disconnect()
+            NetworkHelper.mSocket.emit("startGame")
             startActivity(setTimeIntent)
         })
     }

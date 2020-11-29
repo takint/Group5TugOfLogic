@@ -12,7 +12,8 @@ import com.github.nkzawa.socketio.client.Socket
 
 class NetworkHelper {
     companion object {
-        var API_ENDPOINT_URL = "http://127.0.0.1:5000"
+        //var API_ENDPOINT_URL = "http://127.0.0.1:5000"
+        var API_ENDPOINT_URL = "http://10.0.2.2:5000"
         lateinit var mSocket: Socket;
         private var config_file = "config.txt"
 
