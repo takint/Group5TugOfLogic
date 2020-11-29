@@ -11,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import specialtopic.groupfive.tugoflogic.WEB_SERVICE_URL
 import specialtopic.groupfive.tugoflogic.roomdb.entities.*
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import java.util.*
