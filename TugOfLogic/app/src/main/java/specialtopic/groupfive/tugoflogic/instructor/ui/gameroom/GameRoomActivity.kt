@@ -38,20 +38,7 @@ class GameRoomActivity : AppCompatActivity() {
         val randomGameID = Random.nextInt(100000, 1000000)
 
         // Init data repository for using on this fragment
-        tugDataRepo = application?.let { DataRepository(it) }!!
-
-//        tugDataRepo.getUsersData().observe(this, Observer {
-//            val lstUser: ArrayList<User> = ArrayList<User>(it)
-//
-//            for(user in lstUser){
-//                Log.i("Users: ", user.username)
-//            }
-//
-//            val rvUsers = findViewById<View>(R.id.rv_GameRoom_Users) as RecyclerView
-//            val adapter = UsersAdapter(lstUser)
-//            rvUsers.adapter = adapter
-//            rvUsers.layoutManager = LinearLayoutManager(this)
-//        })
+         tugDataRepo = application?.let { DataRepository(it) }!!
 
         tugDataRepo.getGamesData().observe(this, Observer {
             val newGame = TugGame(randomGameID, Date(), Date(), 0, true)
