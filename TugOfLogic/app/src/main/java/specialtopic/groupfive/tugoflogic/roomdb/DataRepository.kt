@@ -175,4 +175,20 @@ class DataRepository(app: Application) {
             }
         }
     }
+
+    @WorkerThread
+    fun addNewMainClaim(app: Application, newMainClaim: MainClaim) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (NetworkHelper.isNetworkConnected(app)) {
+                val moshi = Moshi.Builder().build()
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
+                val service = retrofit.create(ApiService::class.java)
+                val newMainClaimCall = service.addNewMainClaim(newMainClaim)
+                newMainClaimCall.execute()
+            }
+        }
+    }
 }

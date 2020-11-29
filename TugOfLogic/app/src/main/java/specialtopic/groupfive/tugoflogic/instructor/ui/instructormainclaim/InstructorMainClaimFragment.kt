@@ -18,6 +18,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.nkzawa.emitter.Emitter
+import com.github.nkzawa.socketio.client.Socket
 import kotlinx.android.synthetic.main.activity_game_room.*
 import kotlinx.android.synthetic.main.fragment_instructor_mainclaim.*
 import specialtopic.groupfive.tugoflogic.R
@@ -25,14 +27,13 @@ import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorMainClaim
 import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.ChooseMainClaimActivity
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
+import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
+import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import java.io.InputStream
 import java.lang.Exception
-
-import com.github.nkzawa.emitter.Emitter
-import com.github.nkzawa.socketio.client.IO
-import com.github.nkzawa.socketio.client.Socket
-import specialtopic.groupfive.tugoflogic.WEB_SERVICE_URL
-import java.nio.channels.AsynchronousFileChannel.open
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 
 class InstructorMainClaimFragment : Fragment() {
@@ -53,11 +54,11 @@ class InstructorMainClaimFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_instructor_mainclaim, container, false)
 
         // Fragment title
-        val textView: TextView = root.findViewById(R.id.text_instructor_main_claim_title)
+        // val textView: TextView = root.findViewById(R.id.text_instructor_main_claim_title)
 
-        instructorMainClaimViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+//        instructorMainClaimViewModel.text.observe(viewLifecycleOwner, Observer {
+//            textView.text = it
+//        })
 
         // Init data repository for using on this fragment
         tugDataRepo = activity?.application?.let { DataRepository(it) }!!
@@ -84,7 +85,6 @@ class InstructorMainClaimFragment : Fragment() {
         // Add Floating Action Button - FAB
         fab_instructor.setOnClickListener(View.OnClickListener {
             Log.i(TAG, "onViewCreated: Add Button Clicked! Go to NewMainClaim Activity")
-
             val addNewMainClaimIntent = Intent(activity, AddNewMainClaimActivity::class.java).apply {  }
             startActivity(addNewMainClaimIntent)
 

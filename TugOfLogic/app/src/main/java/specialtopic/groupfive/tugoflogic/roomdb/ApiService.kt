@@ -25,6 +25,10 @@ interface ApiService {
     fun addGame(@Body tugGame: TugGame): Call<TugGame>
 
     @Headers("Content-Type: application/json")
+    @POST("/add-main-claim")
+    fun addNewMainClaim(@Body mainClaim: MainClaim): Call<MainClaim>
+
+    @Headers("Content-Type: application/json")
     @POST("/login")
     fun login(@Body tugGame: User): Call<User>
 }
