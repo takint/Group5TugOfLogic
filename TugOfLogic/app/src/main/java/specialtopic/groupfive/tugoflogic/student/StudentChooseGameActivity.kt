@@ -29,8 +29,6 @@ class StudentChooseGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_student_choose_game)
         username = ""
 
-
-
         try {
             val inputStream: InputStream = assets.open("source.txt")
             val size: Int = inputStream.available()
@@ -95,7 +93,6 @@ class StudentChooseGameActivity : AppCompatActivity() {
 
     fun updateView(){
         if(listGameRoom.size > 0){
-            Log.i("TEST USERNAME: ", username)
             txt_ChooseGame_Title.setText("Game Room")
             val rvGameRooms = findViewById<View>(R.id.rsvStudentChooseGame) as RecyclerView
             if(username.isNullOrBlank()){
