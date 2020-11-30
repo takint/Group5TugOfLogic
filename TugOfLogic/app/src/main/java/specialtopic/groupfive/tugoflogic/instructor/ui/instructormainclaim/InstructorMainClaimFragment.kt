@@ -1,39 +1,24 @@
 package specialtopic.groupfive.tugoflogic.instructor.ui.instructormainclaim
 
-import android.app.Activity
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.system.Os.open
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.nkzawa.emitter.Emitter
-import com.github.nkzawa.socketio.client.Socket
-import kotlinx.android.synthetic.main.activity_game_room.*
 import kotlinx.android.synthetic.main.fragment_instructor_mainclaim.*
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorMainClaimsRVAdapter
-import specialtopic.groupfive.tugoflogic.instructor.ui.gameroom.ChooseMainClaimActivity
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
-import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
-import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
-import java.io.InputStream
-import java.lang.Exception
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.random.Random
 
 
 class InstructorMainClaimFragment : Fragment() {
@@ -44,18 +29,17 @@ class InstructorMainClaimFragment : Fragment() {
     private lateinit var instructorMainClaimViewModel: InstructorMainClaimViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         instructorMainClaimViewModel =
-            ViewModelProviders.of(this).get(InstructorMainClaimViewModel::class.java)
+                ViewModelProviders.of(this).get(InstructorMainClaimViewModel::class.java)
         // Fragment Root
         val root = inflater.inflate(R.layout.fragment_instructor_mainclaim, container, false)
 
-        // Fragment title
-        // val textView: TextView = root.findViewById(R.id.text_instructor_main_claim_title)
-
+//        // Fragment title
+//        val textView: TextView = root.findViewById(R.id.text_instructor_main_claim_title)
 //        instructorMainClaimViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
@@ -76,20 +60,31 @@ class InstructorMainClaimFragment : Fragment() {
                 // Recycler View
                 mMainClaimsRV = view.findViewById(R.id.rv_instructor_main_claims) as RecyclerView
                 mLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                mMainClaimsRVAdapter = InstructorMainClaimsRVAdapter(listMainClaims)
+                mMainClaimsRVAdapter = InstructorMainClaimsRVAdapter(listMainClaims, tugDataRepo, this.requireActivity().application)
                 mMainClaimsRV.adapter = mMainClaimsRVAdapter
                 mMainClaimsRV.layoutManager = mLayoutManager
             })
         }
 
         // Add Floating Action Button - FAB
-        fab_instructor.setOnClickListener(View.OnClickListener {
+        btnFabInstructor.setOnClickListener(View.OnClickListener {
             Log.i(TAG, "onViewCreated: Add Button Clicked! Go to NewMainClaim Activity")
-            val addNewMainClaimIntent = Intent(activity, AddNewMainClaimActivity::class.java).apply {  }
+            val addNewMainClaimIntent = Intent(activity, AddNewMainClaimActivity::class.java).apply { }
             startActivity(addNewMainClaimIntent)
 
             // Skip the MainClaim Fragment and go back to the parent activity
             activity?.onBackPressed()
+        })
+
+        // Refresh Button
+        btnRefreshMainClaims.setOnClickListener(View.OnClickListener {
+            mMainClaimsRVAdapter.notifyDataSetChanged()
+
+            val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+            if (Build.VERSION.SDK_INT >= 26) {
+                ft.setReorderingAllowed(false)
+            }
+            ft.detach(this).attach(this).commit()
         })
     }
 }
