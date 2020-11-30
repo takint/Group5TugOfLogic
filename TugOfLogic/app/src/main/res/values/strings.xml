@@ -49,5 +49,7 @@
     <string name="game_room_template">Game Room ID: %s</string>
     <string name="no_name">No Name User</string>
     <string name="input_username">Input Username</string>
+    <string name="txt_add_new_mainclaim">Add New MainClaim</string>
+    <string name="txt_update_mainclaim">Update MainClaim</string>
     <string name="choose_mc">Choosing Main Claim</string>
 </resources>

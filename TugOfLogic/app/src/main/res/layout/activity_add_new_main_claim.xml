@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".instructor.ui.instructormainclaim.AddNewMainClaimActivity">
+
+    <TextView
+        android:id="@+id/txtAddNewMainClaim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:text="@string/txt_add_new_mainclaim"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextAddNewMainClaim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Your statement goes here"
+        android:inputType="text|textMultiLine"
+        android:lines="7"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancelNewMainClaim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddNewMainClaim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/Agree"
+            android:text="Add" />
+
+    </LinearLayout>
+
+</LinearLayout>
