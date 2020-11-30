@@ -22,15 +22,12 @@ import java.io.InputStream
 class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
     private lateinit var tugDataRepo: DataRepository
     var mainclaims = HashMap<MainClaim, Boolean>()
-    lateinit var sourseStr: String
-    lateinit var mSocket: Socket;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_main_claim)
 
         //Set RoomID and title later
-        //txt_ChooseMC_RoomID.setText("Room ID: 514")
         txt_ChooseMC_Message.setText("Choosing Main Claim")
 
         tugDataRepo = application?.let { DataRepository(it) }!!
