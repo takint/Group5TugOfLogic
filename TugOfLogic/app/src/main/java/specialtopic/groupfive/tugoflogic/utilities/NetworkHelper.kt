@@ -12,6 +12,8 @@ import com.github.nkzawa.socketio.client.Socket
 
 class NetworkHelper {
     companion object {
+        // Loopback ip address (127.0.0.0) will cause cannot connect issue
+        // Considering the phone has its own loopback ip address
         var API_ENDPOINT_URL = "http://10.0.2.2:5000"
         lateinit var mSocket: Socket;
         private var config_file = "config.txt"

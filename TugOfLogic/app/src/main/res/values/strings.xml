@@ -42,4 +42,12 @@
     <string name="reason_in_play_rips">Reason in Play - RIPs</string>
     <string name="wait_game_room">Waiting Game Room</string>
     <string name="game_room">Game Room</string>
+    <string name="wait_for_users">Waiting for other users</string>
+    <string name="set_time_to_vote">Set Time To Vote</string>
+    <string name="wait_for_people">Waiting for people to join your room</string>
+    <string name="game_id_template">\"Game ID: %s\"</string>
+    <string name="game_room_template">Game Room ID: %s</string>
+    <string name="no_name">No Name User</string>
+    <string name="input_username">Input Username</string>
+    <string name="choose_mc">Choosing Main Claim</string>
 </resources>

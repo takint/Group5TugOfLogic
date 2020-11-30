@@ -53,10 +53,10 @@ class InstructorChooseMCAdapter(private val mMCs: HashMap<MainClaim, Boolean>, c
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val mcList: ArrayList<MainClaim> = ArrayList(mMCs.keys)
         val valueList: ArrayList<Boolean> = ArrayList(mMCs.values)
-        val mainClaim: MainClaim = mcList.get(position)
+        val mainClaim: MainClaim = mcList[position]
 
-        holder.tick.isVisible = valueList.get(position);
-        holder.mc.setText(mainClaim.statement)
+        holder.tick.isVisible = valueList[position];
+        holder.mc.text = mainClaim.statement
 
         holder.itemView.setOnClickListener(View.OnClickListener {
 //            //save mainClaimId into sharedPreferences
@@ -65,7 +65,7 @@ class InstructorChooseMCAdapter(private val mMCs: HashMap<MainClaim, Boolean>, c
 //            editor.putInt(R.string.mainClaimId.toString(), mainClaimList.mainClaimId)
 //            editor.apply()
 
-            val newStatus = valueList[position] == false
+            val newStatus = !valueList[position]
             iMainClaim.updateMainClaimStatus(mainClaim, newStatus)
             holder.tick.isVisible = newStatus;
 
