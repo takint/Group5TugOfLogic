@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nkzawa.emitter.Emitter
@@ -33,12 +34,12 @@ class GameRoomActivity : AppCompatActivity() {
 
         // Init data repository for using on this fragment
         tugDataRepo = application?.let { DataRepository(it) }!!
-        tugDataRepo.getGamesData().observe(this, {
+        tugDataRepo.getGamesData().observe(this) {
             val newGame = TugGame(randomGameID, Date(), Date(), 0, true)
             tugDataRepo.createNewGame(this.application, newGame)
             txt_GameRoom_RoomID.text =
                 String.format(getString(R.string.game_id_template), randomGameID)
-        })
+        }
 
         btn_GameRoom_ChooseMC.setOnClickListener {
             val chooseMCIntent = Intent(this, ChooseMainClaimActivity::class.java).apply { }
@@ -60,10 +61,17 @@ class GameRoomActivity : AppCompatActivity() {
     }
 
     var onNewUser = Emitter.Listener {
-        val username = it[0] as String
-        Log.i("User joined in: ", username)
-        if (username != "") {
-            listUsers.add(username)
+        var message = it[0] as String
+        if (message.contains('[')) {
+            listUsers.clear()
+            message = message.substring(1, message.length - 1)
+            message = message.replace("'", "", true)
+            val roomList = message.split(',')
+            for (str in roomList) {
+                listUsers.add(str.trim())
+            }
+        } else {
+            listUsers.add(message)
         }
         runOnUiThread {
             updateView()
