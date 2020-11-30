@@ -1,17 +1,24 @@
 package specialtopic.groupfive.tugoflogic.student.adapters
 
+import android.app.Application
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
+import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 
 
 class StudentRipListAdapter(
     private val context: Context?,
+    private val tugDataRepo: DataRepository,
     private val studentRips: ArrayList<ReasonInPlay>
 ) : RecyclerView.Adapter<StudentRipListAdapter.StudentRipViewHolder>() {
 
@@ -26,15 +33,35 @@ class StudentRipListAdapter(
         holder.etStudentRip.setText(studentRips[position].reasonStatement)
 
         holder.btnPutToBoard.setOnClickListener {
-            Toast.makeText(context, studentRips[position].ripId.toString(), Toast.LENGTH_SHORT).show()
+            studentRips[position].reasonStatement = holder.etStudentRip.text.toString()
+            studentRips[position].description = holder.etStudentRip.text.toString()
+            studentRips[position].logicSide = "neutral"
+
+            if (context != null) {
+                tugDataRepo.addNewRiP(
+                    context.applicationContext as Application,
+                    studentRips[position]
+                )
+            }
+
+            NetworkHelper.mSocket.emit("newRipFromPlayer", studentRips[position].reasonStatement)
         }
 
         holder.btnEditRip.setOnClickListener {
-            Toast.makeText(context, studentRips[position].ripId.toString(), Toast.LENGTH_SHORT).show()
+            holder.etStudentRip.isEnabled = true
         }
 
         holder.btnDeleteRip.setOnClickListener {
-            Toast.makeText(context, studentRips[position].ripId.toString(), Toast.LENGTH_SHORT).show()
+            if (studentRips[position].mainClaimId > 0) {
+                if (context != null) {
+                    tugDataRepo.deleteRiP(
+                        context.applicationContext as Application,
+                        studentRips[position]
+                    )
+
+                    NetworkHelper.mSocket.emit("newRipFromPlayer", studentRips[position].reasonStatement)
+                }
+            }
         }
     }
 
@@ -43,9 +70,9 @@ class StudentRipListAdapter(
     }
 
     class StudentRipViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val etStudentRip: EditText = itemView.findViewById<EditText>(R.id.etStudentRip)
-        val btnPutToBoard: Button = itemView.findViewById<Button>(R.id.btnPutToBoard)
-        val btnEditRip: ImageView = itemView.findViewById<ImageView>(R.id.btnEditRip)
-        val btnDeleteRip: ImageView = itemView.findViewById<ImageView>(R.id.btnDeleteRip)
+        val etStudentRip: EditText = itemView.findViewById(R.id.etStudentRip)
+        val btnPutToBoard: Button = itemView.findViewById(R.id.btnPutToBoard)
+        val btnEditRip: ImageView = itemView.findViewById(R.id.btnEditRip)
+        val btnDeleteRip: ImageView = itemView.findViewById(R.id.btnDeleteRip)
     }
 }

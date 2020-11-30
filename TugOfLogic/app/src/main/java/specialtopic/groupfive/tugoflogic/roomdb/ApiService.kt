@@ -5,6 +5,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
+import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
 import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
 import specialtopic.groupfive.tugoflogic.roomdb.entities.User
 
@@ -19,6 +20,9 @@ interface ApiService {
     @GET("/main-claims")
     suspend fun getMainClaimData(): Response<List<MainClaim>>
 
+    @GET("/main-claims-on-game/{gameId}")
+    suspend fun getMainClaimOnGame(@Path("gameId") gameId: Int): Response<List<MainClaim>>
+
     @GET("/games")
     suspend fun getGameData(): Response<List<TugGame>>
 
@@ -27,6 +31,12 @@ interface ApiService {
 
     @GET("/games/{gameId}")
     suspend fun getGameById(@Path("gameId") gameId: Int): Response<TugGame>
+
+    @GET("/rips")
+    suspend fun getRiPData(): Response<List<ReasonInPlay>>
+
+    @GET("/rips/{username}")
+    suspend fun getRiPDataByUser(@Path("username") username: String): Response<List<ReasonInPlay>>
 
     @Headers("Content-Type: application/json")
     @POST("/add-game")
@@ -46,4 +56,15 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("/login")
     fun login(@Body tugGame: User): Call<User>
+
+    @Headers("Content-Type: application/json")
+    @POST("/add-rip")
+    fun addNewRiP(@Body rip: ReasonInPlay): Call<ReasonInPlay>
+
+    @Headers("Content-Type: application/json")
+    @PUT("/update-rip")
+    fun updateRiP(@Body rip: ReasonInPlay): Call<ReasonInPlay>
+
+    @DELETE("/delete-rip/{ripId}")
+    fun deleteRiP(@Path("ripId") ripId: Int): Call<Void?>
 }

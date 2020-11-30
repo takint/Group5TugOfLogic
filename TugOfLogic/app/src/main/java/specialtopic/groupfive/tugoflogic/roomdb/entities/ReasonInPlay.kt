@@ -18,14 +18,14 @@ data class ReasonInPlay(
     val studentId: Int,
 
     @ColumnInfo(name = "reasonStatement")
-    val reasonStatement: String,
+    var reasonStatement: String,
 
     @ColumnInfo(name = "description")
-    val description: String,
+    var description: String,
 
     // Agree or Disagree with the MainClaim
     @ColumnInfo(name = "logicSide")
-    val logicSide: String
+    var logicSide: String
 ) {
     // Additional process
 }
