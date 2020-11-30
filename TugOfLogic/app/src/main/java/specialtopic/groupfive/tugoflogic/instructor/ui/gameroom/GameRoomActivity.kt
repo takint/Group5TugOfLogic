@@ -14,6 +14,7 @@ import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.UsersAdapter
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
+import specialtopic.groupfive.tugoflogic.roomdb.entities.User
 import specialtopic.groupfive.tugoflogic.utilities.GAME_ID_KEY
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import java.util.*
@@ -51,10 +52,20 @@ class GameRoomActivity : AppCompatActivity() {
         NetworkHelper.mSocket.on("notification_user", onNewUser)
         NetworkHelper.mSocket.emit("newGame", randomGameID.toString())
 
-        runOnUiThread {
-            updateView()
+        tugDataRepo.getUsersData().observe(this){
+            val instructor = User(0, "Instructor","Instructor","Instructor","Instructor","Instructor","Instructor","Instructor",randomGameID)
+            tugDataRepo.addNewUser(this.application, instructor)
+            listUsers.add("Instructor")
+            runOnUiThread {
+                updateView()
+            }
         }
+
+//        runOnUiThread {
+//            updateView()
+//        }
     }
+
 
     var onNewGame = Emitter.Listener {
 

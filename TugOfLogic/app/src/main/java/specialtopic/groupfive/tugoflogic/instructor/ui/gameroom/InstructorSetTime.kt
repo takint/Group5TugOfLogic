@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_instructor_set_time.*
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 
 class InstructorSetTime : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,12 +25,14 @@ class InstructorSetTime : AppCompatActivity() {
                 return@OnClickListener
             }
             val time = edt_SetTime_Time.text.toString()
+
+            NetworkHelper.mSocket.emit("setVotingTime", time)
             //save voteTime into sharedPreferences
-            val sharedPref: SharedPreferences =
-                getSharedPreferences(R.string.sharedPref.toString(), Context.MODE_PRIVATE)
-            val editor: SharedPreferences.Editor = sharedPref.edit()
-            editor.putInt(R.string.voteTime.toString(), time.toInt())
-            editor.apply()
+//            val sharedPref: SharedPreferences =
+//                getSharedPreferences(R.string.sharedPref.toString(), Context.MODE_PRIVATE)
+//            val editor: SharedPreferences.Editor = sharedPref.edit()
+//            editor.putInt(R.string.voteTime.toString(), time.toInt())
+//            editor.apply()
 
             val startGameIntent =
                 Intent(this, InstructorDiscussionManagerActivity::class.java).apply { }

@@ -16,15 +16,15 @@ data class User(
     val userId: Int,
 
     // Instructor or Student
-    val userType: String,
+    var userType: String,
 
-    val username: String,
+    var username: String,
 
-    val email: String,
+    var email: String,
 
     val password: String,
 
-    val fullName: String,
+    var fullName: String,
 
     val studentClass: String?, //(null if type is instructor)
 
@@ -33,4 +33,5 @@ data class User(
     val gamePlayed: Int
 ) {
     // Additional process
+
 }

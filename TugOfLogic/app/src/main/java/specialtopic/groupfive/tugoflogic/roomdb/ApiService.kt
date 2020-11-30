@@ -12,6 +12,10 @@ interface ApiService {
     @GET("/users")
     suspend fun getUserData(): Response<List<User>>
 
+    @Headers("Content-Type: application/json")
+    @POST("/add-user")
+    fun addUser(@Body user: User): Call<User>
+
     @GET("/main-claims")
     suspend fun getMainClaimData(): Response<List<MainClaim>>
 

@@ -17,6 +17,7 @@ import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorChooseMCAdapter
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
+import specialtopic.groupfive.tugoflogic.student.StudentMainActivity
 import specialtopic.groupfive.tugoflogic.utilities.GAME_ID_KEY
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import specialtopic.groupfive.tugoflogic.utilities.ROOM_ID_KEY

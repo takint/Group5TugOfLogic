@@ -45,4 +45,8 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, InstructorMainActivity::class.java)
         startActivity(intent)
     }
+
+    override fun onStop() {
+        super.onStop()
+    }
 }

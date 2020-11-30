@@ -177,6 +177,24 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
+    fun addNewUser(app: Application, user: User){
+        CoroutineScope(Dispatchers.IO).launch {
+            if (NetworkHelper.isNetworkConnected(app)) {
+                val moshi = Moshi.Builder()
+                    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                    .build()
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
+                val service = retrofit.create(ApiService::class.java)
+                val newUserCall = service.addUser(user)
+                newUserCall.execute()
+            }
+        }
+    }
+
+    @WorkerThread
     fun addNewMainClaim(app: Application, newMainClaim: MainClaim) {
         CoroutineScope(Dispatchers.IO).launch {
             if (NetworkHelper.isNetworkConnected(app)) {
