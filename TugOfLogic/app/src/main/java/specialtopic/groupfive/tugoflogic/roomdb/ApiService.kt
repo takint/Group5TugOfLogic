@@ -22,6 +22,12 @@ interface ApiService {
     @GET("/games")
     suspend fun getGameData(): Response<List<TugGame>>
 
+    @GET("/games?isCurrent=false")
+    suspend fun getGamesHistoryData(): Response<List<TugGame>>
+
+    @GET("/games/{gameId}")
+    suspend fun getGameById(@Path("gameId") gameId: Int): Response<TugGame>
+
     @Headers("Content-Type: application/json")
     @POST("/add-game")
     fun addGame(@Body tugGame: TugGame): Call<TugGame>

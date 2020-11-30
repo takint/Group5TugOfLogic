@@ -29,12 +29,12 @@ class InstructorMainClaimFragment : Fragment() {
     private lateinit var instructorMainClaimViewModel: InstructorMainClaimViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         instructorMainClaimViewModel =
-                ViewModelProviders.of(this).get(InstructorMainClaimViewModel::class.java)
+            ViewModelProviders.of(this).get(InstructorMainClaimViewModel::class.java)
         // Fragment Root
         val root = inflater.inflate(R.layout.fragment_instructor_mainclaim, container, false)
 
@@ -60,7 +60,11 @@ class InstructorMainClaimFragment : Fragment() {
                 // Recycler View
                 mMainClaimsRV = view.findViewById(R.id.rv_instructor_main_claims) as RecyclerView
                 mLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                mMainClaimsRVAdapter = InstructorMainClaimsRVAdapter(listMainClaims, tugDataRepo, this.requireActivity().application)
+                mMainClaimsRVAdapter = InstructorMainClaimsRVAdapter(
+                    listMainClaims,
+                    tugDataRepo,
+                    this.requireActivity().application
+                )
                 mMainClaimsRV.adapter = mMainClaimsRVAdapter
                 mMainClaimsRV.layoutManager = mLayoutManager
             })
@@ -69,7 +73,8 @@ class InstructorMainClaimFragment : Fragment() {
         // Add Floating Action Button - FAB
         btnFabInstructor.setOnClickListener(View.OnClickListener {
             Log.i(TAG, "onViewCreated: Add Button Clicked! Go to NewMainClaim Activity")
-            val addNewMainClaimIntent = Intent(activity, AddNewMainClaimActivity::class.java).apply { }
+            val addNewMainClaimIntent =
+                Intent(activity, AddNewMainClaimActivity::class.java).apply { }
             startActivity(addNewMainClaimIntent)
 
             // Skip the MainClaim Fragment and go back to the parent activity
