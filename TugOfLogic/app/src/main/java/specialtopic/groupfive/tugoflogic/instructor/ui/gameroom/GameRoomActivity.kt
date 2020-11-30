@@ -13,6 +13,7 @@ import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.UsersAdapter
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
+import specialtopic.groupfive.tugoflogic.utilities.GAME_ID_KEY
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,6 +42,7 @@ class GameRoomActivity : AppCompatActivity() {
 
         btn_GameRoom_ChooseMC.setOnClickListener {
             val chooseMCIntent = Intent(this, ChooseMainClaimActivity::class.java).apply { }
+            chooseMCIntent.putExtra(GAME_ID_KEY, randomGameID)
             startActivity(chooseMCIntent)
         }
 

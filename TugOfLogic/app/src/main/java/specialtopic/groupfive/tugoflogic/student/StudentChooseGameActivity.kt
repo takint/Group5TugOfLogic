@@ -26,7 +26,7 @@ class StudentChooseGameActivity : AppCompatActivity() {
         NetworkHelper.mSocket.emit("getRunningGame")
         NetworkHelper.mSocket.on("notification_game_room", onNewGame)
 
-        etStudentGuessName.addTextChangedListener { text ->
+        etStudentGuessName.addTextChangedListener {
             userName = etStudentGuessName.text.toString()
             runOnUiThread {
                 updateView()

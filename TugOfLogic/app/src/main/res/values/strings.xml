@@ -49,4 +49,5 @@
     <string name="game_room_template">Game Room ID: %s</string>
     <string name="no_name">No Name User</string>
     <string name="input_username">Input Username</string>
+    <string name="choose_mc">Choosing Main Claim</string>
 </resources>
