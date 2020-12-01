@@ -74,6 +74,13 @@ class DataRepository(app: Application) {
         }
     }
 
+    fun getMainClaimByGameId(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val mainClaim: List<MainClaim> = mainClaimDao.getById(id)
+            mainClaimEnt.postValue(mainClaim[0])
+        }
+    }
+
     /**
      * Get main claim data for UI
      * */

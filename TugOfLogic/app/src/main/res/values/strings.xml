@@ -52,4 +52,6 @@
     <string name="txt_add_new_mainclaim">Add New MainClaim</string>
     <string name="txt_update_mainclaim">Update MainClaim</string>
     <string name="choose_mc">Choosing Main Claim</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

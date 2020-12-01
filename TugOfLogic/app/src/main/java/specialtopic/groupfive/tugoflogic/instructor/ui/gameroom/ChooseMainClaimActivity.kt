@@ -68,7 +68,7 @@ class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
                 ).show()
                 return@OnClickListener
             }
-            val setTimeIntent = Intent(this, InstructorSetTime::class.java)
+            val setTimeIntent = Intent(this, InstructorDiscussionManagerActivity::class.java)
             val gameMCSelected = StringBuilder("$selectedGameId:")
             mainClaims.entries.forEach {
                 if (it.value) {
