@@ -26,7 +26,7 @@ interface ApiService {
     @GET("/main-claims-on-game/{gameId}")
     suspend fun getMainClaimOnGame(@Path("gameId") gameId: Int): Response<List<MainClaim>>
 
-    @GET("/games")
+    @GET("/games?isCurrent=true")
     suspend fun getGameData(): Response<List<TugGame>>
 
     @GET("/games?isCurrent=false")

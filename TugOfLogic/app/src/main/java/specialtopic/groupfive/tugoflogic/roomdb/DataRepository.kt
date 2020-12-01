@@ -302,8 +302,9 @@ class DataRepository(private val app: Application) {
 
     @WorkerThread
     suspend fun getRiPData() {
-        if (NetworkHelper.isNetworkConnected(app)) {
-            try {
+        try {
+            if (NetworkHelper.isNetworkConnected(app)) {
+
                 val retrofit = Retrofit.Builder()
                     .baseUrl(NetworkHelper.API_ENDPOINT_URL)
                     .addConverterFactory(MoshiConverterFactory.create())
@@ -311,16 +312,16 @@ class DataRepository(private val app: Application) {
                 val service = retrofit.create(ApiService::class.java)
                 val serviceData = service.getRiPData().body() ?: emptyList()
                 gameRipData.postValue(serviceData)
-            } catch (ex: Exception) {
-                Log.d("error", ex.message.toString())
             }
+        } catch (ex: Exception) {
+            Log.d("error", ex.message.toString())
         }
     }
 
     @WorkerThread
     suspend fun getRiPDataByUser(username: String) {
-        if (NetworkHelper.isNetworkConnected(app)) {
-            try {
+        try {
+            if (NetworkHelper.isNetworkConnected(app)) {
                 val retrofit = Retrofit.Builder()
                     .baseUrl(NetworkHelper.API_ENDPOINT_URL)
                     .addConverterFactory(MoshiConverterFactory.create())
@@ -328,9 +329,9 @@ class DataRepository(private val app: Application) {
                 val service = retrofit.create(ApiService::class.java)
                 val serviceData = service.getRiPDataByUser(username).body() ?: emptyList()
                 ripData.postValue(serviceData)
-            } catch (ex: Exception) {
-                Log.d("error", ex.message.toString())
             }
+        } catch (ex: Exception) {
+            Log.d("error", ex.message.toString())
         }
     }
 

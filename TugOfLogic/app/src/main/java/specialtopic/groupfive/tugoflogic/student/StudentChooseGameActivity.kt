@@ -7,17 +7,21 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nkzawa.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_student_choose_game.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.student.adapters.ChooseGameAdapter
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 
 class StudentChooseGameActivity : AppCompatActivity() {
-    var listGameRoom = ArrayList<String>()
+    private var listGameRoom = ArrayList<String>()
     private var userName = ""
     private lateinit var rvGameRooms: RecyclerView
     private lateinit var adapter: ChooseGameAdapter
@@ -37,36 +41,24 @@ class StudentChooseGameActivity : AppCompatActivity() {
 
         etStudentGuessName.addTextChangedListener {
             userName = etStudentGuessName.text.toString()
-            runOnUiThread {
-                updateView()
-            }
+            adapter.setUserName(userName)
         }
+
+        tugDataRepo.getGamesData().observe(this, {
+            adapter = ChooseGameAdapter(listGameRoom)
+            rvGameRooms.adapter = adapter
+        })
+
+        loadGameData()
     }
 
     private var onNewGame = Emitter.Listener {
-        var message = it[0] as String
-        if (message.contains('[')) {
-            message = message.substring(1, message.length - 1)
-            message = message.replace("'", "", true)
-            val roomList = message.split(',')
-            for (str in roomList) {
-                listGameRoom.add(str.trim())
-            }
-        } else {
-            listGameRoom.add(message)
-        }
-        runOnUiThread {
-            updateView()
-        }
+        loadGameData()
     }
 
-    private fun updateView() {
-        if (listGameRoom.size > 0) {
-            if (userName.isBlank()) {
-                userName = getString(R.string.no_name)
-            }
-            adapter = ChooseGameAdapter(listGameRoom, userName)
-            rvGameRooms.adapter = adapter
+    private fun loadGameData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            tugDataRepo.getGamesFromService()
         }
     }
 }

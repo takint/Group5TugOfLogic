@@ -13,9 +13,14 @@ import specialtopic.groupfive.tugoflogic.student.ui.StudentWaitingRoomActivity
 import specialtopic.groupfive.tugoflogic.utilities.ROOM_ID_KEY
 import specialtopic.groupfive.tugoflogic.utilities.USER_NAME_KEY
 
-class ChooseGameAdapter(private val gameRooms: ArrayList<String>, private val username: String) :
+class ChooseGameAdapter(private val gameRooms: ArrayList<String>) :
     RecyclerView.Adapter<ChooseGameAdapter.ViewHolder>() {
-    private val mUsername = username
+
+    private var mUsername = ""
+
+    fun setUserName(username: String) {
+        mUsername = username
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtGameID: TextView = itemView.findViewById<TextView>(R.id.txtGameID)
