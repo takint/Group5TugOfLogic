@@ -38,8 +38,6 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_instructor__discussion_manager)
 
-
-
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
             selectedGameId = bundle.getInt(GAME_ID_KEY, 0)
