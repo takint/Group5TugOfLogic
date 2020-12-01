@@ -52,10 +52,9 @@ class InstructorMainClaimsRVAdapter(
 
             btnDelete.setOnClickListener {
                 val position: Int = adapterPosition
-
-                // TODO: implement Delete Button (Delete MainClaim)
                 val currentMC = mMainClaims[position]
                 tugDataRepo.deleteMainClaim(app, currentMC.mainClaimId)
+                mMainClaims.removeAt(position)
             }
         }
     }

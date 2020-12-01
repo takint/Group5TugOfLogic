@@ -45,7 +45,7 @@ class StudentMainClaimActivity : AppCompatActivity() {
 
 
         tugDataRepo.getMainClaimData().observe(this, Observer {
-            val studentMainClaims: ArrayList<MainClaim> = ArrayList<MainClaim>(it)
+            val studentMainClaims: ArrayList<MainClaim> = ArrayList(it)
             studentMainClaimAdapter = StudentMainClaimListAdapter(this, studentMainClaims)
             studentMainClaimListView.adapter = studentMainClaimAdapter
         })
