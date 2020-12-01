@@ -43,7 +43,7 @@ class GameRoomActivity : AppCompatActivity() {
         tugDataRepo = DataRepository(application)
 
         val newGame = TugGame(randomGameID, Date(), Date(), 0, true)
-        tugDataRepo.createNewGame(this.application, newGame)
+        tugDataRepo.createNewGame(newGame)
         txt_GameRoom_RoomID.text =
             String.format(getString(R.string.game_id_template), randomGameID)
 
@@ -67,7 +67,7 @@ class GameRoomActivity : AppCompatActivity() {
 
     private var onNewUser = Emitter.Listener {
         CoroutineScope(Dispatchers.IO).launch {
-            tugDataRepo.getUsersInGame(application, randomGameID)
+            tugDataRepo.getUsersInGame(randomGameID)
         }
     }
 

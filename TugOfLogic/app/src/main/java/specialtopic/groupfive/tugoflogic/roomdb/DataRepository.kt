@@ -16,7 +16,7 @@ import specialtopic.groupfive.tugoflogic.roomdb.entities.*
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import java.util.*
 
-class DataRepository(app: Application) {
+class DataRepository(private val app: Application) {
     // https://developer.android.com/reference/androidx/lifecycle/MutableLiveData.html
     private val mainClaimData = MutableLiveData<List<MainClaim>>()
     private val ripData = MutableLiveData<List<ReasonInPlay>>()
@@ -25,14 +25,11 @@ class DataRepository(app: Application) {
     private val gamesHistoryData = MutableLiveData<List<TugGame>>()
     private val userData = MutableLiveData<List<User>>()
     private val voteData = MutableLiveData<List<VoteTicket>>()
-    private val selectedGameHistory = MutableLiveData<List<TugGame>>()
     private val mainClaimEnt = MutableLiveData<MainClaim>()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            // get data from APIs
-            getGamesFromService(app)
-            getGamesHistoryFromService(app)
+            // get data from APIs if needed
         }
     }
 
@@ -65,7 +62,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getUsersFromService(app: Application) {
+    suspend fun getUsersFromService() {
         try {
             if (NetworkHelper.isNetworkConnected(app)) {
                 val retrofit = Retrofit.Builder()
@@ -83,7 +80,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getUsersInGame(app: Application, gameId: Int) {
+    suspend fun getUsersInGame(gameId: Int) {
         try {
             if (NetworkHelper.isNetworkConnected(app)) {
                 val retrofit = Retrofit.Builder()
@@ -101,7 +98,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getMCsFromService(app: Application) {
+    suspend fun getMCsFromService() {
         try {
             if (NetworkHelper.isNetworkConnected(app)) {
                 val retrofit = Retrofit.Builder()
@@ -119,7 +116,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getMainClaimOnGame(app: Application, gameId: Int) {
+    suspend fun getMainClaimOnGame(gameId: Int) {
         try {
             if (NetworkHelper.isNetworkConnected(app)) {
                 val retrofit = Retrofit.Builder()
@@ -137,7 +134,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getGamesFromService(app: Application) {
+    suspend fun getGamesFromService() {
         try {
             if (NetworkHelper.isNetworkConnected(app)) {
 
@@ -158,7 +155,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getGamesHistoryFromService(app: Application) {
+    suspend fun getGamesHistoryFromService() {
         try {
             if (NetworkHelper.isNetworkConnected(app)) {
 
@@ -180,7 +177,6 @@ class DataRepository(app: Application) {
 
     @WorkerThread
     suspend fun getGameByIdFromService(
-        app: Application,
         gameId: Int,
         onComplete: (TugGame?) -> Unit
     ) {
@@ -203,7 +199,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    fun createNewGame(app: Application, newGame: TugGame) {
+    fun createNewGame(newGame: TugGame) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 if (NetworkHelper.isNetworkConnected(app)) {
@@ -225,7 +221,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    fun addNewUser(app: Application, user: User) {
+    fun addNewUser(user: User) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 if (NetworkHelper.isNetworkConnected(app)) {
@@ -243,7 +239,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    fun addNewMainClaim(app: Application, newMainClaim: MainClaim) {
+    fun addNewMainClaim(newMainClaim: MainClaim) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 if (NetworkHelper.isNetworkConnected(app)) {
@@ -263,7 +259,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    fun updateMainClaim(app: Application, mainClaimId: Int, updatedMainClaim: MainClaim) {
+    fun updateMainClaim(mainClaimId: Int, updatedMainClaim: MainClaim) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 if (NetworkHelper.isNetworkConnected(app)) {
@@ -283,7 +279,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    fun deleteMainClaim(app: Application, mainClaimId: Int) {
+    fun deleteMainClaim(mainClaimId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 if (NetworkHelper.isNetworkConnected(app)) {
@@ -302,7 +298,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getRiPData(app: Application) {
+    suspend fun getRiPData() {
         if (NetworkHelper.isNetworkConnected(app)) {
             try {
                 val retrofit = Retrofit.Builder()
@@ -319,7 +315,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getRiPDataByUser(app: Application, username: String) {
+    suspend fun getRiPDataByUser(username: String) {
         if (NetworkHelper.isNetworkConnected(app)) {
             try {
                 val retrofit = Retrofit.Builder()
@@ -336,7 +332,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    fun addNewRiP(app: Application, newRip: ReasonInPlay) {
+    fun addNewRiP(newRip: ReasonInPlay) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 if (NetworkHelper.isNetworkConnected(app)) {
@@ -355,7 +351,7 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
-    fun deleteRiP(app: Application, deletedRip: ReasonInPlay) {
+    fun deleteRiP(deletedRip: ReasonInPlay) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 if (NetworkHelper.isNetworkConnected(app)) {

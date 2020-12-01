@@ -50,7 +50,7 @@ class StudentMainClaimActivity : AppCompatActivity() {
             studentMainClaimListView.adapter = studentMainClaimAdapter
         })
         CoroutineScope(Dispatchers.IO).launch {
-            tugDataRepo.getMainClaimOnGame(application, roomID.toInt())
+            tugDataRepo.getMainClaimOnGame(roomID.toInt())
         }
     }
 

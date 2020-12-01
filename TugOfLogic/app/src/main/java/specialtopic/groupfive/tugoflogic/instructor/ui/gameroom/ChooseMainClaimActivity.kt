@@ -62,7 +62,7 @@ class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
         })
 
         CoroutineScope(Dispatchers.IO).launch {
-            tugDataRepo.getMCsFromService(application)
+            tugDataRepo.getMCsFromService()
         }
     }
 

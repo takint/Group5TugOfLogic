@@ -49,7 +49,7 @@ class InstructorGameFragment : Fragment() {
         })
 
         CoroutineScope(Dispatchers.IO).launch {
-            tugDataRepo.getGamesFromService(requireActivity().application)
+            tugDataRepo.getGamesFromService()
         }
 
         val btnCreateNewGame = root.findViewById<Button>(R.id.btn_create_new_game)

@@ -16,8 +16,6 @@ import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 
 class StudentMainActivity : AppCompatActivity() {
 
-    lateinit var actContext: Context
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_main)

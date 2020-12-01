@@ -26,11 +26,11 @@ class GameStatisticsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_statistics)
 
         // Init data repository for using on this activity
-        tugDataRepo = application?.let { DataRepository(it) }!!
+        tugDataRepo = DataRepository(application)
         val gameId: Int = intent.getIntExtra("gameId", 0)
 
         CoroutineScope(Dispatchers.IO).launch {
-            tugDataRepo.getGameByIdFromService(application, gameId, onComplete = {
+            tugDataRepo.getGameByIdFromService(gameId, onComplete = {
                 val gameData = it;
                 txt_game_stats_id.text = gameData?.gameId.toString()
                 txt_game_stats_date_time.text = gameData?.startTime.toString()

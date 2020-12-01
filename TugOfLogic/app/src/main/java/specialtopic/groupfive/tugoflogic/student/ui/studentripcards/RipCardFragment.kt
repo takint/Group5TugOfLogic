@@ -52,7 +52,7 @@ class RipCardFragment : Fragment() {
 
     private fun loadRiPData() {
         CoroutineScope(Dispatchers.IO).launch {
-             tugDataRepo.getRiPDataByUser(requireActivity().application, "TestUser")
+             tugDataRepo.getRiPDataByUser("TestUser")
         }
     }
 }

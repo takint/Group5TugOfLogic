@@ -22,18 +22,13 @@ class AddNewMainClaimActivity : AppCompatActivity() {
         tugDataRepo = DataRepository(application)
 
         // Button OnClick: Add New Main Claim
-        btnAddNewMainClaim.setOnClickListener(View.OnClickListener {
+        btnAddNewMainClaim.setOnClickListener {
             val randomMainClaimID = Random.nextInt(100000, 1000000)
             val inputStatement: String = editTextAddNewMainClaim.text.toString().trim()
 
-            if (inputStatement.isNullOrEmpty()) {
-
+            if (inputStatement.isEmpty()) {
                 val newMainClaim = MainClaim(randomMainClaimID, inputStatement)
-                tugDataRepo.addNewMainClaim(this.application, newMainClaim)
-                Toast.makeText(
-                    this,
-                    "A new Main Claim is added!", Toast.LENGTH_LONG
-                ).show()
+                tugDataRepo.addNewMainClaim(newMainClaim)
                 finish()
             } else {
                 Toast.makeText(
@@ -41,11 +36,11 @@ class AddNewMainClaimActivity : AppCompatActivity() {
                     "Please enter a Main Claim statement!", Toast.LENGTH_SHORT
                 ).show()
             }
-        })
+        }
 
         // Button OnClick: Cancel New Main Claim
-        btnCancelNewMainClaim.setOnClickListener(View.OnClickListener {
+        btnCancelNewMainClaim.setOnClickListener {
             finish()
-        })
+        }
     }
 }

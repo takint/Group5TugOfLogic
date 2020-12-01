@@ -65,7 +65,7 @@ class StudentWaitingRoomActivity : AppCompatActivity() {
 
     private var onNewUser = Emitter.Listener {
         CoroutineScope(Dispatchers.IO).launch {
-            tugDataRepo.getUsersInGame(application, roomID.toInt())
+            tugDataRepo.getUsersInGame(roomID.toInt())
         }
     }
 

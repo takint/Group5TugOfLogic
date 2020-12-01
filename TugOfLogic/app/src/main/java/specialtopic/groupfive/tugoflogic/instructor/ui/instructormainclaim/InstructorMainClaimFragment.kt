@@ -40,18 +40,12 @@ class InstructorMainClaimFragment : Fragment() {
 
         tugDataRepo.getMainClaimData().observe(requireActivity(), Observer {
             val listMainClaims = ArrayList<MainClaim>(it)
-
-            mMainClaimsRVAdapter = InstructorMainClaimsRVAdapter(
-                listMainClaims,
-                tugDataRepo,
-                requireActivity().application
-            )
+            mMainClaimsRVAdapter = InstructorMainClaimsRVAdapter(listMainClaims, tugDataRepo)
             mMainClaimsRV.adapter = mMainClaimsRVAdapter
-
         })
 
         CoroutineScope(Dispatchers.IO).launch {
-            tugDataRepo.getMCsFromService(requireActivity().application)
+            tugDataRepo.getMCsFromService()
         }
 
         val fabNewMc = root.findViewById<FloatingActionButton>(R.id.btnFabInstructor)

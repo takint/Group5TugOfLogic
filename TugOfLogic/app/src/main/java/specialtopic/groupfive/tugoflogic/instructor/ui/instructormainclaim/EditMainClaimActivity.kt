@@ -18,7 +18,7 @@ class EditMainClaimActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_main_claim)
 
         // Init data repository for using on this activity
-        tugDataRepo = application?.let { DataRepository(it) }!!
+        tugDataRepo = DataRepository(application)
         val mainClaimId: Int = intent.getIntExtra("mainClaimId", 0)
 
         // Button OnClick: Update Main Claim
@@ -31,7 +31,7 @@ class EditMainClaimActivity : AppCompatActivity() {
             }
 
             val updatedMC = MainClaim(mainClaimId, inputStatement)
-            tugDataRepo.updateMainClaim(this.application, mainClaimId, updatedMC)
+            tugDataRepo.updateMainClaim(mainClaimId, updatedMC)
             finish()
         })
 

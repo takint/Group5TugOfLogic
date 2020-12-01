@@ -48,7 +48,7 @@ class ReasonsFragment : Fragment() {
 
     private fun loadRipData() {
         CoroutineScope(Dispatchers.IO).launch {
-            tugDataRepo.getRiPData(requireActivity().application)
+            tugDataRepo.getRiPData()
         }
     }
 
