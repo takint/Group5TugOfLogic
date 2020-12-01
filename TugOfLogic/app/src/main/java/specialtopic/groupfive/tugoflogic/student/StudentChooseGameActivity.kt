@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nkzawa.emitter.Emitter
@@ -44,10 +45,10 @@ class StudentChooseGameActivity : AppCompatActivity() {
             adapter.setUserName(userName)
         }
 
-        tugDataRepo.getGamesData().observe(this, {
+        tugDataRepo.getGamesData().observe(this) {
             adapter = ChooseGameAdapter(listGameRoom)
             rvGameRooms.adapter = adapter
-        })
+        }
 
         loadGameData()
     }

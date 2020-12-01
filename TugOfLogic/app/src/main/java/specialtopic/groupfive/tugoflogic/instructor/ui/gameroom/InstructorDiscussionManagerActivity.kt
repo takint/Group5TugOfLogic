@@ -1,11 +1,13 @@
 package specialtopic.groupfive.tugoflogic.instructor.ui.gameroom
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_choose_main_claim.*
 import kotlinx.android.synthetic.main.activity_instructor__discussion_manager.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.MainClaimDissussionAdapter
@@ -33,6 +36,7 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
     private lateinit var tugDataRepo: DataRepository
     var selectedGameId = 0
     lateinit var currentMC: MainClaim
+    var isRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +48,10 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
             Log.i("CURRENT GAME ID: ", selectedGameId.toString())
         }
 
+        btnSummary.visibility = View.GONE
+
         hideMainClaims()
+        txtDiscussing.visibility = View.GONE
 
         tugDataRepo = application?.let { DataRepository(it) }!!
         tugDataRepo.getMainClaimData().observe(this, Observer {
@@ -74,6 +81,8 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
             displayMainClaims()
             btnSelectDiscussingMainClaim.text = getString(R.string.select_main_claim)
             Toast.makeText(this, "Select new Main Claim to discuss", Toast.LENGTH_SHORT).show()
+            txtDiscussing.visibility = View.GONE
+            isRunning = false
         })
 
         btnGoToStudentMain.setOnClickListener(View.OnClickListener {
@@ -85,6 +94,24 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
             else{
                 Toast.makeText(this, "You have to pick a Main Claim first", Toast.LENGTH_SHORT).show()
                 return@OnClickListener
+            }
+        })
+
+        btnEndGame.setOnClickListener(View.OnClickListener {
+
+            if(!mainClaimList.isEmpty()){
+                val alertDialogBuilder = AlertDialog.Builder(this)
+                alertDialogBuilder.setTitle("End Game Alert")
+                alertDialogBuilder.setMessage("There are still main claims that haven't discuss, Do you want to end game?")
+                alertDialogBuilder.setPositiveButton(android.R.string.yes){dialog, which ->
+                    endGame()
+                }
+                alertDialogBuilder.setNegativeButton(android.R.string.no){dialog, which ->
+                    return@setNegativeButton
+                }
+                alertDialogBuilder.show()
+            }else{
+                endGame()
             }
         })
 
@@ -111,6 +138,8 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
             hideMainClaims()
             mainClaimList.remove(mainClaim)
             currentMC = mainClaim
+            txtDiscussing.visibility = View.VISIBLE
+            isRunning = true
         }
     }
 
@@ -120,11 +149,29 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
             val adapter = MainClaimDissussionAdapter(mainClaimList, this)
             rcvDiscussingMainClaims.adapter = adapter
             rcvDiscussingMainClaims.layoutManager = LinearLayoutManager(this)
+
+            CoroutineScope(Dispatchers.Main).launch {
+                while(isRunning){
+                    txtDiscussing.text = "Students Discussing."
+                    delay(1000)
+                    txtDiscussing.text = "Students Discussing.."
+                    delay(1000)
+                    txtDiscussing.text = "Students Discussing..."
+                    delay(1000)
+                }
+            }
         }
     }
 
     var onCurrentMainClaim = Emitter.Listener {
 //        var message = it[0] as String
 //        Log.i("Get Current MainClaim", message)
+    }
+
+    fun endGame(){
+        NetworkHelper.mSocket.emit("endGame", selectedGameId)
+        val summaryIntent = Intent(this, GameSummaryActivity::class.java)
+        summaryIntent.putExtra(GAME_ID_KEY, selectedGameId)
+        startActivity(summaryIntent)
     }
 }

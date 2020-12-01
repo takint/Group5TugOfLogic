@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".instructor.ui.gameroom.InstructorDiscussionManagerActivity">
 
+    <Button
+        android:id="@+id/btnEndGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/border_radius"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="End Game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoToStudentMain" />
+
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
@@ -33,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnSelectDiscussingMainClaim" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/txtDiscussing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -50,13 +63,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/border_radius"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="Stop Discussing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDiscussing" />
 
     <Button
         android:id="@+id/btnGoToStudentMain"
@@ -64,32 +77,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/border_radius"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="Watch Student RiP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_Instructor_StopDiscuss" />
 
     <Button
-        android:id="@+id/btn_Instructor_ChangeSide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/border_radius"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="Start To Change Side"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoToStudentMain" />
-
-    <Button
         android:id="@+id/btnSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Go To Summary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Instructor_ChangeSide" />
+        app:layout_constraintTop_toBottomOf="@+id/btnEndGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

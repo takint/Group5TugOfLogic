@@ -58,7 +58,7 @@ class InstructorSummaryAdapter(private val summaries: ArrayList<InstructorSummar
         val txtSummaryDisagree = holder.txtSummaryDisagree
         val txtSummaryTitle = holder.txtSummaryTitle
 
-        txtSummaryTitle.setText("Main Claim ${position + 1}")
+        txtSummaryTitle.setText("Main Claim: ${summary.title}")
 
         txtNumStudents.setText("Number of Students: ${summary.numStudents}")
         txtnumBeginAgree.setText("Begin With Agree: ${summary.beginAgree}")
