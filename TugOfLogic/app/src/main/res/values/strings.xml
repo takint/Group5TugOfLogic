@@ -62,4 +62,5 @@
     <string name="set_time_to_vote">Set Time To Vote</string>
     <string name="set_time">Set Time</string>
     <string name="start_game">Start Game</string>
+    <string name="go_to_current_game">Go To Current Game</string>
 </resources>
