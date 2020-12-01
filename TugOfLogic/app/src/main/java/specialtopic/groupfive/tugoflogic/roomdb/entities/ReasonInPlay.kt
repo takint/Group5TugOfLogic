@@ -12,7 +12,7 @@ data class ReasonInPlay(
     val ripId: Int,
 
     @ColumnInfo(name = "mainClaimId")
-    val mainClaimId: Int,
+    var mainClaimId: Int,
 
     @ColumnInfo(name = "studentId")
     val studentId: Int,

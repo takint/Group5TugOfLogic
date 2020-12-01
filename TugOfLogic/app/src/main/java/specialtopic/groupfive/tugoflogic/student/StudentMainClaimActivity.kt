@@ -74,7 +74,7 @@ class StudentMainClaimActivity : AppCompatActivity() {
         val intent = Intent(this, StudentMainActivity::class.java)
         intent.putExtra(ROOM_ID_KEY, roomID)
         intent.putExtra(USER_NAME_KEY, username)
-        intent.putExtra(MAIN_CLAIM, message)
+        intent.putExtra(MAIN_CLAIM, message.toInt())
         startActivity(intent)
     }
 }

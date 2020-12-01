@@ -74,7 +74,7 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
 
         btn_Instructor_StopDiscuss.setOnClickListener(View.OnClickListener {
             displayMainClaims()
-            btnSelectDiscussingMainClaim.setText("Select MainClaim To Discuss")
+            btnSelectDiscussingMainClaim.text = getString(R.string.select_main_claim)
             Toast.makeText(this, "Select new Main Claim to discuss", Toast.LENGTH_SHORT).show()
         })
 
@@ -92,11 +92,11 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
 
         NetworkHelper.mSocket.on("notification_current_mainclaim", onCurrentMainClaim)
     }
-    fun displayMainClaims(){
+    private fun displayMainClaims(){
         rsvDiscussingMainClaims.visibility = View.VISIBLE
         isDisplay = true
     }
-    fun hideMainClaims(){
+    private fun hideMainClaims(){
         rsvDiscussingMainClaims.visibility = View.GONE
         isDisplay = false
     }
@@ -107,8 +107,8 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
 
     override fun setCurrentMainClaim(mainClaim: MainClaim) {
 
-        if(!mainClaimList.isEmpty()){
-            btnSelectDiscussingMainClaim.setText(mainClaim.statement)
+        if(mainClaimList.isNotEmpty()){
+            btnSelectDiscussingMainClaim.text = mainClaim.statement
             updateView()
             hideMainClaims()
             mainClaimList.remove(mainClaim)

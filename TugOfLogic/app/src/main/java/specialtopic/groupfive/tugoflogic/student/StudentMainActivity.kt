@@ -18,8 +18,21 @@ import specialtopic.groupfive.tugoflogic.utilities.*
 
 class StudentMainActivity : AppCompatActivity() {
 
-    lateinit var actContext: Context
-    lateinit var currentMainClaim: String
+    private var currentMainClaim: Int = 0
+    private var currentUser: String = ""
+    private var currentGame: Int = 0
+
+    fun getCurrentMc(): Int {
+        return currentMainClaim
+    }
+
+    fun getCurrentUser(): String {
+        return currentUser
+    }
+
+    fun getCurrentGame(): Int {
+        return currentGame
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +40,11 @@ class StudentMainActivity : AppCompatActivity() {
 
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
-            currentMainClaim = bundle.getString(MAIN_CLAIM).toString()
+            currentMainClaim = bundle.getInt(MAIN_CLAIM, 0)
+            currentUser = bundle.getString(USER_NAME_KEY).toString()
+            currentGame = bundle.getInt(ROOM_ID_KEY, 0)
         }
 
-        Log.i("SELECTED MAIN CLAIM: ", currentMainClaim)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -55,7 +69,7 @@ class StudentMainActivity : AppCompatActivity() {
     }
 
     var onCurrentMainClaim = Emitter.Listener {
-        var message = it[0] as String
-        Log.i("Current MainCLaim: ", message)
+        val message = it[0] as String
+        currentMainClaim = message.toInt()
     }
 }

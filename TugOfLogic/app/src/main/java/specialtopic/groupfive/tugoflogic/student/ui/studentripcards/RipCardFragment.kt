@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
+import specialtopic.groupfive.tugoflogic.student.StudentMainActivity
 import specialtopic.groupfive.tugoflogic.student.adapters.StudentRipListAdapter
 
 
@@ -22,8 +23,9 @@ class RipCardFragment : Fragment() {
     private lateinit var studentRipsAdapter: StudentRipListAdapter
     private lateinit var tugDataRepo: DataRepository
     private var studentCurrentRips = ArrayList<ReasonInPlay>()
+    private lateinit var mainActivity: StudentMainActivity
     private var placeholderCard = ReasonInPlay(
-        0, 153354, 2,
+        0, 0, 2,
         "", "", ""
     )
 
@@ -37,8 +39,9 @@ class RipCardFragment : Fragment() {
         studentRipListView = root.findViewById(R.id.lstPlayerRipList)
         studentRipListView.setHasFixedSize(true)
         studentRipListView.layoutManager = LinearLayoutManager(root.context)
+        mainActivity = requireActivity() as StudentMainActivity
+        placeholderCard.mainClaimId = mainActivity.getCurrentMc()
         studentCurrentRips.add(placeholderCard)
-
         tugDataRepo.getRipsData().observe(requireActivity(), {
             studentCurrentRips = ArrayList(it)
             studentCurrentRips.add(placeholderCard)
@@ -52,7 +55,7 @@ class RipCardFragment : Fragment() {
 
     private fun loadRiPData() {
         CoroutineScope(Dispatchers.IO).launch {
-             tugDataRepo.getRiPDataByUser("TestUser")
+            tugDataRepo.getRiPDataByUser(mainActivity.getCurrentUser())
         }
     }
 }

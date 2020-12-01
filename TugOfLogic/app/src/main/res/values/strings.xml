@@ -63,4 +63,5 @@
     <string name="set_time">Set Time</string>
     <string name="start_game">Start Game</string>
     <string name="go_to_current_game">Go To Current Game</string>
+    <string name="select_main_claim">Select MainClaim To Discuss</string>
 </resources>
