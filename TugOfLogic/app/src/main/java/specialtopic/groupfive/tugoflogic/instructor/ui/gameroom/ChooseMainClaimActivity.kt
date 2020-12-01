@@ -13,6 +13,9 @@ import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import kotlinx.android.synthetic.main.activity_choose_main_claim.*
 import kotlinx.android.synthetic.main.activity_student_waiting_room.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.InstructorChooseMCAdapter
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
@@ -26,13 +29,16 @@ import java.io.InputStream
 
 class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
     private lateinit var tugDataRepo: DataRepository
-
+    private lateinit var rvMCs: RecyclerView
+    private lateinit var adapter: InstructorChooseMCAdapter
     private var mainClaims = HashMap<MainClaim, Boolean>()
     var selectedGameId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_main_claim)
+
+        tugDataRepo = DataRepository(application)
 
         //Set RoomID and title later
         val bundle: Bundle? = intent.extras
@@ -43,56 +49,48 @@ class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
         }
 
         txt_ChooseMC_Message.text = getString(R.string.choose_mc)
-        tugDataRepo = application?.let { DataRepository(it) }!!
+        rvMCs = findViewById(R.id.rv_ChooseMC_MCs)
+        rvMCs.layoutManager = LinearLayoutManager(this)
+
         tugDataRepo.getMainClaimData().observe(this, Observer {
             val lstMainClaims = ArrayList<MainClaim>(it)
             for (mainClaim in lstMainClaims) {
                 mainClaims[mainClaim] = false
             }
-
-            //Get MainClaims from database and set to the adapter later
-            val rvMCs = findViewById<View>(R.id.rv_ChooseMC_MCs) as RecyclerView
-
-            val adapter = InstructorChooseMCAdapter(mainClaims, this)
+            adapter = InstructorChooseMCAdapter(mainClaims, this)
             rvMCs.adapter = adapter
-            rvMCs.layoutManager = LinearLayoutManager(this)
         })
 
-        // Init data repository for using on this fragment
-        btn_ChooseMC_Next.setOnClickListener(View.OnClickListener {
-            if (!mainClaims.containsValue(true)) {
-                Toast.makeText(
-                    this,
-                    "Select at least one Main Claim to continue",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@OnClickListener
-            }
-            val setTimeIntent = Intent(this, InstructorSetTime::class.java)
+        CoroutineScope(Dispatchers.IO).launch {
+            tugDataRepo.getMCsFromService(application)
+        }
+    }
+
+    fun onChooseMCButtonClick(view: View) {
+        if (mainClaims.containsValue(true)) {
             val gameMCSelected = StringBuilder("$selectedGameId:")
             mainClaims.entries.forEach {
                 if (it.value) {
                     gameMCSelected.append("${it.key.mainClaimId},")
                 }
             }
-
-            Log.i("GAME MC SELECTED: ", gameMCSelected.toString())
-
             NetworkHelper.mSocket.emit("startGame", gameMCSelected.toString())
+
+            val setTimeIntent = Intent(this, InstructorSetTime::class.java)
+            setTimeIntent.putExtra(ROOM_ID_KEY, selectedGameId)
             startActivity(setTimeIntent)
-        })
+        } else {
+            Toast.makeText(
+                this,
+                "Select at least one Main Claim to continue",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     override fun updateMainClaimStatus(mainClaim: MainClaim, newStatus: Boolean) {
         mainClaims[mainClaim] = newStatus
-        updateView()
-    }
-
-    private fun updateView() {
-        val rvMCs = findViewById<View>(R.id.rv_ChooseMC_MCs) as RecyclerView
-        val adapter = InstructorChooseMCAdapter(mainClaims, this)
+        adapter = InstructorChooseMCAdapter(mainClaims, this)
         rvMCs.adapter = adapter
-        rvMCs.layoutManager = LinearLayoutManager(this)
     }
-
 }

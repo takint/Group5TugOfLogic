@@ -92,6 +92,21 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
+    suspend fun getUsersInGame(app: Application, gameId: Int) {
+        if (NetworkHelper.isNetworkConnected(app)) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build()
+            val service = retrofit.create(ApiService::class.java)
+            val serviceData = service.getUserInGame(gameId).body() ?: emptyList()
+
+            Log.i("Main DataRepository", "$serviceData")
+            userData.postValue(serviceData)
+        }
+    }
+
+    @WorkerThread
     suspend fun getMCsFromService(app: Application) {
         if (NetworkHelper.isNetworkConnected(app)) {
             val retrofit = Retrofit.Builder()

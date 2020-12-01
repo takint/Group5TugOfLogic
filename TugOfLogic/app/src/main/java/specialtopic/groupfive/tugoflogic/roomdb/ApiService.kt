@@ -17,6 +17,9 @@ interface ApiService {
     @POST("/add-user")
     fun addUser(@Body user: User): Call<User>
 
+    @GET("/users-in-game/{gameId}")
+    suspend fun getUserInGame(@Path("gameId") gameId: Int): Response<List<User>>
+
     @GET("/main-claims")
     suspend fun getMainClaimData(): Response<List<MainClaim>>
 
