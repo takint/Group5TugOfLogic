@@ -34,7 +34,6 @@ class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_main_claim)
 
-        //Set RoomID and title later
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
             selectedGameId = bundle.getInt(GAME_ID_KEY, 0)
@@ -79,6 +78,7 @@ class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
             Log.i("GAME MC SELECTED: ", gameMCSelected.toString())
 
             NetworkHelper.mSocket.emit("startGame", gameMCSelected.toString())
+            setTimeIntent.putExtra(GAME_ID_KEY, selectedGameId)
             startActivity(setTimeIntent)
         })
     }
@@ -86,6 +86,10 @@ class ChooseMainClaimActivity : AppCompatActivity(), IMainClaim {
     override fun updateMainClaimStatus(mainClaim: MainClaim, newStatus: Boolean) {
         mainClaims[mainClaim] = newStatus
         updateView()
+    }
+
+    override fun setCurrentMainClaim(mainClaim: MainClaim) {
+
     }
 
     private fun updateView() {

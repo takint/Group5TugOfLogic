@@ -25,7 +25,8 @@ class EditMainClaimActivity : AppCompatActivity() {
         btnUpdateMainClaim.setOnClickListener(View.OnClickListener {
             val inputStatement = editTextUpdateNewMainClaim.text.toString().trim()
             if (inputStatement == "") {
-                Toast.makeText(this, "Please enter a Main Claim statement!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Please enter a Main Claim statement!", Toast.LENGTH_LONG)
+                    .show()
                 return@OnClickListener
             }
 

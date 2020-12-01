@@ -52,18 +52,18 @@ class GameRoomActivity : AppCompatActivity() {
         NetworkHelper.mSocket.on("notification_user", onNewUser)
         NetworkHelper.mSocket.emit("newGame", randomGameID.toString())
 
-        tugDataRepo.getUsersData().observe(this){
-            val instructor = User(0, "Instructor","Instructor","Instructor","Instructor","Instructor","Instructor","Instructor",randomGameID)
-            tugDataRepo.addNewUser(this.application, instructor)
-            listUsers.add("Instructor")
-            runOnUiThread {
-                updateView()
-            }
-        }
-
-//        runOnUiThread {
-//            updateView()
+//        tugDataRepo.getUsersData().observe(this){
+//            val instructor = User(0, "Instructor","Instructor","Instructor","Instructor","Instructor","Instructor","Instructor",randomGameID)
+//            tugDataRepo.addNewUser(this.application, instructor)
+//            listUsers.add("Instructor")
+//            runOnUiThread {
+//                updateView()
+//            }
 //        }
+
+        runOnUiThread {
+            updateView()
+        }
     }
 
 

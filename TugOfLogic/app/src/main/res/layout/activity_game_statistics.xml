@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".instructor.ui.instructorstatistics.GameStatisticsActivity">
+
+    <TextView
+        android:id="@+id/txt_instructor_game_stats_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dip"
+        android:gravity="center"
+        android:text="@string/txt_instructor_game_stats"
+        android:textSize="20sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
+
+        <TableRow android:layout_margin="4dip">
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/txt_game_id" />
+
+            <TextView
+                android:id="@+id/txt_game_stats_id"
+                android:layout_column="1"
+                android:gravity="start"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow android:layout_margin="4dip">
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/txt_date_time" />
+
+            <TextView
+                android:id="@+id/txt_game_stats_date_time"
+                android:layout_column="1"
+                android:gravity="start"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow android:layout_margin="4dip">
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/txt_no_of_players" />
+
+            <TextView
+                android:id="@+id/txt_game_stats_players"
+                android:layout_column="1"
+                android:gravity="start"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow android:layout_margin="4dip">
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/txt_game_main_claim" />
+
+            <TextView
+                android:id="@+id/txt_game_stats_main_claim"
+                android:layout_column="1"
+                android:gravity="start"
+                android:padding="3dip" />
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="This is a scroll view container for other Stats" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

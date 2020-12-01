@@ -48,17 +48,20 @@ class InstructorStatisticsFragment : Fragment() {
         Log.i(ContentValues.TAG, "onViewCreated: Statistics Fragment")
 
         activity?.let { fragmentActivity ->
-            tugDataRepo.getGamesData().observe(fragmentActivity, Observer {
-                val lstGames: ArrayList<TugGame> = ArrayList(it)
+            tugDataRepo.getGamesHistoryData().observe(fragmentActivity, Observer {
+                val listGames: ArrayList<TugGame> = ArrayList(it)
 
                 // Recycler View
                 mStatsRV = view.findViewById(R.id.rv_instructor_statistics) as RecyclerView
                 mLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                mStatsRVAdapter = InstructorStatsRVAdapter(lstGames)
+                mStatsRVAdapter = InstructorStatsRVAdapter(
+                    listGames,
+                    tugDataRepo,
+                    this.requireActivity().application
+                )
                 mStatsRV.adapter = mStatsRVAdapter
                 mStatsRV.layoutManager = mLayoutManager
             })
         }
-
     }
 }

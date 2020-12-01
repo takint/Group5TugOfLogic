@@ -8,6 +8,8 @@
         android:id="@+id/txt_discussingMainClaim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/border_radius"
         android:gravity="center"
-        android:textSize="30sp" />
+        android:textSize="18sp" />
 </LinearLayout>

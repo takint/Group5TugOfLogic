@@ -2,6 +2,8 @@ package specialtopic.groupfive.tugoflogic.instructor.adapters
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Application
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +16,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.instructor.ui.instructormainclaim.EditMainClaimActivity
+import specialtopic.groupfive.tugoflogic.instructor.ui.instructorstatistics.GameStatisticsActivity
+import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
 import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
 
 class InstructorStatsRVAdapter(
-    private val mGames: ArrayList<TugGame>
+    private val mGames: ArrayList<TugGame>,
+    private val tugDataRepo: DataRepository,
+    private val app: Application
 ) : RecyclerView.Adapter<InstructorStatsRVAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,11 +36,15 @@ class InstructorStatsRVAdapter(
             itemView.setOnClickListener {
                 // TODO: implement item click here
                 val position: Int = adapterPosition
-                Toast.makeText(
-                    itemView.context,
-                    "You clicked on item $position",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+                // Get the current game from the RV
+                val currentGame = mGames[position]
+
+                val context = itemView.context
+                val statsIntent =
+                    Intent(context, GameStatisticsActivity::class.java).apply { }
+                statsIntent.putExtra("gameId", currentGame.gameId)
+                context.startActivity(statsIntent)
             }
         }
     }

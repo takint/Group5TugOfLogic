@@ -4,4 +4,5 @@ import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
 
 interface IMainClaim {
     fun updateMainClaimStatus(mainClaim: MainClaim, newStatus: Boolean)
+    fun setCurrentMainClaim(mainClaim: MainClaim)
 }

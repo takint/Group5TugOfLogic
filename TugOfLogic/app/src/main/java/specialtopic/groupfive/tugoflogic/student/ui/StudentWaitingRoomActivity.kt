@@ -63,6 +63,8 @@ class StudentWaitingRoomActivity : AppCompatActivity() {
 
     private var onStartGame = Emitter.Listener {
         val intent = Intent(this, StudentMainClaimActivity::class.java)
+        intent.putExtra(ROOM_ID_KEY, roomID)
+        intent.putExtra(USER_NAME_KEY, username)
         startActivity(intent)
     }
 

@@ -52,6 +52,11 @@
     <string name="txt_add_new_mainclaim">Add New MainClaim</string>
     <string name="txt_update_mainclaim">Update MainClaim</string>
     <string name="choose_mc">Choosing Main Claim</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_instructor_game_stats">Game Statistics</string>
+    <string name="txt_game_id">Game ID:</string>
+    <string name="delete_rip">Delete RiP</string>
+    <string name="edit_rip">Edit RiP</string>
+    <string name="txt_date_time">Date Time:</string>
+    <string name="txt_no_of_players">No. of Players:</string>
+    <string name="txt_game_main_claim">Main Claim:</string>
 </resources>

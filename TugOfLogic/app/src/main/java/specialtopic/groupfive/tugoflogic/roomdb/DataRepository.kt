@@ -9,8 +9,11 @@ import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.await
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
 import specialtopic.groupfive.tugoflogic.roomdb.entities.*
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 import java.util.*
@@ -19,67 +22,65 @@ class DataRepository(app: Application) {
     // https://developer.android.com/reference/androidx/lifecycle/MutableLiveData.html
     private val mainClaimData = MutableLiveData<List<MainClaim>>()
     private val ripData = MutableLiveData<List<ReasonInPlay>>()
+    private val gameRipData = MutableLiveData<List<ReasonInPlay>>()
     private val gameData = MutableLiveData<List<TugGame>>()
+    private val gamesHistoryData = MutableLiveData<List<TugGame>>()
     private val userData = MutableLiveData<List<User>>()
     private val voteData = MutableLiveData<List<VoteTicket>>()
-
+    private val selectedGameHistory = MutableLiveData<List<TugGame>>()
     private val mainClaimEnt = MutableLiveData<MainClaim>()
-
-    private val mainClaimDao = LogicTugRoomDatabase.getDatabase(app).mainClaimDao()
-    private val reasonInPlayDao = LogicTugRoomDatabase.getDatabase(app).reasonInPlayDao()
-    private val gameDao = LogicTugRoomDatabase.getDatabase(app).gameDao()
-    private val userDao = LogicTugRoomDatabase.getDatabase(app).userDao()
-    private val voteTicketDao = LogicTugRoomDatabase.getDatabase(app).voteTicketDao()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
             // get data from APIs
             getUsersFromService(app)
-            getMCsFromService(app)
             getGamesFromService(app)
+            getGamesHistoryFromService(app)
+            getMCsFromService(app)
         }
     }
 
-    /**
-     * Expose the add and update main claim operation from DAO
-     * for the UI can use to handle the data from users
-     * */
-    fun addOrUpdateMainClaimDao(mainClaim: MainClaim) {
-        CoroutineScope(Dispatchers.IO).launch {
-            if (mainClaim.mainClaimId > 0) {
-                mainClaimDao.updateMainClaim(mainClaim)
-            } else {
-                mainClaimDao.insertMainClaim(mainClaim)
-            }
-        }
-    }
 
-    /**
-     * Expose the delete main claim operation from DAO
-     * for the UI can use to handle the data from users
-     * */
-    fun deleteMainClaimDao(mainClaim: MainClaim) {
-        CoroutineScope(Dispatchers.IO).launch {
-            mainClaimDao.deleteMainClaim(mainClaim)
-        }
-    }
-
-    /**
-     * Get main claim by Id
-     * */
-    fun getMainClaimById(id: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val mainClaim: List<MainClaim> = mainClaimDao.getById(id)
-            mainClaimEnt.postValue(mainClaim[0])
-        }
-    }
-
-    fun getMainClaimByGameId(id: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val mainClaim: List<MainClaim> = mainClaimDao.getById(id)
-            mainClaimEnt.postValue(mainClaim[0])
-        }
-    }
+//    /**
+//     * Expose the add and update main claim operation from DAO
+//     * for the UI can use to handle the data from users
+//     * */
+//    fun addOrUpdateMainClaimDao(mainClaim: MainClaim) {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            if (mainClaim.mainClaimId > 0) {
+//                mainClaimDao.updateMainClaim(mainClaim)
+//            } else {
+//                mainClaimDao.insertMainClaim(mainClaim)
+//            }
+//        }
+//    }
+//
+//    /**
+//     * Expose the delete main claim operation from DAO
+//     * for the UI can use to handle the data from users
+//     * */
+//    fun deleteMainClaimDao(mainClaim: MainClaim) {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            mainClaimDao.deleteMainClaim(mainClaim)
+//        }
+//    }
+//
+//    /**
+//     * Get main claim by Id
+//     * */
+//    fun getMainClaimById(id: Int) {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val mainClaim: List<MainClaim> = mainClaimDao.getById(id)
+//            mainClaimEnt.postValue(mainClaim[0])
+//        }
+//    }
+//
+//    fun getMainClaimByGameId(id: Int) {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val mainClaim: List<MainClaim> = mainClaimDao.getById(id)
+//            mainClaimEnt.postValue(mainClaim[0])
+//        }
+//    }
 
     /**
      * Get main claim data for UI
@@ -109,13 +110,23 @@ class DataRepository(app: Application) {
         return gameData
     }
 
+    fun getGameRipData(): MutableLiveData<List<ReasonInPlay>> {
+        return gameRipData
+    }
+    /**
+     * Get game history data for UI
+     * */
+    fun getGamesHistoryData(): MutableLiveData<List<TugGame>> {
+        return gamesHistoryData
+    }
+
     @WorkerThread
     suspend fun getUsersFromService(app: Application) {
         if (NetworkHelper.isNetworkConnected(app)) {
             val retrofit = Retrofit.Builder()
-                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
-                    .addConverterFactory(MoshiConverterFactory.create())
-                    .build()
+                .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build()
             val service = retrofit.create(ApiService::class.java)
             val serviceData = service.getUserData().body() ?: emptyList()
 
@@ -128,9 +139,9 @@ class DataRepository(app: Application) {
     suspend fun getMCsFromService(app: Application) {
         if (NetworkHelper.isNetworkConnected(app)) {
             val retrofit = Retrofit.Builder()
-                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
-                    .addConverterFactory(MoshiConverterFactory.create())
-                    .build()
+                .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build()
             val service = retrofit.create(ApiService::class.java)
             val serviceData = service.getMainClaimData().body() ?: emptyList()
 
@@ -140,22 +151,72 @@ class DataRepository(app: Application) {
     }
 
     @WorkerThread
+    suspend fun getMainClaimOnGame(app: Application, gameId: Int) {
+        if (NetworkHelper.isNetworkConnected(app)) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build()
+            val service = retrofit.create(ApiService::class.java)
+            val serviceData = service.getMainClaimOnGame(gameId).body() ?: emptyList()
+
+            mainClaimData.postValue(serviceData)
+        }
+    }
+
+    @WorkerThread
     suspend fun getGamesFromService(app: Application) {
         if (NetworkHelper.isNetworkConnected(app)) {
             try {
                 val moshi = Moshi.Builder()
-                        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
-                        .build()
+                    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                    .build()
                 val retrofit = Retrofit.Builder()
-                        .baseUrl(NetworkHelper.API_ENDPOINT_URL)
-                        .addConverterFactory(MoshiConverterFactory.create(moshi))
-                        .build()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
                 val service = retrofit.create(ApiService::class.java)
                 val serviceData = service.getGameData().body() ?: emptyList()
                 gameData.postValue(serviceData)
             } catch (ex: Exception) {
                 Log.d("error", ex.message.toString())
             }
+        }
+    }
+
+    @WorkerThread
+    suspend fun getGamesHistoryFromService(app: Application) {
+        if (NetworkHelper.isNetworkConnected(app)) {
+            try {
+                val moshi = Moshi.Builder()
+                    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                    .build()
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
+                val service = retrofit.create(ApiService::class.java)
+                val serviceData = service.getGamesHistoryData().body() ?: emptyList()
+                gamesHistoryData.postValue(serviceData)
+            } catch (ex: Exception) {
+                Log.d("error", ex.message.toString())
+            }
+        }
+    }
+
+    @WorkerThread
+    suspend fun getGameByIdFromService(app: Application, gameId: Int, onComplete: (TugGame?) -> Unit) {
+        if (NetworkHelper.isNetworkConnected(app)) {
+            val moshi = Moshi.Builder()
+                .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                .build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .build()
+            val service = retrofit.create(ApiService::class.java)
+            val gameData = service.getGameById(gameId).body()
+            onComplete(gameData)
         }
     }
 
@@ -170,15 +231,15 @@ class DataRepository(app: Application) {
         CoroutineScope(Dispatchers.IO).launch {
             if (NetworkHelper.isNetworkConnected(app)) {
                 val moshi = Moshi.Builder()
-                        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
-                        .build()
+                    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                    .build()
                 val retrofit = Retrofit.Builder()
-                        .baseUrl(NetworkHelper.API_ENDPOINT_URL)
-                        .addConverterFactory(MoshiConverterFactory.create(moshi))
-                        .build()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
                 val service = retrofit.create(ApiService::class.java)
                 val newGameCall = service.addGame(newGame)
-                newGameCall.execute()
+                newGameCall.await()
             }
         }
     }
@@ -207,12 +268,12 @@ class DataRepository(app: Application) {
             if (NetworkHelper.isNetworkConnected(app)) {
                 val moshi = Moshi.Builder().build()
                 val retrofit = Retrofit.Builder()
-                        .baseUrl(NetworkHelper.API_ENDPOINT_URL)
-                        .addConverterFactory(MoshiConverterFactory.create(moshi))
-                        .build()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
                 val service = retrofit.create(ApiService::class.java)
                 val newMainClaimCall = service.addNewMainClaim(newMainClaim)
-                newMainClaimCall.execute()
+                newMainClaimCall.await()
             }
         }
     }
@@ -223,12 +284,12 @@ class DataRepository(app: Application) {
             if (NetworkHelper.isNetworkConnected(app)) {
                 val moshi = Moshi.Builder().build()
                 val retrofit = Retrofit.Builder()
-                        .baseUrl(NetworkHelper.API_ENDPOINT_URL)
-                        .addConverterFactory(MoshiConverterFactory.create(moshi))
-                        .build()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
                 val service = retrofit.create(ApiService::class.java)
                 val updateMainClaimCall = service.updateMainClaim(mainClaimId, updatedMainClaim)
-                updateMainClaimCall.execute()
+                updateMainClaimCall.await()
             }
         }
     }
@@ -238,11 +299,74 @@ class DataRepository(app: Application) {
         CoroutineScope(Dispatchers.IO).launch {
             if (NetworkHelper.isNetworkConnected(app)) {
                 val retrofit = Retrofit.Builder()
-                        .baseUrl(NetworkHelper.API_ENDPOINT_URL)
-                        .build()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .build()
                 val service = retrofit.create(ApiService::class.java)
                 val deleteMainClaimCall = service.deleteMainClaim(mainClaimId)
-                deleteMainClaimCall.execute()
+                deleteMainClaimCall.await()
+            }
+        }
+    }
+
+    @WorkerThread
+    suspend fun getRiPData(app: Application) {
+        if (NetworkHelper.isNetworkConnected(app)) {
+            try {
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .build()
+                val service = retrofit.create(ApiService::class.java)
+                val serviceData = service.getRiPData().body() ?: emptyList()
+                gameRipData.postValue(serviceData)
+            } catch (ex: Exception) {
+                Log.d("error", ex.message.toString())
+            }
+        }
+    }
+
+    @WorkerThread
+    suspend fun getRiPDataByUser(app: Application, username: String) {
+        if (NetworkHelper.isNetworkConnected(app)) {
+            try {
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .build()
+                val service = retrofit.create(ApiService::class.java)
+                val serviceData = service.getRiPDataByUser(username).body() ?: emptyList()
+                ripData.postValue(serviceData)
+            } catch (ex: Exception) {
+                Log.d("error", ex.message.toString())
+            }
+        }
+    }
+
+    @WorkerThread
+    fun addNewRiP(app: Application, newRip: ReasonInPlay) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (NetworkHelper.isNetworkConnected(app)) {
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .build()
+                val service = retrofit.create(ApiService::class.java)
+                val newRipCall = service.addNewRiP(newRip)
+                newRipCall.await()
+            }
+        }
+    }
+
+    @WorkerThread
+    fun deleteRiP(app: Application, deletedRip: ReasonInPlay) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (NetworkHelper.isNetworkConnected(app)) {
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                    .build()
+                val service = retrofit.create(ApiService::class.java)
+                val deleteRipCall = service.deleteRiP(deletedRip.ripId)
+                deleteRipCall.await()
             }
         }
     }
