@@ -19,27 +19,28 @@ class AddNewMainClaimActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_new_main_claim)
 
         // Init data repository for using on this activity
-        tugDataRepo = application?.let { DataRepository(it) }!!
+        tugDataRepo = DataRepository(application)
 
         // Button OnClick: Add New Main Claim
-        btnAddNewMainClaim.setOnClickListener(View.OnClickListener {
+        btnAddNewMainClaim.setOnClickListener {
             val randomMainClaimID = Random.nextInt(100000, 1000000)
             val inputStatement: String = editTextAddNewMainClaim.text.toString().trim()
 
-            if (inputStatement == "") {
-                Toast.makeText(this, "Please enter a Main Claim statement!", Toast.LENGTH_LONG)
-                    .show()
-                return@OnClickListener
+            if (inputStatement.isEmpty()) {
+                val newMainClaim = MainClaim(randomMainClaimID, inputStatement)
+                tugDataRepo.addNewMainClaim(newMainClaim)
+                finish()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Please enter a Main Claim statement!", Toast.LENGTH_SHORT
+                ).show()
             }
-
-            val newMainClaim = MainClaim(randomMainClaimID, inputStatement)
-            tugDataRepo.addNewMainClaim(this.application, newMainClaim)
-            Toast.makeText(this, "A new Main Claim is added!", Toast.LENGTH_LONG).show()
-        })
+        }
 
         // Button OnClick: Cancel New Main Claim
-        btnCancelNewMainClaim.setOnClickListener(View.OnClickListener {
+        btnCancelNewMainClaim.setOnClickListener {
             finish()
-        })
+        }
     }
 }

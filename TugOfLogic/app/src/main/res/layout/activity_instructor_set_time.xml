@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Room ID: ABC123"
+        android:text="@string/game_room_template"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Set Time To Vote"
+        android:text="@string/set_time_to_vote"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_SetTime_RoomID" />
@@ -35,23 +35,25 @@
         android:layout_marginTop="96dp"
         android:ems="10"
         android:gravity="center"
-        android:hint="Set Time"
+        android:hint="@string/set_time"
         android:inputType="number"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_SetTime_Message" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_SetTime_Message"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/btn_Instructor_StartGame"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:text="Start Game"
+        android:background="@drawable/border_radius"
+        android:onClick="onStartButtonClick"
+        android:text="@string/start_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/border_radius"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

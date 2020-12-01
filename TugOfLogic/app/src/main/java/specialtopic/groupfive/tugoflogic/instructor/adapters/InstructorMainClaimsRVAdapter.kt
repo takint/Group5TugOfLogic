@@ -26,7 +26,6 @@ import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
 class InstructorMainClaimsRVAdapter(
     private val mMainClaims: ArrayList<MainClaim>,
     private val tugDataRepo: DataRepository,
-    private val app: Application
 ) : RecyclerView.Adapter<InstructorMainClaimsRVAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -44,18 +43,16 @@ class InstructorMainClaimsRVAdapter(
 
                 // Put extra and start EditMainClaim Activity
                 val context = itemView.context
-                val editMainClaimIntent =
-                    Intent(context, EditMainClaimActivity::class.java).apply { }
+                val editMainClaimIntent = Intent(context, EditMainClaimActivity::class.java)
                 editMainClaimIntent.putExtra("mainClaimId", currentMC.mainClaimId)
                 context.startActivity(editMainClaimIntent)
             }
 
             btnDelete.setOnClickListener {
                 val position: Int = adapterPosition
-
-                // TODO: implement Delete Button (Delete MainClaim)
                 val currentMC = mMainClaims[position]
-                tugDataRepo.deleteMainClaim(app, currentMC.mainClaimId)
+                tugDataRepo.deleteMainClaim(currentMC.mainClaimId)
+                mMainClaims.removeAt(position)
             }
         }
     }

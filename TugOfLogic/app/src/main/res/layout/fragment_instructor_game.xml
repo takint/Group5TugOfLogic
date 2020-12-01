@@ -20,6 +20,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/redvsblue" />
 
     <Button
@@ -31,5 +32,15 @@
         android:text="@string/create_new_game"
         app:backgroundTint="#90F6A8"
         app:icon="@drawable/ic_newgame" />
+
+    <Button
+        android:id="@+id/btn_current_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="#2196F3"
+        android:enabled="true"
+        android:text="@string/go_to_current_game"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

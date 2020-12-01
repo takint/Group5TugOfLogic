@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nkzawa.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_game_room.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.UsersAdapter
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
@@ -23,6 +26,10 @@ import kotlin.random.Random
 
 class GameRoomActivity : AppCompatActivity() {
     private lateinit var tugDataRepo: DataRepository
+    private lateinit var rvUsers: RecyclerView
+    private lateinit var adapter: UsersAdapter
+
+    private var randomGameID = Random.nextInt(100000, 1000000)
     var listUsers = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,70 +38,42 @@ class GameRoomActivity : AppCompatActivity() {
 
         //Set RoomID and title later
         txt_GameRoom_Message.text = getString(R.string.wait_for_people)
-        val randomGameID = Random.nextInt(100000, 1000000)
 
         // Init data repository for using on this fragment
-        tugDataRepo = application?.let { DataRepository(it) }!!
-        tugDataRepo.getGamesData().observe(this) {
-            val newGame = TugGame(randomGameID, Date(), Date(), 0, true)
-            tugDataRepo.createNewGame(this.application, newGame)
-            txt_GameRoom_RoomID.text =
-                String.format(getString(R.string.game_id_template), randomGameID)
-        }
+        tugDataRepo = DataRepository(application)
 
-        btn_GameRoom_ChooseMC.setOnClickListener {
-            val chooseMCIntent = Intent(this, ChooseMainClaimActivity::class.java).apply { }
-            chooseMCIntent.putExtra(GAME_ID_KEY, randomGameID)
-            startActivity(chooseMCIntent)
-        }
+        val newGame = TugGame(randomGameID, Date(), Date(), 0, true)
+        tugDataRepo.createNewGame(newGame)
+        txt_GameRoom_RoomID.text =
+            String.format(getString(R.string.game_id_template), randomGameID)
 
-        NetworkHelper.mSocket.on("notification_game_room", onNewGame)
+
+        rvUsers = findViewById(R.id.rv_GameRoom_Users)
+        rvUsers.layoutManager = LinearLayoutManager(this)
+
         NetworkHelper.mSocket.on("notification_user", onNewUser)
         NetworkHelper.mSocket.emit("newGame", randomGameID.toString())
 
-//        tugDataRepo.getUsersData().observe(this){
-//            val instructor = User(0, "Instructor","Instructor","Instructor","Instructor","Instructor","Instructor","Instructor",randomGameID)
-//            tugDataRepo.addNewUser(this.application, instructor)
-//            listUsers.add("Instructor")
-//            runOnUiThread {
-//                updateView()
-//            }
-//        }
 
-        runOnUiThread {
-            updateView()
-        }
-    }
-
-
-    var onNewGame = Emitter.Listener {
-
-    }
-
-    var onNewUser = Emitter.Listener {
-        var message = it[0] as String
-        if (message.contains('[')) {
+        tugDataRepo.getUsersData().observe(this) {
             listUsers.clear()
-            message = message.substring(1, message.length - 1)
-            message = message.replace("'", "", true)
-            val roomList = message.split(',')
-            for (str in roomList) {
-                listUsers.add(str.trim())
+            it.forEach { user ->
+                listUsers.add(user.username)
             }
-        } else {
-            listUsers.add(message)
-        }
-        runOnUiThread {
-            updateView()
+            adapter = UsersAdapter(listUsers)
+            rvUsers.adapter = adapter
         }
     }
 
-    private fun updateView() {
-        if (listUsers.isNotEmpty()) {
-            val rvUsers = findViewById<View>(R.id.rv_GameRoom_Users) as RecyclerView
-            val adapter = UsersAdapter(listUsers)
-            rvUsers.adapter = adapter
-            rvUsers.layoutManager = LinearLayoutManager(this)
+    private var onNewUser = Emitter.Listener {
+        CoroutineScope(Dispatchers.IO).launch {
+            tugDataRepo.getUsersInGame(randomGameID)
         }
+    }
+
+    fun onGameRoomChooseMcClick(view: View) {
+        val chooseMCIntent = Intent(this, ChooseMainClaimActivity::class.java)
+        chooseMCIntent.putExtra(GAME_ID_KEY, randomGameID)
+        startActivity(chooseMCIntent)
     }
 }

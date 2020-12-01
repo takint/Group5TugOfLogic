@@ -10,14 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.await
 import specialtopic.groupfive.tugoflogic.R
-import specialtopic.groupfive.tugoflogic.roomdb.ApiService
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
 import specialtopic.groupfive.tugoflogic.student.adapters.StudentRipListAdapter
-import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 
 
 class RipCardFragment : Fragment() {
@@ -37,33 +33,26 @@ class RipCardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_student_ripcards, container, false)
-        tugDataRepo = activity?.application?.let { DataRepository(it) }!!
-        setupStudentRipListPage(root)
-        CoroutineScope(Dispatchers.IO).launch {
-            activity?.application?.let { tugDataRepo.getRiPDataByUser(it, "TestUser") }!!
-        }
+        tugDataRepo = DataRepository(requireActivity().application)
+        studentRipListView = root.findViewById(R.id.lstPlayerRipList)
+        studentRipListView.setHasFixedSize(true)
+        studentRipListView.layoutManager = LinearLayoutManager(root.context)
+        studentCurrentRips.add(placeholderCard)
+
+        tugDataRepo.getRipsData().observe(requireActivity(), {
+            studentCurrentRips = ArrayList(it)
+            studentCurrentRips.add(placeholderCard)
+            studentRipsAdapter = StudentRipListAdapter(context, tugDataRepo, studentCurrentRips)
+            studentRipListView.adapter = studentRipsAdapter
+        })
+
+        loadRiPData()
         return root
     }
 
-    private fun setupStudentRipListPage(container: View) {
-        studentRipListView = container.findViewById(R.id.lstPlayerRipList)
-        studentRipListView.setHasFixedSize(true)
-        studentRipListView.layoutManager = LinearLayoutManager(container.context)
-        loadRiPData()
-
-        activity?.let { fragmentActivity ->
-            tugDataRepo.getRipsData().observe(fragmentActivity, {
-                studentCurrentRips = ArrayList(it)
-                if (studentCurrentRips.size > 0) {
-                    loadRiPData()
-                }
-            })
-        }
-    }
-
     private fun loadRiPData() {
-        studentCurrentRips.add(placeholderCard)
-        studentRipsAdapter = StudentRipListAdapter(context, tugDataRepo, studentCurrentRips)
-        studentRipListView.adapter = studentRipsAdapter
+        CoroutineScope(Dispatchers.IO).launch {
+             tugDataRepo.getRiPDataByUser("TestUser")
+        }
     }
 }

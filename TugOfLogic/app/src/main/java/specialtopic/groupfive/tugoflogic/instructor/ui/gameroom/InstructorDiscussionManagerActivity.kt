@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.nkzawa.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_choose_main_claim.*
 import kotlinx.android.synthetic.main.activity_instructor__discussion_manager.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.instructor.adapters.MainClaimDissussionAdapter
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
@@ -35,24 +38,25 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_instructor__discussion_manager)
 
+
+
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
             selectedGameId = bundle.getInt(GAME_ID_KEY, 0)
+            Log.i("CURRENT GAME ID: ", selectedGameId.toString())
         }
 
         hideMainClaims()
 
         tugDataRepo = application?.let { DataRepository(it) }!!
         tugDataRepo.getMainClaimData().observe(this, Observer {
-            val lstMainClaims = ArrayList<MainClaim>(it)
-            for (mainClaim in lstMainClaims) {
-                if (mainClaim.gameId.equals(selectedGameId)){
-                    mainClaimList.add(mainClaim)
-                }
-            }
+            mainClaimList = ArrayList(it)
             updateView()
         })
+        CoroutineScope(Dispatchers.IO).launch {
 
+            tugDataRepo.getMainClaimOnGame(selectedGameId)
+        }
 
         btnSummary.setOnClickListener(View.OnClickListener {
             val summaryIntent = Intent(this, GameSummaryActivity::class.java).apply {  }
@@ -71,6 +75,7 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
         btn_Instructor_StopDiscuss.setOnClickListener(View.OnClickListener {
             displayMainClaims()
             btnSelectDiscussingMainClaim.setText("Select MainClaim To Discuss")
+            Toast.makeText(this, "Select new Main Claim to discuss", Toast.LENGTH_SHORT).show()
         })
 
         btnGoToStudentMain.setOnClickListener(View.OnClickListener {
@@ -101,11 +106,12 @@ class InstructorDiscussionManagerActivity : AppCompatActivity(), IMainClaim {
     }
 
     override fun setCurrentMainClaim(mainClaim: MainClaim) {
-        btnSelectDiscussingMainClaim.setText(mainClaim.statement)
+
         if(!mainClaimList.isEmpty()){
-            mainClaimList.remove(mainClaim)
+            btnSelectDiscussingMainClaim.setText(mainClaim.statement)
             updateView()
             hideMainClaims()
+            mainClaimList.remove(mainClaim)
             currentMC = mainClaim
         }
     }

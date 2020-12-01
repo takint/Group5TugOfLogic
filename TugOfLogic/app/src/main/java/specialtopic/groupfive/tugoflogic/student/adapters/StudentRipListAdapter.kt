@@ -36,13 +36,7 @@ class StudentRipListAdapter(
             studentRips[position].reasonStatement = holder.etStudentRip.text.toString()
             studentRips[position].description = holder.etStudentRip.text.toString()
             studentRips[position].logicSide = "neutral"
-
-            if (context != null) {
-                tugDataRepo.addNewRiP(
-                    context.applicationContext as Application,
-                    studentRips[position]
-                )
-            }
+            tugDataRepo.addNewRiP(studentRips[position])
 
             NetworkHelper.mSocket.emit("newRipFromPlayer", studentRips[position].reasonStatement)
         }
@@ -54,12 +48,11 @@ class StudentRipListAdapter(
         holder.btnDeleteRip.setOnClickListener {
             if (studentRips[position].mainClaimId > 0) {
                 if (context != null) {
-                    tugDataRepo.deleteRiP(
-                        context.applicationContext as Application,
-                        studentRips[position]
+                    tugDataRepo.deleteRiP(studentRips[position])
+                    NetworkHelper.mSocket.emit(
+                        "newRipFromPlayer",
+                        studentRips[position].reasonStatement
                     )
-
-                    NetworkHelper.mSocket.emit("newRipFromPlayer", studentRips[position].reasonStatement)
                 }
             }
         }

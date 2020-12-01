@@ -49,12 +49,12 @@ class StudentMainClaimActivity : AppCompatActivity() {
 
 
         tugDataRepo.getMainClaimData().observe(this, Observer {
-            val studentMainClaims: ArrayList<MainClaim> = ArrayList<MainClaim>(it)
+            val studentMainClaims: ArrayList<MainClaim> = ArrayList(it)
             studentMainClaimAdapter = StudentMainClaimListAdapter(this, studentMainClaims)
             studentMainClaimListView.adapter = studentMainClaimAdapter
         })
         CoroutineScope(Dispatchers.IO).launch {
-            tugDataRepo.getMainClaimOnGame(application, roomID.toInt())
+            tugDataRepo.getMainClaimOnGame(roomID.toInt())
         }
 
         NetworkHelper.mSocket.on("notification_current_mainclaim", onCurrentMainClaim)
