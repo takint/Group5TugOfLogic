@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
     fun onStudentBtnClick(view: View) {
         val intent = Intent(this, StudentChooseGameActivity::class.java)
-        //val intent = Intent(this, StudentMainActivity::class.java)
         startActivity(intent)
     }
 
