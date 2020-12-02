@@ -27,14 +27,14 @@ class AddNewMainClaimActivity : AppCompatActivity() {
             val inputStatement: String = editTextAddNewMainClaim.text.toString().trim()
 
             if (inputStatement.isEmpty()) {
-                val newMainClaim = MainClaim(randomMainClaimID, inputStatement)
-                tugDataRepo.addNewMainClaim(newMainClaim)
-                finish()
-            } else {
                 Toast.makeText(
                     this,
                     "Please enter a Main Claim statement!", Toast.LENGTH_SHORT
                 ).show()
+            } else {
+                val newMainClaim = MainClaim(randomMainClaimID, inputStatement)
+                tugDataRepo.addNewMainClaim(newMainClaim)
+                finish()
             }
         }
 
