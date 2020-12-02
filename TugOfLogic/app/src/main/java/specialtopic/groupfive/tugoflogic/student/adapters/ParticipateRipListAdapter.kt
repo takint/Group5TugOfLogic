@@ -13,6 +13,7 @@ import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
 import specialtopic.groupfive.tugoflogic.roomdb.entities.VoteTicket
+import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 
 class ParticipateRipListAdapter(
     private val context: Context?,
@@ -40,15 +41,13 @@ class ParticipateRipListAdapter(
         holder.etPartName.text = String.format("StudentId: %d", participateRips[position].studentId)
         holder.etPartReason.text = participateRips[position].reasonStatement
 
-
-
         participateRips[position].mainClaimId
-        var newVotes = VoteTicket(
+        val newVotes = VoteTicket(
             voteId = 0,
-            gameId = 1,
-            userId = 2,
+            gameId = currentGame,
+            userId = currentUser,
             mainClaimId = participateRips[position].mainClaimId,
-            RipId = 2,
+            ripId = currentMc,
             statementToVote = "",
             voteSide = participateRips[position].logicSide
         )
@@ -57,18 +56,27 @@ class ParticipateRipListAdapter(
             newVotes.voteSide = "agree"
             newVotes.statementToVote = "Agree with ${participateRips[position].reasonStatement}"
 
-            Toast.makeText(context, participateRips[position].description, Toast.LENGTH_SHORT)
+            tugDataRepo.addNewVote(newVotes)
+            Toast.makeText(context, newVotes.statementToVote, Toast.LENGTH_SHORT)
                 .show()
+            holder.btnAgreePatRip.isEnabled = false
+            holder.btnDisagreePatRip.isEnabled = false
+
+            NetworkHelper.mSocket.emit("newVoteComing", newVotes.mainClaimId)
         }
 
         holder.btnDisagreePatRip.setOnClickListener {
             newVotes.voteSide = "disagree"
             newVotes.statementToVote = "Disagree with ${participateRips[position].reasonStatement}"
 
+            tugDataRepo.addNewVote(newVotes)
 
-
-            Toast.makeText(context, participateRips[position].description, Toast.LENGTH_SHORT)
+            Toast.makeText(context, newVotes.statementToVote, Toast.LENGTH_SHORT)
                 .show()
+            holder.btnAgreePatRip.isEnabled = false
+            holder.btnDisagreePatRip.isEnabled = false
+
+            NetworkHelper.mSocket.emit("newVoteComing", newVotes.mainClaimId)
         }
     }
 

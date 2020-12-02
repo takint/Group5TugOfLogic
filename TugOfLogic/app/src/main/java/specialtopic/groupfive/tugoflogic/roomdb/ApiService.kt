@@ -4,10 +4,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
-import specialtopic.groupfive.tugoflogic.roomdb.entities.MainClaim
-import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
-import specialtopic.groupfive.tugoflogic.roomdb.entities.TugGame
-import specialtopic.groupfive.tugoflogic.roomdb.entities.User
+import specialtopic.groupfive.tugoflogic.roomdb.entities.*
 
 interface ApiService {
     @GET("/users")
@@ -70,4 +67,8 @@ interface ApiService {
 
     @DELETE("/delete-rip/{ripId}")
     fun deleteRiP(@Path("ripId") ripId: Int): Call<Void?>
+
+    @Headers("Content-Type: application/json")
+    @POST("/add-vote")
+    fun addNewVote(@Body vote: VoteTicket): Call<VoteTicket>
 }

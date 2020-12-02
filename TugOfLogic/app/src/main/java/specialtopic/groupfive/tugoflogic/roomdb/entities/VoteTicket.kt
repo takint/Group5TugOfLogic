@@ -11,11 +11,11 @@ data class VoteTicket(
 
     val gameId: Int,
 
-    val userId: Int,
+    val userId: String,
 
     val mainClaimId: Int?, //(null if vote for Rip)
 
-    val RipId: Int?, // (null if vote for MC)
+    val ripId: Int?, // (null if vote for MC)
 
     var statementToVote: String,
 

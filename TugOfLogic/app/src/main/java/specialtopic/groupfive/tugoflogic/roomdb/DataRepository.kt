@@ -371,4 +371,23 @@ class DataRepository(private val app: Application) {
             }
         }
     }
+
+    @WorkerThread
+    fun addNewVote(newVote: VoteTicket) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                if (NetworkHelper.isNetworkConnected(app)) {
+                    val retrofit = Retrofit.Builder()
+                        .baseUrl(NetworkHelper.API_ENDPOINT_URL)
+                        .addConverterFactory(MoshiConverterFactory.create())
+                        .build()
+                    val service = retrofit.create(ApiService::class.java)
+                    val newVoteCall = service.addNewVote(newVote)
+                    newVoteCall.await()
+                }
+            } catch (ex: Exception) {
+                Log.d("error", ex.message.toString())
+            }
+        }
+    }
 }

@@ -7,7 +7,7 @@ data class ReasonInPlayWithVotes (
     @Embedded val rip: ReasonInPlay,
     @Relation(
         parentColumn = "id",
-        entityColumn = "RipId"
+        entityColumn = "ripId"
     )
     val voteTickets: List<VoteTicket>
 )
