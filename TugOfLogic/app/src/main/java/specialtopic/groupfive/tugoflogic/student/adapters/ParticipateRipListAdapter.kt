@@ -47,7 +47,7 @@ class ParticipateRipListAdapter(
             gameId = currentGame,
             userId = currentUser,
             mainClaimId = participateRips[position].mainClaimId,
-            ripId = currentMc,
+            ripId = participateRips[position].ripId,
             statementToVote = "",
             voteSide = participateRips[position].logicSide
         )
