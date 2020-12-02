@@ -17,10 +17,10 @@ data class VoteTicket(
 
     val RipId: Int?, // (null if vote for MC)
 
-    val statementToVote: String,
+    var statementToVote: String,
 
     // Agree or Disagree
-    val voteSide: String
+    var voteSide: String
 ) {
     // Additional process
 }

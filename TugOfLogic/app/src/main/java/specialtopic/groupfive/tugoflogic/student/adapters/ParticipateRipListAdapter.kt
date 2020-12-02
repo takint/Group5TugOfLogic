@@ -10,10 +10,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import specialtopic.groupfive.tugoflogic.R
+import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
+import specialtopic.groupfive.tugoflogic.roomdb.entities.VoteTicket
 
 class ParticipateRipListAdapter(
     private val context: Context?,
+    private val tugDataRepo: DataRepository,
+    private val currentUser: String,
+    private val currentGame: Int,
+    private val currentMc: Int,
     private val participateRips: ArrayList<ReasonInPlay>
 ) : RecyclerView.Adapter<ParticipateRipListAdapter.ParticipateRipViewHolder>() {
 
@@ -24,22 +30,45 @@ class ParticipateRipListAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         val listItem = layoutInflater.inflate(R.layout.layout_student_reason_item, parent, false)
 
-        return ParticipateRipListAdapter.ParticipateRipViewHolder(listItem)
+        return ParticipateRipViewHolder(listItem)
     }
 
     override fun onBindViewHolder(
-        holder: ParticipateRipListAdapter.ParticipateRipViewHolder,
+        holder: ParticipateRipViewHolder,
         position: Int
     ) {
-        holder.etPartName.text = String.format("StudentId: %d",  participateRips[position].studentId)
+        holder.etPartName.text = String.format("StudentId: %d", participateRips[position].studentId)
         holder.etPartReason.text = participateRips[position].reasonStatement
 
+
+
+        participateRips[position].mainClaimId
+        var newVotes = VoteTicket(
+            voteId = 0,
+            gameId = 1,
+            userId = 2,
+            mainClaimId = participateRips[position].mainClaimId,
+            RipId = 2,
+            statementToVote = "",
+            voteSide = participateRips[position].logicSide
+        )
+
         holder.btnAgreePatRip.setOnClickListener {
-            Toast.makeText(context, participateRips[position].description, Toast.LENGTH_SHORT).show()
+            newVotes.voteSide = "agree"
+            newVotes.statementToVote = "Agree with ${participateRips[position].reasonStatement}"
+
+            Toast.makeText(context, participateRips[position].description, Toast.LENGTH_SHORT)
+                .show()
         }
 
         holder.btnDisagreePatRip.setOnClickListener {
-            Toast.makeText(context, participateRips[position].description, Toast.LENGTH_SHORT).show()
+            newVotes.voteSide = "disagree"
+            newVotes.statementToVote = "Disagree with ${participateRips[position].reasonStatement}"
+
+
+
+            Toast.makeText(context, participateRips[position].description, Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

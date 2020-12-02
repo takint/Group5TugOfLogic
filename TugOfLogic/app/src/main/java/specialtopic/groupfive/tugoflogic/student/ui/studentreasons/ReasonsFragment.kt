@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import specialtopic.groupfive.tugoflogic.R
 import specialtopic.groupfive.tugoflogic.roomdb.DataRepository
 import specialtopic.groupfive.tugoflogic.roomdb.entities.ReasonInPlay
+import specialtopic.groupfive.tugoflogic.student.StudentMainActivity
 import specialtopic.groupfive.tugoflogic.student.adapters.ParticipateRipListAdapter
 import specialtopic.groupfive.tugoflogic.utilities.NetworkHelper
 
@@ -23,6 +24,7 @@ class ReasonsFragment : Fragment() {
     private lateinit var participateRipsAdapter: ParticipateRipListAdapter
     private lateinit var tugDataRepo: DataRepository
     private var studentCurrentRips = ArrayList<ReasonInPlay>()
+    private lateinit var mainActivity: StudentMainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,10 +36,19 @@ class ReasonsFragment : Fragment() {
         participateRipListView = root.findViewById(R.id.lstParticipateRipList)
         participateRipListView.setHasFixedSize(true)
         participateRipListView.layoutManager = LinearLayoutManager(root.context)
+        mainActivity = requireActivity() as StudentMainActivity
+
 
         tugDataRepo.getGameRipData().observe(requireActivity(), {
             studentCurrentRips = ArrayList(it)
-            participateRipsAdapter = ParticipateRipListAdapter(this.context, studentCurrentRips)
+            participateRipsAdapter = ParticipateRipListAdapter(
+                this.context,
+                tugDataRepo,
+                mainActivity.getCurrentUser(),
+                mainActivity.getCurrentGame(),
+                mainActivity.getCurrentMc(),
+                studentCurrentRips
+            )
             participateRipListView.adapter = participateRipsAdapter
         })
 
