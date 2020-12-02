@@ -46,6 +46,11 @@ class StudentChooseGameActivity : AppCompatActivity() {
         }
 
         tugDataRepo.getGamesData().observe(this) {
+            listGameRoom.clear()
+            it.forEach {game ->
+                listGameRoom.add(game.gameId.toString())
+            }
+
             adapter = ChooseGameAdapter(listGameRoom)
             rvGameRooms.adapter = adapter
         }

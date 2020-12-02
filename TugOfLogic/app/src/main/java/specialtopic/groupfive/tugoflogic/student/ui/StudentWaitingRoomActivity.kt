@@ -3,6 +3,7 @@ package specialtopic.groupfive.tugoflogic.student.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nkzawa.emitter.Emitter
@@ -61,6 +62,13 @@ class StudentWaitingRoomActivity : AppCompatActivity() {
             adapter = UsersAdapter(listUsers)
             rvUsers.adapter = adapter
         })
+    }
+
+    fun onPrepareYourRipClick(view: View) {
+        val intent = Intent(this, StudentMainClaimActivity::class.java)
+        intent.putExtra(ROOM_ID_KEY, roomID)
+        intent.putExtra(USER_NAME_KEY, username)
+        startActivity(intent)
     }
 
     private var onNewUser = Emitter.Listener {

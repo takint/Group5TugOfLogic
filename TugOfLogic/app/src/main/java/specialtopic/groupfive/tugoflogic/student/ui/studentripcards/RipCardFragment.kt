@@ -40,8 +40,11 @@ class RipCardFragment : Fragment() {
         studentRipListView.setHasFixedSize(true)
         studentRipListView.layoutManager = LinearLayoutManager(root.context)
         mainActivity = requireActivity() as StudentMainActivity
+
         placeholderCard.mainClaimId = mainActivity.getCurrentMc()
+        placeholderCard.description = mainActivity.getCurrentUser()
         studentCurrentRips.add(placeholderCard)
+
         tugDataRepo.getRipsData().observe(requireActivity(), {
             studentCurrentRips = ArrayList(it)
             studentCurrentRips.add(placeholderCard)

@@ -34,7 +34,6 @@ class StudentRipListAdapter(
 
         holder.btnPutToBoard.setOnClickListener {
             studentRips[position].reasonStatement = holder.etStudentRip.text.toString()
-            studentRips[position].description = holder.etStudentRip.text.toString()
             studentRips[position].logicSide = "neutral"
             tugDataRepo.addNewRiP(studentRips[position])
 
