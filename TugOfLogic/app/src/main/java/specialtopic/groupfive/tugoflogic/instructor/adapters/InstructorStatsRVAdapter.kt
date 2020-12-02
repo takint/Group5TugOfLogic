@@ -39,7 +39,6 @@ class InstructorStatsRVAdapter(
 
                 // Get the current game from the RV
                 val currentGame = mGames[position]
-
                 val context = itemView.context
                 val statsIntent =
                     Intent(context, GameStatisticsActivity::class.java).apply { }

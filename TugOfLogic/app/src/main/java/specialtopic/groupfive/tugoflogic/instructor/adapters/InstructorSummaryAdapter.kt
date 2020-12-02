@@ -58,13 +58,13 @@ class InstructorSummaryAdapter(private val summaries: ArrayList<InstructorSummar
         val txtSummaryDisagree = holder.txtSummaryDisagree
         val txtSummaryTitle = holder.txtSummaryTitle
 
-        txtSummaryTitle.setText("Main Claim: ${summary.title}")
+        txtSummaryTitle.text = "Main Claim: ${summary.title}"
 
-        txtNumStudents.setText("Number of Students: ${summary.numStudents}")
-        txtnumBeginAgree.setText("Begin With Agree: ${summary.beginAgree}")
-        txtnumBeginDisagree.setText("Begin With Disagree: ${summary.beginDisagree}")
-        txtnumEndAgree.setText("End With Agree: ${summary.endAgree}")
-        txtnumEndDisagree.setText("End With Disagree: ${summary.endDisagree}")
+        txtNumStudents.text = "Number of Students: ${summary.numStudents}"
+        txtnumBeginAgree.text = "Begin With Agree: ${summary.beginAgree}"
+        txtnumBeginDisagree.text = "Begin With Disagree: ${summary.beginDisagree}"
+        txtnumEndAgree.text = "End With Agree: ${summary.endAgree}"
+        txtnumEndDisagree.text = "End With Disagree: ${summary.endDisagree}"
 
         val percent: Float = (summary.endAgree.toFloat() / summary.numStudents.toFloat()) * 100
 
@@ -80,8 +80,8 @@ class InstructorSummaryAdapter(private val summaries: ArrayList<InstructorSummar
             )
         )
 
-        txtSummaryAgree.setText("Agree " + percent.toInt() + "%")
-        txtSummaryDisagree.setText("Disagree " + (100 - percent).toInt() + "%")
+        txtSummaryAgree.text = "Agree " + percent.toInt() + "%"
+        txtSummaryDisagree.text = "Disagree " + (100 - percent).toInt() + "%"
 
         pieChart.startAnimation()
     }
